@@ -195,13 +195,123 @@
       letter-spacing: 0.2em;
     }
 
+    /* ── Labs dashboard ──────────────────────────────────────────────── */
+
+    .labs-dashboard {
+      background: var(--color-nav);
+      border-top: 1px solid rgba(232, 236, 244, 0.06);
+    }
+
+    .labs-dashboard-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: var(--f5) var(--f5) var(--f4);
+    }
+
+    .labs-ident-stamp {
+      font-family: var(--font-mono);
+      font-size: var(--f2);
+      color: rgba(232, 236, 244, 0.4);
+      text-transform: uppercase;
+      letter-spacing: 0.28em;
+      margin: 0 0 var(--f3);
+    }
+
+    .labs-ident-rule {
+      width: var(--f5);            /* 55px */
+      height: 2px;
+      background: var(--color-primary);
+      margin-bottom: var(--f3);
+    }
+
+    .labs-ident-tagline {
+      font-family: var(--font-mono);
+      font-size: var(--f3);        /* 21px */
+      color: #ffffff;
+      letter-spacing: 0.02em;
+      line-height: 1.3;
+      margin: 0 0 var(--f4);
+    }
+
+    .labs-ident-desc {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: rgba(232, 236, 244, 0.45);
+      line-height: 1.85;
+      max-width: 600px;
+      margin: 0;
+    }
+
+    /* ── Status strip ────────────────────────────────────────────────── */
+
+    .labs-status-strip {
+      border-top: 1px solid rgba(232, 236, 244, 0.07);
+      background: rgba(0, 0, 0, 0.22);
+    }
+
+    .labs-status-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: var(--f2) var(--f5);
+      display: flex;
+      align-items: stretch;
+      flex-wrap: wrap;
+    }
+
+    .labs-status-item {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 4px;
+      padding: var(--f2) var(--f4) var(--f2) 0;
+      margin-right: var(--f4);
+      border-right: 1px solid rgba(232, 236, 244, 0.1);
+    }
+
+    .labs-status-item:last-child {
+      border-right: none;
+      margin-right: 0;
+      padding-right: 0;
+    }
+
+    .labs-status-label {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: rgba(232, 236, 244, 0.28);
+      white-space: nowrap;
+    }
+
+    .labs-status-value {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: rgba(232, 236, 244, 0.6);
+      white-space: nowrap;
+    }
+
+    .labs-status-value--nominal { color: #3dcf8e; }
+
+    /* Section divider between dashboard and tool grid */
+    .labs-section-rule {
+      border: none;
+      border-top: 1px solid rgba(0, 87, 184, 0.2);
+      margin: 0;
+    }
+
     /* ── Responsive ──────────────────────────────────────────────────── */
 
     @media (max-width: 700px) {
-      .labs-intro         { padding: var(--f4) var(--f3); }
-      .labs-title         { font-size: var(--f4); }   /* 34px on mobile */
-      .labs-intro::before { font-size: 60px; }
-      .labs-grid          { grid-template-columns: 1fr; }
+      .labs-intro           { padding: var(--f4) var(--f3); }
+      .labs-title           { font-size: var(--f4); }   /* 34px on mobile */
+      .labs-intro::before   { font-size: 60px; }
+      .labs-grid            { grid-template-columns: 1fr; }
+      .labs-dashboard-inner { padding: var(--f4) var(--f3) var(--f3); }
+      .labs-ident-tagline   { font-size: var(--f2); }
+      .labs-status-inner    { padding: var(--f2) var(--f3); }
+      .labs-status-item     { border-right: none; padding-right: 0; margin-right: var(--f4); }
     }
   </style>
 </head>
@@ -216,6 +326,37 @@
       <p class="labs-subtitle">Internal Tool Index</p>
     </div>
   </section>
+
+  <!-- Labs overview dashboard -->
+  <section class="labs-dashboard">
+    <div class="labs-dashboard-inner">
+      <div class="labs-ident-stamp">Applied Information Labs</div>
+      <div class="labs-ident-rule"></div>
+      <div class="labs-ident-tagline">Instrumentation for the Intelligence Cycle</div>
+      <p class="labs-ident-desc">Applied Information Labs is the R&amp;D and tooling division of Applied Information Services, LLC. It produces internal instruments, analytical tools, and experimental systems in support of OSINT operations, ISR planning, and collection architecture design. Access is restricted to authorized personnel.</p>
+    </div>
+    <div class="labs-status-strip">
+      <div class="labs-status-inner">
+        <div class="labs-status-item">
+          <span class="labs-status-label">Systems</span>
+          <span class="labs-status-value labs-status-value--nominal">Nominal</span>
+        </div>
+        <div class="labs-status-item">
+          <span class="labs-status-label">Active Tools</span>
+          <span class="labs-status-value" id="labs-tool-count">&mdash;</span>
+        </div>
+        <div class="labs-status-item">
+          <span class="labs-status-label">Classification</span>
+          <span class="labs-status-value">Unclassified // For Official Use</span>
+        </div>
+        <div class="labs-status-item">
+          <span class="labs-status-label">Last Updated</span>
+          <span class="labs-status-value" id="labs-last-updated">&mdash;</span>
+        </div>
+      </div>
+    </div>
+  </section>
+  <hr class="labs-section-rule">
 
   <div class="page-content">
     <div class="labs-grid">
@@ -268,6 +409,23 @@
           el.textContent = new Date().getFullYear();
         });
       });
+
+    // Status strip — active tool count
+    try {
+      const n = document.querySelectorAll('.labs-badge--active').length;
+      document.getElementById('labs-tool-count').textContent = n > 0 ? String(n) : '—';
+    } catch (e) {}
+
+    // Status strip — last updated date (document.lastModified, fallback to today)
+    try {
+      const d = new Date(document.lastModified);
+      const src = isNaN(d.getTime()) ? new Date() : d;
+      document.getElementById('labs-last-updated').textContent =
+        src.toISOString().split('T')[0];
+    } catch (e) {
+      document.getElementById('labs-last-updated').textContent =
+        new Date().toISOString().split('T')[0];
+    }
   </script>
 </body>
 </html>
