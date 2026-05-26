@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Applied Information Labs — Internal Tool Index</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/main.css?v=12">
+
+  <style>
+    /* ── Applied Information Labs — page-scoped styles ───────────────── */
+
+    .labs-intro {
+      background: var(--color-nav);
+      padding: var(--f5) var(--f5);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Gold gradient line at bottom — matches .hero::after pattern */
+    .labs-intro::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(201, 168, 76, 0.4) 20%,
+        rgba(201, 168, 76, 0.7) 50%,
+        rgba(201, 168, 76, 0.4) 80%,
+        transparent 100%
+      );
+    }
+
+    /* Terminal watermark overlay */
+    .labs-intro::before {
+      content: '// LABS';
+      position: absolute;
+      right: var(--f5);
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: var(--font-mono);
+      font-size: 112px;
+      color: rgba(201, 168, 76, 0.04);
+      letter-spacing: 0.05em;
+      pointer-events: none;
+      white-space: nowrap;
+      line-height: 1;
+    }
+
+    .labs-intro-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .labs-eyebrow {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: var(--f2);
+      color: rgba(201, 168, 76, 0.65);
+      letter-spacing: 0.2em;
+      margin-bottom: var(--f2);
+    }
+
+    .labs-title {
+      font-size: var(--f5);   /* 55px — Fibonacci */
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      margin: 0 0 var(--f1);
+    }
+
+    .labs-subtitle {
+      font-family: var(--font-mono);
+      font-size: var(--f2);
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      margin: 0;
+      max-width: none;
+    }
+
+    /* ── Tool grid ───────────────────────────────────────────────────── */
+
+    .labs-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--f3);   /* 21px */
+    }
+
+    .labs-card {
+      background: var(--color-nav);
+      border: 1px solid rgba(201, 168, 76, 0.18);
+      border-top: 3px solid var(--color-primary);
+      padding: var(--f4);   /* 34px */
+      display: flex;
+      flex-direction: column;
+      gap: var(--f2);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .labs-card:hover {
+      border-color: rgba(0, 87, 184, 0.6);
+      box-shadow: 0 var(--f1) var(--f4) rgba(0, 0, 0, 0.35);
+    }
+
+    .labs-card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--f2);
+    }
+
+    .labs-card-mono {
+      font-family: var(--font-mono);
+      font-size: var(--f3);   /* 21px */
+      color: var(--color-accent);
+      letter-spacing: 0.05em;
+      line-height: 1.2;
+    }
+
+    .labs-card-name {
+      font-size: var(--f2);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(232, 236, 244, 0.5);
+      margin: var(--f1) 0 0;
+    }
+
+    .labs-card-desc {
+      font-size: var(--f2);
+      color: rgba(232, 236, 244, 0.7);
+      line-height: 1.618;
+      margin: 0;
+      max-width: none;
+      flex: 1;
+    }
+
+    /* ── Status badges ───────────────────────────────────────────────── */
+
+    .labs-badge {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border: 1px solid currentColor;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+
+    .labs-badge--active {
+      color: #3dcf8e;
+      border-color: rgba(61, 207, 142, 0.35);
+      background: rgba(61, 207, 142, 0.08);
+    }
+
+    .labs-badge--beta {
+      color: var(--color-accent);
+      border-color: rgba(201, 168, 76, 0.35);
+      background: rgba(201, 168, 76, 0.08);
+    }
+
+    .labs-badge--deprecated {
+      color: #e05c5c;
+      border-color: rgba(224, 92, 92, 0.35);
+      background: rgba(224, 92, 92, 0.08);
+    }
+
+    /* ── Empty state ─────────────────────────────────────────────────── */
+
+    .labs-empty {
+      background: var(--color-nav);
+      border: 1px solid rgba(201, 168, 76, 0.12);
+      border-top: 3px solid var(--color-text-muted);
+      padding: var(--f5) var(--f4);
+      text-align: center;
+      grid-column: 1 / -1;
+    }
+
+    .labs-empty-label {
+      font-family: var(--font-mono);
+      font-size: var(--f2);
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+    }
+
+    /* ── Responsive ──────────────────────────────────────────────────── */
+
+    @media (max-width: 700px) {
+      .labs-intro         { padding: var(--f4) var(--f3); }
+      .labs-title         { font-size: var(--f4); }   /* 34px on mobile */
+      .labs-intro::before { font-size: 60px; }
+      .labs-grid          { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <!-- Labs identity strip -->
+  <section class="labs-intro">
+    <div class="labs-intro-inner">
+      <span class="labs-eyebrow">// APPLIED INFORMATION SERVICES &mdash; INTERNAL</span>
+      <h1 class="labs-title">Applied Information Labs</h1>
+      <p class="labs-subtitle">Internal Tool Index</p>
+    </div>
+  </section>
+
+  <div class="page-content">
+    <div class="labs-grid">
+
+      <!-- VIGIL — ISR Flight Pattern Planner -->
+      <article class="labs-card">
+        <div class="labs-card-top">
+          <div>
+            <div class="labs-card-mono">VIGIL</div>
+            <div class="labs-card-name">ISR Flight Pattern Planner</div>
+          </div>
+          <span class="labs-badge labs-badge--active">ACTIVE</span>
+        </div>
+        <p class="labs-card-desc">Generate georeferenced ISR orbit waypoints across eight flight patterns &mdash; circular, racetrack, figure-8, expanding square, parallel track, sector search, and AR track &mdash; with profile compliance checking and export to SkyVector, SimBrief, and plain-text formats.</p>
+        <div class="project-buttons">
+          <a href="/labs/isr-planner/">Launch VIGIL</a>
+        </div>
+      </article>
+
+      <!-- APV — Applied Flight Visualizer -->
+      <article class="labs-card">
+        <div class="labs-card-top">
+          <div>
+            <div class="labs-card-mono">APV</div>
+            <div class="labs-card-name">Applied Flight Visualizer</div>
+          </div>
+          <span class="labs-badge labs-badge--active">ACTIVE</span>
+        </div>
+        <p class="labs-card-desc">Interactive flight-route visualization with great-circle arc rendering over a MapLibre basemap. Accepts IATA codes, ICAO codes, or raw coordinates across a database of ~4,400 civilian airports and ~570 military installations worldwide.</p>
+        <div class="project-buttons">
+          <a href="/tools/apv/">Launch APV</a>
+        </div>
+      </article>
+
+    </div>
+  </div>
+
+  <div id="footer-placeholder"></div>
+
+  <script>
+    fetch('../includes/header.html')
+      .then(r => r.text())
+      .then(html => { document.getElementById('header-placeholder').innerHTML = html; });
+
+    fetch('../includes/footer.html')
+      .then(r => r.text())
+      .then(html => {
+        document.getElementById('footer-placeholder').innerHTML = html;
+        document.querySelectorAll('.ais-copyright-year').forEach(el => {
+          el.textContent = new Date().getFullYear();
+        });
+      });
+  </script>
+</body>
+</html>
