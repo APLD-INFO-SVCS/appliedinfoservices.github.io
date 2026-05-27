@@ -351,6 +351,51 @@
     document.getElementById('consultation-form').addEventListener('submit', function(e) {
       e.preventDefault();
       const form = this;
+
+      // Validate required fields
+      const required = [
+        { el: form.querySelector('#cf-name'),        msg: 'Full name is required.' },
+        { el: form.querySelector('#cf-org'),         msg: 'Organization is required.' },
+        { el: form.querySelector('#cf-email'),       msg: 'Email address is required.' },
+        { el: form.querySelector('#cf-requirement'), msg: 'Please describe your requirement.' }
+      ];
+
+      // Clear previous errors
+      form.querySelectorAll('.form-input--error, .form-textarea--error').forEach(el => {
+        el.classList.remove('form-input--error', 'form-textarea--error');
+      });
+      form.querySelectorAll('.form-error-msg').forEach(el => el.remove());
+
+      let valid = true;
+      required.forEach(({ el, msg }) => {
+        const val = el.value.trim();
+        let fieldInvalid = val === '';
+        if (!fieldInvalid && el.type === 'email') {
+          fieldInvalid = !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+          msg = 'Please enter a valid email address.';
+        }
+        if (fieldInvalid) {
+          el.classList.add(el.tagName === 'TEXTAREA' ? 'form-textarea--error' : 'form-input--error');
+          const errEl = document.createElement('span');
+          errEl.className = 'form-error-msg';
+          errEl.textContent = msg;
+          el.parentNode.appendChild(errEl);
+          if (valid) el.focus();
+          valid = false;
+        }
+      });
+
+      if (!valid) return;
+
+      // Clear errors on input
+      required.forEach(({ el }) => {
+        el.addEventListener('input', function() {
+          this.classList.remove('form-input--error', 'form-textarea--error');
+          const err = this.parentNode.querySelector('.form-error-msg');
+          if (err) err.remove();
+        }, { once: true });
+      });
+
       const submitBtn = form.querySelector('.form-submit');
       submitBtn.textContent = 'Sending…';
       submitBtn.disabled = true;

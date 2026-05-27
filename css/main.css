@@ -1232,6 +1232,17 @@ footer::after {
   border-color: var(--color-accent);
 }
 
+.form-input--error,
+.form-textarea--error {
+  border-color: #e05252 !important;
+}
+
+.form-error-msg {
+  font-size: var(--f1);
+  color: #e05252;
+  margin-top: 2px;
+}
+
 .form-textarea {
   resize: vertical;
   min-height: 120px;
