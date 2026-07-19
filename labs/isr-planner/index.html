@@ -320,6 +320,8 @@
             <button type="button" class="mode-btn profile-btn" data-radius="3.0"  data-points="8">ISR</button>
             <button type="button" class="mode-btn profile-btn" data-radius="12.0" data-points="8">SURVEY</button>
             <button type="button" class="mode-btn profile-btn" data-radius="2.5"  data-points="12">CIRCLING</button>
+            <button type="button" class="mode-btn profile-btn" data-radius="3.0"  data-points="8" data-dir="CCW">CN235 SM</button>
+            <button type="button" class="mode-btn profile-btn" data-radius="6.0"  data-points="8" data-dir="CCW">CN235 LG</button>
             <button type="button" class="mode-btn profile-btn" data-points="36">ARC</button>
           </div>
 
@@ -597,6 +599,8 @@ const PROFILES = {
   ISR:      { driftCapNm: 3.0,  minTurnDps: 0.6,  altMin: 1500, altMax: null },
   SURVEY:   { driftCapNm: 12.0, minTurnDps: null, altMin: null, altMax: null },
   CIRCLING: { driftCapNm: 1.35, minTurnDps: null, altMin: null, altMax: null },
+  'CN235 SM': { driftCapNm: 3.0, minTurnDps: null, altMin: 17000, altMax: 22000 },
+  'CN235 LG': { driftCapNm: 6.0, minTurnDps: null, altMin: 17000, altMax: 22000 },
 };
 
 const orbitalMetrics = (r, spd) => {
@@ -966,6 +970,7 @@ document.querySelectorAll('#preset-row .profile-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     if (btn.dataset.radius) document.getElementById('radius_nm').value = btn.dataset.radius;
     document.getElementById('num_points').value = btn.dataset.points;
+    if (btn.dataset.dir) setDir(btn.dataset.dir);
     document.querySelectorAll('#preset-row .profile-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     renderCanvas();
