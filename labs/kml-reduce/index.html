@@ -357,8 +357,15 @@ const douglasPeucker = (pts, toleranceNm) => {
   return [pts[0], pts[pts.length - 1]];
 };
 
-// Parses <coordinates> nodes from KML (lon,lat[,alt] tuples, document order),
-// falling back to plain "lat,lon" per line for a raw point list.
+// Parses coordinates out of KML in whichever of the common shapes it's in:
+//  - <coordinates> nodes (LineString/Point/Polygon): "lon,lat[,alt]" tuples,
+//    whitespace-separated, one or more per node, document order.
+//  - Google Earth / GPS-recorder gx:Track extension: repeated
+//    <gx:coord>lon lat alt</gx:coord> nodes, one tuple per node (space-separated,
+//    not comma-separated) — this is how most *recorded* track exports (Google
+//    Earth track recording, ForeFlight, Garmin, ...) actually come out, as
+//    opposed to hand-drawn LineStrings, so it needs to be supported explicitly.
+// Falls back to plain "lat,lon" per line for a raw point list.
 const parseKmlPoints = text => {
   const trimmed = (text || '').trim();
   if (!trimmed) return [];
@@ -374,6 +381,14 @@ const parseKmlPoints = text => {
           if (!isNaN(lat) && !isNaN(lon)) pts.push([lat, lon]);
         });
       }
+      if (pts.length) return pts;
+
+      const coordNodes = [...doc.getElementsByTagName('gx:coord'), ...doc.getElementsByTagName('coord')];
+      coordNodes.forEach(node => {
+        const parts = node.textContent.trim().split(/\s+/);
+        const lon = parseFloat(parts[0]), lat = parseFloat(parts[1]);
+        if (!isNaN(lat) && !isNaN(lon)) pts.push([lat, lon]);
+      });
       if (pts.length) return pts;
     }
   }
@@ -510,7 +525,8 @@ const clearError = ()  => { const el = document.getElementById('form-error'); el
 
 const reduce = () => {
   clearError();
-  const raw = document.getElementById('kml-input').value;
+  const raw        = document.getElementById('kml-input').value;
+  const rawTrimmed = raw.trim();
   rawPoints = dedupeConsecutive(parseKmlPoints(raw));
 
   const preview = document.getElementById('parsed-preview');
@@ -521,6 +537,11 @@ const reduce = () => {
     reducedPoints = [];
     document.getElementById('output-empty').hidden = false;
     document.getElementById('output-content').hidden = true;
+    if (rawTrimmed && rawPoints.length === 0) {
+      showError('Couldn\'t find any coordinates in that input. Supported: KML <coordinates> (LineString/Point/Polygon), Google Earth gx:Track <gx:coord>, or plain "lat,lon" per line.');
+    } else if (rawPoints.length === 1) {
+      showError('Only found 1 point — need at least 2 to reduce a track.');
+    }
     renderCanvas();
     return;
   }
