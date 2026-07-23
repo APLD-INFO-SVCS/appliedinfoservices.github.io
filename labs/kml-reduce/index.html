@@ -158,6 +158,24 @@
       border: 1px solid var(--red); border-left-width: 2px; background: rgba(255,59,59,.07);
     }
 
+    .warn-msg {
+      color: var(--amber); font-family: var(--mono); font-size: 11px;
+      margin-bottom: 10px; padding: 8px 10px;
+      border: 1px solid var(--amber); border-left-width: 2px; background: rgba(255,183,0,.07);
+    }
+
+    /* ── Tolerance presets ── */
+    .tolerance-presets { display: flex; gap: 4px; margin-top: 6px; }
+    .preset-btn {
+      flex: 1; padding: 6px 4px;
+      background: var(--bg-2); border: 1px solid var(--bdr-0);
+      color: var(--txt-1); cursor: pointer; text-align: center;
+      font-family: var(--disp); font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+      transition: background .12s, border-color .12s, color .12s;
+    }
+    .preset-btn:hover  { background: var(--bg-3); border-color: var(--bdr-1); color: var(--txt-0); }
+    .preset-btn.active { background: var(--bg-3); border-color: var(--green); color: var(--green); }
+
     /* ── Export ── */
     .export-bar { display: flex; border-bottom: 1px solid var(--bdr-0); }
     .tab-btn {
@@ -249,6 +267,11 @@
             <input type="number" id="tolerance_nm" class="vigil-input has-unit" value="0.1" step="0.01" min="0.01">
             <span class="input-unit">NM</span>
           </div>
+          <div class="tolerance-presets" id="tolerance-presets">
+            <button type="button" class="preset-btn active" data-tolerance="0.1">TIGHT</button>
+            <button type="button" class="preset-btn" data-tolerance="1">MEDIUM</button>
+            <button type="button" class="preset-btn" data-tolerance="5">LOOSE</button>
+          </div>
         </div>
 
         <div id="form-error" class="error-msg" hidden></div>
@@ -275,6 +298,7 @@
         <div id="output-content" hidden>
           <div id="mission-summary" class="mission-summary"></div>
           <div id="accuracy-badge" class="acc-badge"></div>
+          <div id="reduction-warning" class="warn-msg" hidden></div>
 
           <hr class="sec-divider">
 
@@ -533,10 +557,13 @@ const reduce = () => {
   preview.value = rawPoints.map((p, i) => `${String(i + 1).padStart(3, '0')}  ${p[0].toFixed(6)}  ${p[1].toFixed(6)}`).join('\n');
   document.getElementById('parsed-count').textContent = String(rawPoints.length);
 
+  const warnEl = document.getElementById('reduction-warning');
+
   if (rawPoints.length < 2) {
     reducedPoints = [];
     document.getElementById('output-empty').hidden = false;
     document.getElementById('output-content').hidden = true;
+    warnEl.hidden = true;
     if (rawTrimmed && rawPoints.length === 0) {
       showError('Couldn\'t find any coordinates in that input. Supported: KML <coordinates> (LineString/Point/Polygon), Google Earth gx:Track <gx:coord>, or plain "lat,lon" per line.');
     } else if (rawPoints.length === 1) {
@@ -550,11 +577,26 @@ const reduce = () => {
   if (isNaN(tolerance) || tolerance <= 0) {
     showError('Simplify tolerance must be a positive number.');
     reducedPoints = [];
+    warnEl.hidden = true;
     renderCanvas();
     return;
   }
 
   reducedPoints = douglasPeucker(rawPoints, tolerance);
+
+  // Real GPS-recorded tracks can need a much looser tolerance than a clean
+  // synthetic shape to reduce meaningfully — flag it instead of silently
+  // handing back a still-huge waypoint list most route-import tools can't take.
+  const HIGH_COUNT_THRESHOLD = 150;
+  if (reducedPoints.length > HIGH_COUNT_THRESHOLD) {
+    const droppedPct = Math.round((1 - reducedPoints.length / rawPoints.length) * 100);
+    warnEl.textContent = droppedPct < 10
+      ? `${reducedPoints.length} waypoints — this tolerance (${tolerance} NM) is barely reducing the track (only ${droppedPct}% dropped). Most flight-planning tools can't import this many; try MEDIUM or LOOSE.`
+      : `${reducedPoints.length} waypoints is still more than most flight-planning tools can import. Try raising Simplify Tolerance further.`;
+    warnEl.hidden = false;
+  } else {
+    warnEl.hidden = true;
+  }
 
   document.getElementById('mission-summary').textContent =
     `TRACK REDUCED | ${rawPoints.length} → ${reducedPoints.length} pts | TOLERANCE ${tolerance} NM`;
@@ -572,8 +614,22 @@ const reduce = () => {
   renderCanvas();
 };
 
+const syncPresetActive = () => {
+  const val = document.getElementById('tolerance_nm').value;
+  document.querySelectorAll('#tolerance-presets .preset-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.tolerance === val);
+  });
+};
+
 document.getElementById('kml-input').addEventListener('input', reduce);
-document.getElementById('tolerance_nm').addEventListener('input', reduce);
+document.getElementById('tolerance_nm').addEventListener('input', () => { syncPresetActive(); reduce(); });
+document.querySelectorAll('#tolerance-presets .preset-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.getElementById('tolerance_nm').value = btn.dataset.tolerance;
+    syncPresetActive();
+    reduce();
+  });
+});
 document.getElementById('kml-file').addEventListener('change', e => {
   const file = e.target.files && e.target.files[0];
   if (!file) return;
