@@ -112,7 +112,6 @@
 
     /* ── Mode buttons (pattern + profile) ── */
     .btn-grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 4px; }
-    .btn-grid-2 { display: grid; grid-template-columns: repeat(2,1fr); gap: 4px; }
 
     .mode-btn {
       background: var(--bg-2); border: 1px solid var(--bdr-0);
@@ -168,7 +167,6 @@
     .vigil-input:focus        { border-color: var(--green); border-left-color: var(--green); box-shadow: 0 0 0 1px rgba(0,255,136,.15); }
     .vigil-input::placeholder { color: var(--txt-2); }
     .vigil-input.has-unit     { padding-right: 42px; }
-    input[type="file"].vigil-input { padding: 6px 8px; font-size: 11px; cursor: pointer; }
     .input-unit { position: absolute; right: 8px; font-family: var(--mono); font-size: 10px; color: var(--txt-2); pointer-events: none; }
 
     /* ── Generate button ── */
@@ -311,7 +309,6 @@
             <button type="button" class="mode-btn pattern-btn" data-pattern="sector">SECTOR</button>
             <button type="button" class="mode-btn pattern-btn" data-pattern="partrack">PAR TRK</button>
             <button type="button" class="mode-btn pattern-btn" data-pattern="artrack">AR TRACK</button>
-            <button type="button" class="mode-btn pattern-btn" data-pattern="kmlreduce">KML REDUCE</button>
           </div>
 
           <hr class="sec-divider">
@@ -341,48 +338,6 @@
 
           <hr class="sec-divider">
 
-          <div class="field" id="field-kml-input" hidden>
-            <label class="vigil-label" for="kml-input">KML / Point List</label>
-            <div class="input-wrap">
-              <textarea id="kml-input" class="vigil-output" spellcheck="false" placeholder="Paste KML &lt;coordinates&gt; or one &quot;lat,lon&quot; per line…" style="min-height:100px;"></textarea>
-            </div>
-          </div>
-
-          <div class="field" id="field-kml-file" hidden>
-            <label class="vigil-label" for="kml-file">Upload File <span class="opt-tag">OPT — READ LOCALLY, NOT UPLOADED</span></label>
-            <div class="input-wrap">
-              <input type="file" id="kml-file" class="vigil-input" accept=".kml,.txt">
-            </div>
-          </div>
-
-          <div class="field" id="field-kml-preview" hidden>
-            <label class="vigil-label">Parsed Points <span id="kml-parsed-count" class="opt-tag">0</span></label>
-            <textarea id="kml-parsed-preview" class="vigil-output" readonly spellcheck="false" style="min-height:110px; font-size:10px;"></textarea>
-          </div>
-
-          <div class="sec-label" id="label-reduce-mode" hidden>Segment Type</div>
-          <div class="btn-grid-2" id="reduce-mode-row" hidden>
-            <button type="button" class="mode-btn profile-btn active" data-reduce-mode="circle">CIRCLE</button>
-            <button type="button" class="mode-btn profile-btn" data-reduce-mode="bowtie">BOWTIE</button>
-          </div>
-
-          <div class="grid2" id="field-seg-range" hidden style="margin-top:10px;">
-            <div class="field">
-              <label class="vigil-label" for="seg-start">Segment Start Idx</label>
-              <div class="input-wrap">
-                <input type="number" id="seg-start" class="vigil-input" value="1" step="1" min="1">
-              </div>
-            </div>
-            <div class="field">
-              <label class="vigil-label" for="seg-end">Segment End Idx</label>
-              <div class="input-wrap">
-                <input type="number" id="seg-end" class="vigil-input" value="1" step="1" min="1">
-              </div>
-            </div>
-          </div>
-
-          <hr class="sec-divider" id="divider-kml" hidden>
-
           <div class="grid2">
             <div class="field">
               <label class="vigil-label" for="departure">Departure ICAO</label>
@@ -400,7 +355,7 @@
             </div>
           </div>
 
-          <div class="grid2" id="field-target-latlon">
+          <div class="grid2">
             <div class="field">
               <label class="vigil-label" for="target_lat">Target Lat</label>
               <div class="input-wrap">
@@ -636,163 +591,6 @@ const arTrack = (lat, lon, r, leg, course, semiPts, dir) => {
   return [nearArc.at(-1), ...farArc, ...nearArc.slice(0, -1)];
 };
 
-// ── KML Waypoint Reduction ──────────────────────────────────────────────────────
-// Reduces a real recorded track to fewer waypoints. The output is always a SUBSET
-// of the input points — nothing is invented or replaced with an idealized shape.
-
-const nmDist = (a, b) => {
-  const dLat   = (b[0] - a[0]) / DEG_LAT;
-  const cosLat = Math.cos(((a[0] + b[0]) / 2) * Math.PI / 180);
-  const dLon   = (b[1] - a[1]) * 60 * cosLat;
-  return Math.hypot(dLat, dLon);
-};
-
-const bearingTo = (a, b) => {
-  const north  = (b[0] - a[0]) / DEG_LAT;
-  const cosLat = Math.cos(((a[0] + b[0]) / 2) * Math.PI / 180);
-  const east   = (b[1] - a[1]) * 60 * cosLat;
-  return (Math.atan2(east, north) * 180 / Math.PI + 360) % 360;
-};
-
-// Perpendicular distance (NM) from pt to the infinite line through a–b.
-const perpDistNm = (pt, a, b) => {
-  const cosLat = Math.cos(a[0] * Math.PI / 180);
-  const toXY   = p => [(p[1] - a[1]) * 60 * cosLat, (p[0] - a[0]) / DEG_LAT];
-  const [bx, by] = toXY(b);
-  const [px, py] = toXY(pt);
-  const segLen = Math.hypot(bx, by);
-  return segLen < 1e-9 ? Math.hypot(px, py) : Math.abs(bx * py - by * px) / segLen;
-};
-
-const dedupeConsecutive = (pts, epsNm = 0.01) => {
-  if (!pts.length) return [];
-  const out = [pts[0]];
-  for (let i = 1; i < pts.length; i++) {
-    if (nmDist(out[out.length - 1], pts[i]) > epsNm) out.push(pts[i]);
-  }
-  return out;
-};
-
-// Standard recursive Douglas-Peucker line simplification. On a bowtie's straight
-// legs, interior points sit ~0 NM from the chord and get dropped while turn
-// vertices exceed tolerance and are kept; on a circular arc, points thin out while
-// staying within toleranceNm of the original curve. One algorithm, both sub-modes.
-const douglasPeucker = (pts, toleranceNm) => {
-  if (pts.length < 3) return pts.slice();
-  let maxDist = -1, idx = 0;
-  for (let i = 1; i < pts.length - 1; i++) {
-    const d = perpDistNm(pts[i], pts[0], pts[pts.length - 1]);
-    if (d > maxDist) { maxDist = d; idx = i; }
-  }
-  if (maxDist > toleranceNm) {
-    const left  = douglasPeucker(pts.slice(0, idx + 1), toleranceNm);
-    const right = douglasPeucker(pts.slice(idx), toleranceNm);
-    return [...left.slice(0, -1), ...right];
-  }
-  return [pts[0], pts[pts.length - 1]];
-};
-
-// Transit legs outside the marked segment: keep first/last, keep any point ≥thinNm
-// from the last kept point.
-const thinTransit = (pts, thinNm) => {
-  if (pts.length <= 1) return pts.slice();
-  const out = [pts[0]];
-  for (let i = 1; i < pts.length - 1; i++) {
-    if (nmDist(out[out.length - 1], pts[i]) >= thinNm) out.push(pts[i]);
-  }
-  out.push(pts[pts.length - 1]);
-  return out;
-};
-
-// Circle sub-mode only: 2nd pass after douglasPeucker() to cap point density
-// (raw orbit logs are often densely, evenly sampled and DP alone may leave points
-// bunched close together). Still only ever drops points, never adds any.
-const minSpacingFilter = (pts, spacingNm) => {
-  if (pts.length <= 2) return pts.slice();
-  const out = [pts[0]];
-  for (let i = 1; i < pts.length - 1; i++) {
-    if (nmDist(out[out.length - 1], pts[i]) >= spacingNm) out.push(pts[i]);
-  }
-  out.push(pts[pts.length - 1]);
-  return out;
-};
-
-// Informational only — feeds the summary/brief text, never used to build wps.
-const deriveCircleInfo = pts => {
-  if (pts.length < 2) return null;
-  const center = [
-    pts.reduce((s, p) => s + p[0], 0) / pts.length,
-    pts.reduce((s, p) => s + p[1], 0) / pts.length,
-  ];
-  const radius = pts.reduce((s, p) => s + nmDist(center, p), 0) / pts.length;
-  let signedSum = 0;
-  for (let i = 0; i < pts.length - 1; i++) {
-    let d = bearingTo(center, pts[i + 1]) - bearingTo(center, pts[i]);
-    if (d > 180) d -= 360;
-    if (d < -180) d += 360;
-    signedSum += d;
-  }
-  return { center, radius, dir: signedSum >= 0 ? 'CW' : 'CCW' };
-};
-
-// Parses <coordinates> nodes from KML (lon,lat[,alt] tuples, document order),
-// falling back to plain "lat,lon" per line for a raw point list.
-const parseKmlPoints = text => {
-  const trimmed = (text || '').trim();
-  if (!trimmed) return [];
-  if (trimmed.startsWith('<')) {
-    const doc = new DOMParser().parseFromString(trimmed, 'application/xml');
-    if (!doc.querySelector('parsererror')) {
-      const pts = [];
-      for (const node of doc.getElementsByTagName('coordinates')) {
-        node.textContent.trim().split(/\s+/).forEach(tuple => {
-          if (!tuple) return;
-          const [lonS, latS] = tuple.split(',');
-          const lon = parseFloat(lonS), lat = parseFloat(latS);
-          if (!isNaN(lat) && !isNaN(lon)) pts.push([lat, lon]);
-        });
-      }
-      if (pts.length) return pts;
-    }
-  }
-  return trimmed.split('\n').map(line => {
-    const parts = line.split(',').map(s => parseFloat(s.trim()));
-    return parts.length >= 2 && !isNaN(parts[0]) && !isNaN(parts[1]) ? [parts[0], parts[1]] : null;
-  }).filter(Boolean);
-};
-
-// Shared by the live canvas preview and the Generate handler so both always agree.
-// Returns null when the current segment range isn't valid yet (mid-edit).
-const computeKmlReduction = () => {
-  if (kmlPoints.length < 2) return null;
-  const segStart = parseInt(document.getElementById('seg-start').value, 10);
-  const segEnd   = parseInt(document.getElementById('seg-end').value, 10);
-  if (isNaN(segStart) || isNaN(segEnd) || segStart < 1 || segEnd > kmlPoints.length || segStart >= segEnd) return null;
-
-  const tolerance   = parseFloat(document.getElementById('leg_length_nm').value) || 0.1;
-  const minSpacing  = parseFloat(document.getElementById('radius_nm').value)     || 5;
-  const transitThin = parseFloat(document.getElementById('sar_spacing').value)   || 20;
-
-  const s = segStart - 1, e = segEnd - 1;
-  const transitBefore = kmlPoints.slice(0, s);
-  const segment        = kmlPoints.slice(s, e + 1);
-  const transitAfter   = kmlPoints.slice(e + 1);
-
-  const circleInfo     = reduceMode === 'circle' ? deriveCircleInfo(segment) : null;
-  const reducedSegment = reduceMode === 'circle'
-    ? minSpacingFilter(douglasPeucker(segment, tolerance), minSpacing)
-    : douglasPeucker(segment, tolerance);
-
-  const thinnedBefore = thinTransit(transitBefore, transitThin);
-  const thinnedAfter  = thinTransit(transitAfter, transitThin);
-  const wps = [...thinnedBefore, ...reducedSegment, ...thinnedAfter];
-
-  return {
-    wps, segStart, segEnd, segment, reducedSegment, transitBefore, transitAfter,
-    thinnedBefore, thinnedAfter, circleInfo, tolerance, minSpacing, transitThin,
-  };
-};
-
 // ── Compliance ────────────────────────────────────────────────────────────────
 
 const PROFILES = {
@@ -866,8 +664,7 @@ const formatArcBrief = (wps, r, n, dir) => {
 };
 
 const formatPatternBrief = (wps, type, opts) => {
-  const { r, leg, course, semi, dir, axis, spacing,
-          segStart, segEnd, reduceMode: rMode, transitBeforeCount, reducedSegmentCount, segmentCount, circleInfo } = opts;
+  const { r, leg, course, semi, dir, axis, spacing } = opts;
   if (type === 'racetrack') {
     const opp = (course + 180) % 360;
     return [
@@ -934,29 +731,12 @@ const formatPatternBrief = (wps, type, opts) => {
       ...wps.map((w, i) => `${String(i+1).padStart(2,'0')}   ${typeOf(i)}${fmt6(w[0])}   ${fmt6(w[1])}`)
     ].join('\n');
   }
-  if (type === 'kmlreduce') {
-    const typeOf = i => (i >= transitBeforeCount && i < transitBeforeCount + reducedSegmentCount) ? 'KEPT    ' : 'TRANSIT ';
-    const header = [
-      `KML REDUCE BRIEF — ${rMode.toUpperCase()} SEGMENT [${segStart}-${segEnd}]`,
-      `RAW SEGMENT: ${segmentCount} pts  →  KEPT: ${reducedSegmentCount} pts`,
-    ];
-    if (circleInfo) {
-      header.push(`APPROX CENTER: ${circleInfo.center[0].toFixed(6)}, ${circleInfo.center[1].toFixed(6)}  RADIUS: ${circleInfo.radius.toFixed(2)} NM  DIR: ${circleInfo.dir}`);
-    }
-    header.push('', 'WP   TYPE     LAT           LON');
-    return [
-      ...header,
-      ...wps.map((w, i) => `${String(i+1).padStart(2,'0')}   ${typeOf(i)}${fmt6(w[0])}   ${fmt6(w[1])}`)
-    ].join('\n');
-  }
 };
 
 // ── State ─────────────────────────────────────────────────────────────────────
 
 let patternType = 'circular';
 let orbitDir    = 'CW';
-let reduceMode  = 'circle';
-let kmlPoints   = [];
 
 // ── Canvas ────────────────────────────────────────────────────────────────────
 
@@ -994,25 +774,6 @@ const drawWP = (x, y, i) => {
 const drawLabel = text => {
   ctx.fillStyle = '#00ff88'; ctx.font = '11px Share Tech Mono,monospace';
   ctx.textAlign = 'left'; ctx.fillText(text, 12, canvas.height - 12);
-};
-
-// Flat-earth projection (same DEG_LAT/cos(lat) convention as the rest of the file)
-// fitting an arbitrary lat/lon track into the canvas's available circular area,
-// preserving aspect ratio, north-up.
-const projectTrack = (pts, cx, cy, avail) => {
-  const latAvg = pts.reduce((s, p) => s + p[0], 0) / pts.length;
-  const cosLat = Math.cos(latAvg * Math.PI / 180);
-  const toXY   = p => [p[1] * 60 * cosLat, p[0] * 60];
-  const xy     = pts.map(toXY);
-  const xs = xy.map(p => p[0]), ys = xy.map(p => p[1]);
-  const xMid = (Math.min(...xs) + Math.max(...xs)) / 2;
-  const yMid = (Math.min(...ys) + Math.max(...ys)) / 2;
-  const span  = Math.max(Math.max(...xs) - Math.min(...xs), Math.max(...ys) - Math.min(...ys), 0.001);
-  const scale = (avail * 1.8) / span;
-  return pt => {
-    const [x, y] = toXY(pt);
-    return [cx + (x - xMid) * scale, cy - (y - yMid) * scale];
-  };
 };
 
 const renderCanvas = () => {
@@ -1149,37 +910,6 @@ const renderCanvas = () => {
     drawWP(exp_[0],  exp_[1],  2);
     drawWP(exit_[0], exit_[1], 3);
     drawLabel(`AR TRACK  r=${p.r}NM  leg=${p.leg}NM`);
-
-  } else if (patternType === 'kmlreduce') {
-    if (!kmlPoints.length) {
-      drawLabel('KML REDUCE — paste or upload a track to preview');
-    } else {
-      const proj = projectTrack(kmlPoints, cx, cy, avail);
-
-      ctx.strokeStyle = 'rgba(138,154,181,0.35)'; ctx.lineWidth = 1;
-      ctx.beginPath();
-      kmlPoints.forEach((pt, i) => { const [x, y] = proj(pt); i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y); });
-      ctx.stroke();
-
-      const result = computeKmlReduction();
-      if (result) {
-        ctx.strokeStyle = 'rgba(0,255,136,0.35)'; ctx.lineWidth = 1.5;
-        ctx.beginPath();
-        result.segment.forEach((pt, i) => { const [x, y] = proj(pt); i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y); });
-        ctx.stroke();
-
-        const kept = new Set(result.reducedSegment);
-        ctx.fillStyle = 'rgba(138,154,181,0.5)';
-        result.segment.forEach(pt => {
-          if (!kept.has(pt)) { const [x, y] = proj(pt); ctx.beginPath(); ctx.arc(x, y, 1.5, 0, Math.PI * 2); ctx.fill(); }
-        });
-
-        result.wps.forEach((pt, i) => { const [x, y] = proj(pt); drawWP(x, y, i); });
-        drawLabel(`KML REDUCE  ${reduceMode.toUpperCase()}  ${kmlPoints.length} → ${result.wps.length} pts`);
-      } else {
-        drawLabel(`KML REDUCE  ${kmlPoints.length} pts parsed — set a valid segment range`);
-      }
-    }
   }
 };
 
@@ -1191,85 +921,38 @@ const initCanvas = () => {
 window.addEventListener('resize', initCanvas);
 setTimeout(initCanvas, 0);
 
-['radius_nm','num_points','leg_length_nm','inbound_course','sar_spacing','seg-start','seg-end'].forEach(id => {
+['radius_nm','num_points','leg_length_nm','inbound_course','sar_spacing'].forEach(id => {
   document.getElementById(id)?.addEventListener('input', renderCanvas);
-});
-
-// ── KML input parsing ────────────────────────────────────────────────────────
-
-const parseAndPreview = () => {
-  const raw   = document.getElementById('kml-input').value;
-  kmlPoints   = dedupeConsecutive(parseKmlPoints(raw));
-  const preview = document.getElementById('kml-parsed-preview');
-  preview.value = kmlPoints.map((p, i) => `${String(i + 1).padStart(3, '0')}  ${p[0].toFixed(6)}  ${p[1].toFixed(6)}`).join('\n');
-  document.getElementById('kml-parsed-count').textContent = String(kmlPoints.length);
-
-  const segStart = document.getElementById('seg-start');
-  const segEnd   = document.getElementById('seg-end');
-  const maxIdx   = Math.max(1, kmlPoints.length);
-  segStart.max = String(maxIdx);
-  segEnd.max   = String(maxIdx);
-  if (parseInt(segStart.value, 10) > maxIdx || !segStart.value) segStart.value = '1';
-  if (parseInt(segEnd.value, 10) > maxIdx || parseInt(segEnd.value, 10) < 1)  segEnd.value = String(maxIdx);
-
-  renderCanvas();
-};
-
-document.getElementById('kml-input').addEventListener('input', parseAndPreview);
-document.getElementById('kml-file').addEventListener('change', e => {
-  const file = e.target.files && e.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = ev => {
-    document.getElementById('kml-input').value = ev.target.result;
-    parseAndPreview();
-  };
-  reader.readAsText(file);
 });
 
 // ── Pattern field visibility ───────────────────────────────────────────────────
 
 const updateFields = () => {
-  const p       = patternType;
-  const isSAR   = ['expsquare','sector','partrack'].includes(p);
-  const isKml   = p === 'kmlreduce';
-  const isKmlC  = isKml && reduceMode === 'circle';
+  const p     = patternType;
+  const isSAR = ['expsquare','sector','partrack'].includes(p);
 
-  document.getElementById('field-radius').hidden         = isKml ? !isKmlC : ['expsquare','partrack'].includes(p);
-  document.getElementById('field-num-points').hidden     = isKml;
-  document.getElementById('field-leg-length').hidden     = isKml ? false : !['racetrack','partrack','artrack'].includes(p);
+  document.getElementById('field-radius').hidden         = ['expsquare','partrack'].includes(p);
+  document.getElementById('field-leg-length').hidden     = !['racetrack','partrack','artrack'].includes(p);
   document.getElementById('field-inbound-course').hidden = !['racetrack','figureeight','expsquare','sector','partrack','artrack'].includes(p);
-  document.getElementById('field-sar-spacing').hidden    = isKml ? false : !['expsquare','partrack'].includes(p);
-  document.getElementById('field-dir-toggle').hidden     = isKml ? true : ['figureeight','expsquare','sector','partrack'].includes(p);
-  document.getElementById('field-target-latlon').hidden  = isKml;
-
-  document.getElementById('field-kml-input').hidden    = !isKml;
-  document.getElementById('field-kml-file').hidden     = !isKml;
-  document.getElementById('field-kml-preview').hidden  = !isKml;
-  document.getElementById('label-reduce-mode').hidden  = !isKml;
-  document.getElementById('reduce-mode-row').hidden    = !isKml;
-  document.getElementById('field-seg-range').hidden    = !isKml;
-  document.getElementById('divider-kml').hidden        = !isKml;
+  document.getElementById('field-sar-spacing').hidden    = !['expsquare','partrack'].includes(p);
+  document.getElementById('field-dir-toggle').hidden     = ['figureeight','expsquare','sector','partrack'].includes(p);
 
   const labels = {
-    radius:  isKml ? 'Min Waypoint Spacing' : p === 'sector' ? 'Search Radius' : 'Radius',
+    radius:  p === 'sector' ? 'Search Radius' : 'Radius',
     points:  { racetrack: 'Points per Turn', sector: 'Num Sectors', expsquare: 'Num Legs', partrack: 'Num Legs', artrack: 'Arc Points' }[p] || 'Waypoints',
     course:  { figureeight: 'Axis Course', expsquare: 'Initial Heading', sector: 'Initial Bearing', partrack: 'Track Heading', artrack: 'Refueling Course' }[p] || 'Inbound Course',
-    spacing: isKml ? 'Transit Thin Distance' : p === 'partrack' ? 'Track Spacing' : 'Leg Spacing',
-    tolerance: isKml ? 'Simplify Tolerance' : 'Leg Length',
+    spacing: p === 'partrack' ? 'Track Spacing' : 'Leg Spacing',
   };
   document.getElementById('label-radius').textContent         = labels.radius;
   document.getElementById('label-num-points').textContent     = labels.points;
   document.getElementById('label-inbound-course').textContent = labels.course;
   document.getElementById('label-sar-spacing').textContent    = labels.spacing;
-  document.querySelector('label[for="leg_length_nm"]').textContent = labels.tolerance;
 
   const presets = document.getElementById('preset-row');
   presets.style.opacity       = p === 'circular' ? '' : '0.4';
   presets.style.pointerEvents = p === 'circular' ? '' : 'none';
 
-  document.getElementById('compliance-section').hidden = isSAR || isKml;
-  if (isKml) document.getElementById('metrics-strip').hidden = true;
+  document.getElementById('compliance-section').hidden = isSAR;
   renderCanvas();
 };
 
@@ -1277,25 +960,8 @@ const updateFields = () => {
 
 document.querySelectorAll('[data-pattern]').forEach(btn => {
   btn.addEventListener('click', () => {
-    const wasKml = patternType === 'kmlreduce';
-    patternType  = btn.dataset.pattern;
-    const isKml  = patternType === 'kmlreduce';
-    if (isKml && !wasKml) {
-      document.getElementById('leg_length_nm').value = '0.1';
-      document.getElementById('sar_spacing').value    = '20';
-    } else if (!isKml && wasKml) {
-      document.getElementById('leg_length_nm').value = '5.0';
-      document.getElementById('sar_spacing').value    = '1.0';
-    }
+    patternType = btn.dataset.pattern;
     document.querySelectorAll('[data-pattern]').forEach(b => b.classList.toggle('active', b === btn));
-    updateFields();
-  });
-});
-
-document.querySelectorAll('#reduce-mode-row [data-reduce-mode]').forEach(btn => {
-  btn.addEventListener('click', () => {
-    reduceMode = btn.dataset.reduceMode;
-    document.querySelectorAll('#reduce-mode-row [data-reduce-mode]').forEach(b => b.classList.toggle('active', b === btn));
     updateFields();
   });
 });
@@ -1358,11 +1024,9 @@ document.getElementById('planner-form').addEventListener('submit', e => {
   const p      = patternType;
 
   if (!dep || !arr)                          return showError('Departure and arrival ICAO codes are required.');
-  if (p !== 'kmlreduce') {
-    if (isNaN(lat) || isNaN(lon))            return showError('Target latitude and longitude are required.');
-    if (lat < -90 || lat > 90)               return showError('Latitude must be between -90 and 90.');
-    if (lon < -180 || lon > 180)             return showError('Longitude must be between -180 and 180.');
-  }
+  if (isNaN(lat) || isNaN(lon))              return showError('Target latitude and longitude are required.');
+  if (lat < -90 || lat > 90)                 return showError('Latitude must be between -90 and 90.');
+  if (lon < -180 || lon > 180)               return showError('Longitude must be between -180 and 180.');
   if (['circular','figureeight','sector','artrack'].includes(p) && (isNaN(r) || r <= 0)) return showError('Radius must be a positive number.');
   if (p === 'circular' && (isNaN(n) || n < 3 || n > 64))     return showError('Waypoints must be between 3 and 64.');
   if (p === 'artrack') {
@@ -1393,16 +1057,6 @@ document.getElementById('planner-form').addEventListener('submit', e => {
     if (isNaN(spc) || spc <= 0)             return showError('Track spacing must be a positive number.');
     if (isNaN(course))                       return showError('Track heading is required.');
     if (isNaN(n) || n < 1)                   return showError('Num legs must be at least 1.');
-  }
-  if (p === 'kmlreduce') {
-    if (kmlPoints.length < 2)               return showError('Paste or upload a KML track with at least 2 points.');
-    const segStart = parseInt(get('seg-start').value, 10);
-    const segEnd   = parseInt(get('seg-end').value, 10);
-    if (isNaN(segStart) || isNaN(segEnd) || segStart < 1 || segEnd > kmlPoints.length || segStart >= segEnd)
-                                             return showError('Segment start/end indices must be a valid range within the parsed points.');
-    if (isNaN(leg) || leg <= 0)             return showError('Simplify tolerance must be a positive number.');
-    if (isNaN(spc) || spc <= 0)             return showError('Transit thin distance must be a positive number.');
-    if (reduceMode === 'circle' && (isNaN(r) || r <= 0)) return showError('Min waypoint spacing must be a positive number.');
   }
 
   const btn = document.getElementById('generate-btn');
@@ -1459,24 +1113,6 @@ document.getElementById('planner-form').addEventListener('submit', e => {
       brief   = formatPatternBrief(wps, 'partrack', { leg, course, spacing: spc });
       document.querySelector('.tab-btn[data-tab="arcbrief"]').textContent = 'SAR BRIEF';
 
-    } else if (p === 'kmlreduce') {
-      const result = computeKmlReduction();
-      wps = result.wps;
-      const segLabel  = `SEG [${result.segStart}-${result.segEnd}]`;
-      const circleTxt = result.circleInfo
-        ? ` | ~CTR ${result.circleInfo.center[0].toFixed(4)},${result.circleInfo.center[1].toFixed(4)} R=${result.circleInfo.radius.toFixed(2)}NM ${result.circleInfo.dir}`
-        : '';
-      summary = `${route} | KML REDUCE | ${reduceMode.toUpperCase()} ${segLabel} | ${kmlPoints.length} → ${wps.length} pts${circleTxt}`;
-      badge   = `REDUCED ${kmlPoints.length} → ${wps.length} pts`;
-      brief   = formatPatternBrief(wps, 'kmlreduce', {
-        segStart: result.segStart, segEnd: result.segEnd, reduceMode,
-        transitBeforeCount: result.thinnedBefore.length,
-        reducedSegmentCount: result.reducedSegment.length,
-        segmentCount: result.segment.length,
-        circleInfo: result.circleInfo,
-      });
-      document.querySelector('.tab-btn[data-tab="arcbrief"]').textContent = 'KML BRIEF';
-
     } else {
       let w = orbit(lat, lon, r, n);
       if (orbitDir === 'CCW') w = [...w].reverse();
@@ -1497,7 +1133,7 @@ document.getElementById('planner-form').addEventListener('submit', e => {
     document.getElementById('out-plaintext').value = formatPlainText(wps);
     document.getElementById('out-arcbrief').value  = brief;
 
-    const isSAR = ['expsquare','sector','partrack','kmlreduce'].includes(p);
+    const isSAR = ['expsquare','sector','partrack'].includes(p);
     if (!isSAR) {
       const m = orbitalMetrics(r, spd);
       const metricsEl = document.getElementById('metrics-strip');
