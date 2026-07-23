@@ -79,9 +79,23 @@
     @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: .3; } }
 
     /* ── Canvas ── */
-    .canvas-wrap { background: var(--bg-0); border-bottom: 1px solid var(--bdr-0); }
-    #trim-canvas { display: block; width: 100%; height: 300px; }
+    .canvas-wrap { background: var(--bg-0); border-bottom: 1px solid var(--bdr-0); position: relative; }
+    #trim-canvas { display: block; width: 100%; height: 300px; cursor: default; touch-action: none; }
     @media (max-width: 767px) { #trim-canvas { height: 220px; } }
+
+    .zoom-controls {
+      position: absolute; top: 10px; right: 10px; z-index: 5;
+      display: flex; flex-direction: column; gap: 4px;
+    }
+    .zoom-btn {
+      width: 28px; height: 28px; padding: 0;
+      background: rgba(17,19,24,.85); border: 1px solid var(--bdr-1);
+      color: var(--txt-1); font-family: var(--mono); font-size: 16px; line-height: 1;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: border-color .12s, color .12s;
+    }
+    .zoom-btn:hover { border-color: var(--green); color: var(--green); }
+    .zoom-reset-btn { font-size: 12px; }
 
     /* ── Layout ── */
     .page-body { max-width: 1400px; margin: 0 auto; }
@@ -234,6 +248,11 @@
 <div class="page-body">
   <div class="canvas-wrap">
     <canvas id="trim-canvas"></canvas>
+    <div class="zoom-controls">
+      <button type="button" id="zoom-in" class="zoom-btn" title="Zoom in">+</button>
+      <button type="button" id="zoom-out" class="zoom-btn" title="Zoom out">&minus;</button>
+      <button type="button" id="zoom-reset" class="zoom-btn zoom-reset-btn" title="Reset view">⟲</button>
+    </div>
   </div>
 
   <div class="main-cols">
@@ -457,6 +476,13 @@ const formatReduceBrief = (wps, rawCount, toleranceNm) => [
 let rawPoints     = [];
 let reducedPoints = [];
 
+// View transform layered on top of the auto-fit projection below — lets the
+// user zoom/pan to inspect a region while the underlying fit (which only
+// depends on rawPoints, not tolerance) stays stable across tolerance changes.
+let viewZoom = 1;
+let viewPanX = 0;
+let viewPanY = 0;
+
 // ── Canvas ────────────────────────────────────────────────────────────────────
 
 const canvas = document.getElementById('trim-canvas');
@@ -482,7 +508,8 @@ const drawLabel = text => {
 };
 
 // Flat-earth projection fitting an arbitrary lat/lon track into the canvas's
-// available area, preserving aspect ratio, north-up.
+// available area, preserving aspect ratio, north-up — then layers the user's
+// zoom/pan (viewZoom/viewPanX/viewPanY) on top of that base fit.
 const projectTrack = (pts, cx, cy, avail) => {
   const latAvg = pts.reduce((s, p) => s + p[0], 0) / pts.length;
   const cosLat = Math.cos(latAvg * Math.PI / 180);
@@ -492,12 +519,15 @@ const projectTrack = (pts, cx, cy, avail) => {
   const xMid = (Math.min(...xs) + Math.max(...xs)) / 2;
   const yMid = (Math.min(...ys) + Math.max(...ys)) / 2;
   const span  = Math.max(Math.max(...xs) - Math.min(...xs), Math.max(...ys) - Math.min(...ys), 0.001);
-  const scale = (avail * 1.8) / span;
+  const baseScale = (avail * 1.8) / span;
+  const scale = baseScale * viewZoom;
   return pt => {
     const [x, y] = toXY(pt);
-    return [cx + (x - xMid) * scale, cy - (y - yMid) * scale];
+    return [cx + (x - xMid) * scale + viewPanX, cy - (y - yMid) * scale + viewPanY];
   };
 };
+
+const resetView = () => { viewZoom = 1; viewPanX = 0; viewPanY = 0; };
 
 const renderCanvas = () => {
   const w = canvas.width, h = canvas.height;
@@ -531,7 +561,8 @@ const renderCanvas = () => {
     reducedPoints.forEach((pt, i) => { const [x, y] = proj(pt); drawWP(x, y, i); });
   }
 
-  drawLabel(`${rawPoints.length} → ${reducedPoints.length} pts`);
+  const zoomSuffix = viewZoom !== 1 ? ` | ZOOM ${Math.round(viewZoom * 100)}%` : '';
+  drawLabel(`${rawPoints.length} → ${reducedPoints.length} pts${zoomSuffix}`);
 };
 
 const initCanvas = () => {
@@ -541,6 +572,73 @@ const initCanvas = () => {
 };
 window.addEventListener('resize', initCanvas);
 setTimeout(initCanvas, 0);
+
+// ── Canvas zoom / pan ─────────────────────────────────────────────────────────
+
+const ZOOM_MIN = 0.5, ZOOM_MAX = 40;
+
+const canvasPoint = clientX_clientY => {
+  const rect = canvas.getBoundingClientRect();
+  const scaleX = canvas.width / rect.width, scaleY = canvas.height / rect.height;
+  return [(clientX_clientY[0] - rect.left) * scaleX, (clientX_clientY[1] - rect.top) * scaleY];
+};
+
+const zoomAt = (mx, my, factor) => {
+  if (!rawPoints.length) return;
+  const newZoom = Math.min(Math.max(viewZoom * factor, ZOOM_MIN), ZOOM_MAX);
+  const actualFactor = newZoom / viewZoom;
+  const cx = canvas.width / 2, cy = canvas.height / 2;
+  viewPanX = (mx - cx) - actualFactor * (mx - cx - viewPanX);
+  viewPanY = (my - cy) - actualFactor * (my - cy - viewPanY);
+  viewZoom = newZoom;
+  renderCanvas();
+};
+
+canvas.addEventListener('wheel', e => {
+  if (!rawPoints.length) return;
+  e.preventDefault();
+  const [mx, my] = canvasPoint([e.clientX, e.clientY]);
+  zoomAt(mx, my, e.deltaY < 0 ? 1.15 : 1 / 1.15);
+}, { passive: false });
+
+let dragging = false, dragStart = null;
+
+const startDrag = (clientX, clientY) => {
+  if (!rawPoints.length) return;
+  dragging  = true;
+  dragStart = { x: clientX, y: clientY, panX: viewPanX, panY: viewPanY };
+  canvas.style.cursor = 'grabbing';
+};
+const moveDrag = (clientX, clientY) => {
+  if (!dragging) return;
+  const rect = canvas.getBoundingClientRect();
+  const scaleX = canvas.width / rect.width, scaleY = canvas.height / rect.height;
+  viewPanX = dragStart.panX + (clientX - dragStart.x) * scaleX;
+  viewPanY = dragStart.panY + (clientY - dragStart.y) * scaleY;
+  renderCanvas();
+};
+const endDrag = () => {
+  dragging = false;
+  canvas.style.cursor = rawPoints.length ? 'grab' : 'default';
+};
+
+canvas.addEventListener('mousedown', e => startDrag(e.clientX, e.clientY));
+window.addEventListener('mousemove', e => moveDrag(e.clientX, e.clientY));
+window.addEventListener('mouseup', endDrag);
+
+canvas.addEventListener('touchstart', e => {
+  if (e.touches.length !== 1) return;
+  startDrag(e.touches[0].clientX, e.touches[0].clientY);
+}, { passive: true });
+canvas.addEventListener('touchmove', e => {
+  if (e.touches.length !== 1) return;
+  moveDrag(e.touches[0].clientX, e.touches[0].clientY);
+}, { passive: true });
+canvas.addEventListener('touchend', endDrag);
+
+document.getElementById('zoom-in').addEventListener('click', () => zoomAt(canvas.width / 2, canvas.height / 2, 1.4));
+document.getElementById('zoom-out').addEventListener('click', () => zoomAt(canvas.width / 2, canvas.height / 2, 1 / 1.4));
+document.getElementById('zoom-reset').addEventListener('click', () => { resetView(); renderCanvas(); });
 
 // ── Reduce pipeline — fully reactive, no Generate button ────────────────────────
 
@@ -556,6 +654,7 @@ const reduce = () => {
   const preview = document.getElementById('parsed-preview');
   preview.value = rawPoints.map((p, i) => `${String(i + 1).padStart(3, '0')}  ${p[0].toFixed(6)}  ${p[1].toFixed(6)}`).join('\n');
   document.getElementById('parsed-count').textContent = String(rawPoints.length);
+  if (!dragging) canvas.style.cursor = rawPoints.length >= 2 ? 'grab' : 'default';
 
   const warnEl = document.getElementById('reduction-warning');
 
@@ -621,7 +720,12 @@ const syncPresetActive = () => {
   });
 };
 
-document.getElementById('kml-input').addEventListener('input', reduce);
+// A new track (typed, pasted, or uploaded) resets the zoom/pan so you're not
+// left staring at empty space; adjusting tolerance on the *same* track never
+// resets the view — that's the point of persisting it in the first place.
+const onNewTrackInput = () => { resetView(); reduce(); };
+
+document.getElementById('kml-input').addEventListener('input', onNewTrackInput);
 document.getElementById('tolerance_nm').addEventListener('input', () => { syncPresetActive(); reduce(); });
 document.querySelectorAll('#tolerance-presets .preset-btn').forEach(btn => {
   btn.addEventListener('click', () => {
@@ -636,7 +740,7 @@ document.getElementById('kml-file').addEventListener('change', e => {
   const reader = new FileReader();
   reader.onload = ev => {
     document.getElementById('kml-input').value = ev.target.result;
-    reduce();
+    onNewTrackInput();
   };
   reader.readAsText(file);
 });
