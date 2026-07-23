@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TRIM — KML Waypoint Reducer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-0: #0a0c0f;
+      --bg-1: #111318;
+      --bg-2: #1a1e26;
+      --bg-3: #1f2430;
+      --green:  #00ff88;
+      --amber:  #ffb700;
+      --red:    #ff3b3b;
+      --blue:   #3b8bff;
+      --txt-0:  #e8edf5;
+      --txt-1:  #8a9ab5;
+      --txt-2:  #4a5568;
+      --bdr-0:  #1e2533;
+      --bdr-1:  #2e3a4e;
+      --mono:   'Share Tech Mono', monospace;
+      --ui:     'Barlow', sans-serif;
+      --disp:   'Barlow Condensed', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg-0);
+      background-image:
+        linear-gradient(rgba(0,255,136,.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,255,136,.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      color: var(--txt-0);
+      font-family: var(--ui);
+      font-size: 14px;
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+
+    ::-webkit-scrollbar       { width: 4px; height: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg-0); }
+    ::-webkit-scrollbar-thumb { background: var(--bdr-1); border-radius: 2px; }
+
+    /* ── Banner & Header ── */
+    .cls-banner {
+      position: sticky; top: 0; z-index: 1000;
+      height: 28px; line-height: 28px;
+      background: #1a1200;
+      color: var(--amber);
+      font-family: var(--disp); font-size: 11px; font-weight: 700;
+      letter-spacing: .18em; text-transform: uppercase; text-align: center;
+      border-bottom: 1px solid rgba(255,183,0,.18);
+    }
+
+    .site-header {
+      background: var(--bg-1);
+      border-bottom: 1px solid var(--bdr-1);
+      padding: 12px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+
+    .brand { border-left: 2px solid var(--green); padding-left: 12px; }
+    .brand-name { font-family: var(--disp); font-size: 28px; font-weight: 700; color: var(--green); letter-spacing: .05em; line-height: 1; }
+    .brand-sub  { font-family: var(--ui); font-size: 10px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: var(--txt-1); margin-top: 3px; }
+    .brand-back { display: block; font-family: var(--mono); font-size: 10px; color: var(--txt-2); letter-spacing: .08em; margin-bottom: 6px; text-decoration: none; }
+    .brand-back:hover { color: var(--txt-1); }
+
+    .header-right { text-align: right; }
+    .header-build { font-family: var(--mono); font-size: 11px; color: var(--txt-1); letter-spacing: .06em; }
+    .status-row   { display: flex; align-items: center; justify-content: flex-end; gap: 6px; margin-top: 4px; }
+    .status-dot   { width: 6px; height: 6px; background: var(--green); border-radius: 50%; animation: blink 2s ease-in-out infinite; }
+    .status-label { font-family: var(--ui); font-size: 10px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--green); }
+
+    @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: .3; } }
+
+    /* ── Canvas ── */
+    .canvas-wrap { background: var(--bg-0); border-bottom: 1px solid var(--bdr-0); }
+    #trim-canvas { display: block; width: 100%; height: 300px; }
+    @media (max-width: 767px) { #trim-canvas { height: 220px; } }
+
+    /* ── Layout ── */
+    .page-body { max-width: 1400px; margin: 0 auto; }
+    .main-cols { display: flex; flex-direction: column; }
+    @media (min-width: 768px) {
+      .main-cols { flex-direction: row; align-items: flex-start; padding: 20px; gap: 16px; }
+    }
+
+    .panel { background: var(--bg-1); border: 1px solid var(--bdr-0); }
+    .panel-params { flex: 0 0 42%; }
+    .panel-output { flex: 1; }
+    @media (max-width: 767px) { .panel { border-left: none; border-right: none; } }
+
+    .panel-hdr {
+      display: flex; align-items: center; gap: 8px;
+      padding: 10px 16px; background: var(--bg-0); border-bottom: 1px solid var(--bdr-0);
+    }
+    .panel-hdr-icon  { color: var(--green); font-size: 12px; }
+    .panel-hdr-title { font-family: var(--disp); font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--txt-1); }
+    .panel-body { padding: 14px 16px; }
+
+    .sec-label {
+      font-family: var(--ui); font-size: 10px; font-weight: 600; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--txt-2); margin-bottom: 6px; margin-top: 14px;
+    }
+    .sec-label:first-child { margin-top: 0; }
+    .sec-divider { border: none; border-top: 1px solid var(--bdr-0); margin: 12px 0; }
+
+    /* ── Form fields ── */
+    .field { margin-bottom: 10px; }
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+    .vigil-label {
+      display: block; font-family: var(--ui); font-size: 10px; font-weight: 600;
+      letter-spacing: .12em; text-transform: uppercase; color: var(--txt-1); margin-bottom: 4px;
+    }
+    .opt-tag { font-size: 9px; color: var(--txt-2); letter-spacing: 0; }
+    .input-wrap { position: relative; display: flex; align-items: center; }
+
+    .vigil-input {
+      background: var(--bg-2); border: 1px solid var(--bdr-0); border-left: 2px solid var(--bdr-1);
+      color: var(--txt-0); font-family: var(--mono); font-size: 13px; padding: 7px 10px;
+      width: 100%; outline: none; -webkit-appearance: none; appearance: none;
+      transition: border-color .15s;
+    }
+    .vigil-input:focus        { border-color: var(--green); border-left-color: var(--green); box-shadow: 0 0 0 1px rgba(0,255,136,.15); }
+    .vigil-input::placeholder { color: var(--txt-2); }
+    .vigil-input.has-unit     { padding-right: 42px; }
+    .input-unit { position: absolute; right: 8px; font-family: var(--mono); font-size: 10px; color: var(--txt-2); pointer-events: none; }
+    input[type="file"].vigil-input { padding: 6px 8px; font-size: 11px; cursor: pointer; }
+
+    .vigil-output {
+      display: block; width: 100%; min-height: 140px; padding: 12px;
+      background: var(--bg-0); border: 1px solid var(--bdr-0); border-left: 2px solid var(--blue);
+      font-family: var(--mono); font-size: 11px; color: var(--txt-0); line-height: 1.6;
+      resize: vertical; outline: none; -webkit-user-select: text; user-select: text;
+    }
+
+    /* ── Output ── */
+    .mission-summary {
+      font-family: var(--mono); font-size: 11px; line-height: 1.55; word-break: break-all;
+      padding: 8px 10px; margin-bottom: 8px;
+      background: var(--bg-0); border: 1px solid var(--bdr-0); border-left: 2px solid var(--blue);
+    }
+    .acc-badge {
+      display: inline-block; font-family: var(--mono); font-size: 10px; font-weight: 600;
+      letter-spacing: .08em; text-transform: uppercase;
+      color: var(--bg-0); background: var(--green); padding: 3px 8px; margin-bottom: 12px;
+    }
+
+    .error-msg {
+      color: var(--red); font-family: var(--mono); font-size: 11px;
+      margin: 10px 0; padding: 8px 10px;
+      border: 1px solid var(--red); border-left-width: 2px; background: rgba(255,59,59,.07);
+    }
+
+    /* ── Export ── */
+    .export-bar { display: flex; border-bottom: 1px solid var(--bdr-0); }
+    .tab-btn {
+      flex: 1; padding: 8px 6px; background: transparent;
+      border: none; border-bottom: 2px solid transparent; margin-bottom: -1px;
+      color: var(--txt-2); font-family: var(--disp); font-size: 10px; font-weight: 600;
+      letter-spacing: .1em; text-transform: uppercase; cursor: pointer;
+      transition: color .12s, border-color .12s;
+    }
+    .tab-btn:hover  { color: var(--txt-1); }
+    .tab-btn.active { color: var(--txt-0); border-bottom-color: var(--green); }
+
+    .tab-content        { display: none; }
+    .tab-content.active { display: block; }
+
+    .output-meta { display: flex; align-items: center; justify-content: space-between; padding-top: 8px; }
+    .wp-count { font-family: var(--mono); font-size: 10px; color: var(--txt-2); letter-spacing: .08em; text-transform: uppercase; }
+
+    .copy-btn {
+      display: flex; align-items: center; gap: 6px; padding: 6px 12px;
+      background: transparent; border: 1px solid var(--amber);
+      color: var(--amber); font-family: var(--disp); font-size: 10px; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase; cursor: pointer;
+      transition: background .12s;
+    }
+    .copy-btn:hover  { background: rgba(255,183,0,.08); }
+    .copy-btn.copied { border-color: var(--green); color: var(--green); }
+
+    .export-wrap { padding-top: 10px; }
+
+    .empty-state {
+      font-family: var(--mono); font-size: 11px; color: var(--txt-2);
+      padding: 20px 10px; text-align: center; border: 1px dashed var(--bdr-0);
+    }
+  </style>
+</head>
+<body>
+
+<div class="cls-banner">UNCLASSIFIED // FOR TRAINING USE ONLY</div>
+
+<header class="site-header">
+  <div class="brand">
+    <a class="brand-back" href="/labs/">&larr; AIS LABS</a>
+    <div class="brand-name">TRIM</div>
+    <div class="brand-sub">KML Waypoint Reducer</div>
+  </div>
+  <div class="header-right">
+    <div class="header-build">AIS LABS // BUILD 1.0</div>
+    <div class="status-row">
+      <div class="status-dot"></div>
+      <span class="status-label">System Nominal</span>
+    </div>
+  </div>
+</header>
+
+<div class="page-body">
+  <div class="canvas-wrap">
+    <canvas id="trim-canvas"></canvas>
+  </div>
+
+  <div class="main-cols">
+
+    <section class="panel panel-params">
+      <div class="panel-hdr">
+        <span class="panel-hdr-icon">◈</span>
+        <span class="panel-hdr-title">Track Input</span>
+      </div>
+      <div class="panel-body">
+
+        <div class="field">
+          <label class="vigil-label" for="kml-input">KML / Point List</label>
+          <div class="input-wrap">
+            <textarea id="kml-input" class="vigil-output" spellcheck="false" placeholder="Paste KML &lt;coordinates&gt; or one &quot;lat,lon&quot; per line…" style="min-height:110px;"></textarea>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="vigil-label" for="kml-file">Upload File <span class="opt-tag">OPT — READ LOCALLY, NOT UPLOADED</span></label>
+          <div class="input-wrap">
+            <input type="file" id="kml-file" class="vigil-input" accept=".kml,.txt">
+          </div>
+        </div>
+
+        <hr class="sec-divider">
+
+        <div class="field">
+          <label class="vigil-label" for="tolerance_nm">Simplify Tolerance</label>
+          <div class="input-wrap">
+            <input type="number" id="tolerance_nm" class="vigil-input has-unit" value="0.1" step="0.01" min="0.01">
+            <span class="input-unit">NM</span>
+          </div>
+        </div>
+
+        <div id="form-error" class="error-msg" hidden></div>
+
+        <hr class="sec-divider">
+
+        <div class="field">
+          <label class="vigil-label">Parsed Points <span id="parsed-count" class="opt-tag">0</span></label>
+          <textarea id="parsed-preview" class="vigil-output" readonly spellcheck="false" style="min-height:120px; font-size:10px;"></textarea>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="panel panel-output">
+      <div class="panel-hdr">
+        <span class="panel-hdr-icon">◈</span>
+        <span class="panel-hdr-title">Reduced Output</span>
+      </div>
+      <div class="panel-body">
+
+        <div id="output-empty" class="empty-state">Paste or upload a KML track to begin.</div>
+
+        <div id="output-content" hidden>
+          <div id="mission-summary" class="mission-summary"></div>
+          <div id="accuracy-badge" class="acc-badge"></div>
+
+          <hr class="sec-divider">
+
+          <div class="export-bar" role="tablist">
+            <button class="tab-btn active" role="tab" data-tab="skyvector">SKYVECTOR</button>
+            <button class="tab-btn" role="tab" data-tab="simbrief">SIMBRIEF</button>
+            <button class="tab-btn" role="tab" data-tab="plaintext">PLAIN TEXT</button>
+            <button class="tab-btn" role="tab" data-tab="reducebrief">REDUCE BRIEF</button>
+          </div>
+
+          <div class="export-wrap">
+            <div id="tab-skyvector" class="tab-content active"><textarea id="out-skyvector" class="vigil-output" readonly spellcheck="false"></textarea></div>
+            <div id="tab-simbrief"  class="tab-content"><textarea id="out-simbrief"  class="vigil-output" readonly spellcheck="false"></textarea></div>
+            <div id="tab-plaintext" class="tab-content"><textarea id="out-plaintext" class="vigil-output" readonly spellcheck="false"></textarea></div>
+            <div id="tab-reducebrief" class="tab-content"><textarea id="out-reducebrief" class="vigil-output" readonly spellcheck="false"></textarea></div>
+
+            <div class="output-meta">
+              <span id="waypoint-count" class="wp-count"></span>
+              <button id="copy-btn" class="copy-btn" type="button">
+                <span>⧉</span><span id="copy-label">COPY TO CLIPBOARD</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script>
+'use strict';
+
+// ── Geometry (flat-earth convention: 1' lat = 1 NM, lon scaled by cos(lat)) ────
+
+const DEG_LAT = 1 / 60;
+
+const nmDist = (a, b) => {
+  const dLat   = (b[0] - a[0]) / DEG_LAT;
+  const cosLat = Math.cos(((a[0] + b[0]) / 2) * Math.PI / 180);
+  const dLon   = (b[1] - a[1]) * 60 * cosLat;
+  return Math.hypot(dLat, dLon);
+};
+
+// Perpendicular distance (NM) from pt to the infinite line through a–b.
+const perpDistNm = (pt, a, b) => {
+  const cosLat = Math.cos(a[0] * Math.PI / 180);
+  const toXY   = p => [(p[1] - a[1]) * 60 * cosLat, (p[0] - a[0]) / DEG_LAT];
+  const [bx, by] = toXY(b);
+  const [px, py] = toXY(pt);
+  const segLen = Math.hypot(bx, by);
+  return segLen < 1e-9 ? Math.hypot(px, py) : Math.abs(bx * py - by * px) / segLen;
+};
+
+const dedupeConsecutive = (pts, epsNm = 0.01) => {
+  if (!pts.length) return [];
+  const out = [pts[0]];
+  for (let i = 1; i < pts.length; i++) {
+    if (nmDist(out[out.length - 1], pts[i]) > epsNm) out.push(pts[i]);
+  }
+  return out;
+};
+
+// Standard recursive Douglas-Peucker line simplification. The output is always a
+// strict subset of the input points — nothing is invented or replaced with an
+// idealized shape. Applied once, over the whole track.
+const douglasPeucker = (pts, toleranceNm) => {
+  if (pts.length < 3) return pts.slice();
+  let maxDist = -1, idx = 0;
+  for (let i = 1; i < pts.length - 1; i++) {
+    const d = perpDistNm(pts[i], pts[0], pts[pts.length - 1]);
+    if (d > maxDist) { maxDist = d; idx = i; }
+  }
+  if (maxDist > toleranceNm) {
+    const left  = douglasPeucker(pts.slice(0, idx + 1), toleranceNm);
+    const right = douglasPeucker(pts.slice(idx), toleranceNm);
+    return [...left.slice(0, -1), ...right];
+  }
+  return [pts[0], pts[pts.length - 1]];
+};
+
+// Parses <coordinates> nodes from KML (lon,lat[,alt] tuples, document order),
+// falling back to plain "lat,lon" per line for a raw point list.
+const parseKmlPoints = text => {
+  const trimmed = (text || '').trim();
+  if (!trimmed) return [];
+  if (trimmed.startsWith('<')) {
+    const doc = new DOMParser().parseFromString(trimmed, 'application/xml');
+    if (!doc.querySelector('parsererror')) {
+      const pts = [];
+      for (const node of doc.getElementsByTagName('coordinates')) {
+        node.textContent.trim().split(/\s+/).forEach(tuple => {
+          if (!tuple) return;
+          const [lonS, latS] = tuple.split(',');
+          const lon = parseFloat(lonS), lat = parseFloat(latS);
+          if (!isNaN(lat) && !isNaN(lon)) pts.push([lat, lon]);
+        });
+      }
+      if (pts.length) return pts;
+    }
+  }
+  return trimmed.split('\n').map(line => {
+    const parts = line.split(',').map(s => parseFloat(s.trim()));
+    return parts.length >= 2 && !isNaN(parts[0]) && !isNaN(parts[1]) ? [parts[0], parts[1]] : null;
+  }).filter(Boolean);
+};
+
+// ── Formatters ────────────────────────────────────────────────────────────────
+
+const fmt4 = n => n.toFixed(4);
+const fmt6 = n => (n >= 0 ? '+' : '') + n.toFixed(6);
+
+const toDMS = (deg, isLon) => {
+  const sign = deg >= 0;
+  const abs  = Math.abs(deg);
+  const d    = Math.floor(abs);
+  const mF   = (abs - d) * 60;
+  const m0   = Math.floor(mF);
+  let s = Math.round((mF - m0) * 60);
+  let m = m0;
+  if (s >= 60) { s -= 60; m++; }
+  const dFinal = m >= 60 ? d + 1 : d;
+  const mFinal = m >= 60 ? m - 60 : m;
+  const dir  = isLon ? (sign ? 'E' : 'W') : (sign ? 'N' : 'S');
+  return String(dFinal).padStart(isLon ? 3 : 2, '0') + String(mFinal).padStart(2, '0') + String(s).padStart(2, '0') + dir;
+};
+
+const formatSkyVector = wps => wps.map(w => `${fmt4(w[0])},${fmt4(w[1])}`).join('\n');
+const formatSimBrief  = wps => wps.map(w => toDMS(w[0], false) + toDMS(w[1], true)).join(' ');
+const formatPlainText = wps => wps.map((w, i) => `WP${String(i+1).padStart(2,'0')}: ${fmt6(w[0])} ${fmt6(w[1])}`).join('\n');
+
+const formatReduceBrief = (wps, rawCount, toleranceNm) => [
+  `REDUCE BRIEF — ${rawCount} pts  →  ${wps.length} pts  |  TOLERANCE ${toleranceNm} NM`,
+  '', 'WP   LAT           LON',
+  ...wps.map((w, i) => `${String(i+1).padStart(2,'0')}   ${fmt6(w[0])}   ${fmt6(w[1])}`)
+].join('\n');
+
+// ── State ─────────────────────────────────────────────────────────────────────
+
+let rawPoints     = [];
+let reducedPoints = [];
+
+// ── Canvas ────────────────────────────────────────────────────────────────────
+
+const canvas = document.getElementById('trim-canvas');
+const ctx    = canvas.getContext('2d');
+
+const drawGrid = (w, h) => {
+  ctx.strokeStyle = 'rgba(0,255,136,0.04)'; ctx.lineWidth = 1;
+  for (let x = 0; x <= w; x += 40) { ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,h); ctx.stroke(); }
+  for (let y = 0; y <= h; y += 40) { ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(w,y); ctx.stroke(); }
+};
+
+const drawWP = (x, y, i) => {
+  ctx.beginPath(); ctx.arc(x, y, 3.5, 0, Math.PI*2); ctx.fillStyle = '#00ff88'; ctx.fill();
+  if (i < 20) {
+    ctx.fillStyle = 'rgba(0,255,136,0.65)'; ctx.font = '9px Share Tech Mono,monospace';
+    ctx.textAlign = 'left'; ctx.fillText(`WP${String(i+1).padStart(2,'0')}`, x+5, y-3);
+  }
+};
+
+const drawLabel = text => {
+  ctx.fillStyle = '#00ff88'; ctx.font = '11px Share Tech Mono,monospace';
+  ctx.textAlign = 'left'; ctx.fillText(text, 12, canvas.height - 12);
+};
+
+// Flat-earth projection fitting an arbitrary lat/lon track into the canvas's
+// available area, preserving aspect ratio, north-up.
+const projectTrack = (pts, cx, cy, avail) => {
+  const latAvg = pts.reduce((s, p) => s + p[0], 0) / pts.length;
+  const cosLat = Math.cos(latAvg * Math.PI / 180);
+  const toXY   = p => [p[1] * 60 * cosLat, p[0] * 60];
+  const xy     = pts.map(toXY);
+  const xs = xy.map(p => p[0]), ys = xy.map(p => p[1]);
+  const xMid = (Math.min(...xs) + Math.max(...xs)) / 2;
+  const yMid = (Math.min(...ys) + Math.max(...ys)) / 2;
+  const span  = Math.max(Math.max(...xs) - Math.min(...xs), Math.max(...ys) - Math.min(...ys), 0.001);
+  const scale = (avail * 1.8) / span;
+  return pt => {
+    const [x, y] = toXY(pt);
+    return [cx + (x - xMid) * scale, cy - (y - yMid) * scale];
+  };
+};
+
+const renderCanvas = () => {
+  const w = canvas.width, h = canvas.height;
+  if (!w || !h) return;
+  ctx.clearRect(0, 0, w, h);
+  ctx.fillStyle = '#0a0c0f'; ctx.fillRect(0, 0, w, h);
+  drawGrid(w, h);
+
+  const cx = w/2, cy = h/2, avail = Math.min(w,h)/2 - 44;
+
+  ctx.fillStyle = '#8a9ab5'; ctx.font = '11px Barlow,sans-serif'; ctx.textAlign = 'right';
+  ctx.fillText('N↑', w-10, 22);
+
+  if (!rawPoints.length) {
+    drawLabel('TRIM — paste or upload a KML track to preview');
+    return;
+  }
+
+  const proj = projectTrack(rawPoints, cx, cy, avail);
+
+  ctx.strokeStyle = 'rgba(138,154,181,0.4)'; ctx.lineWidth = 1;
+  ctx.beginPath();
+  rawPoints.forEach((pt, i) => { const [x, y] = proj(pt); i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y); });
+  ctx.stroke();
+
+  if (reducedPoints.length) {
+    ctx.strokeStyle = '#00ff88'; ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    reducedPoints.forEach((pt, i) => { const [x, y] = proj(pt); i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y); });
+    ctx.stroke();
+    reducedPoints.forEach((pt, i) => { const [x, y] = proj(pt); drawWP(x, y, i); });
+  }
+
+  drawLabel(`${rawPoints.length} → ${reducedPoints.length} pts`);
+};
+
+const initCanvas = () => {
+  canvas.width  = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
+  renderCanvas();
+};
+window.addEventListener('resize', initCanvas);
+setTimeout(initCanvas, 0);
+
+// ── Reduce pipeline — fully reactive, no Generate button ────────────────────────
+
+const showError  = msg => { const el = document.getElementById('form-error'); el.textContent = msg; el.hidden = false; };
+const clearError = ()  => { const el = document.getElementById('form-error'); el.textContent = '';  el.hidden = true; };
+
+const reduce = () => {
+  clearError();
+  const raw = document.getElementById('kml-input').value;
+  rawPoints = dedupeConsecutive(parseKmlPoints(raw));
+
+  const preview = document.getElementById('parsed-preview');
+  preview.value = rawPoints.map((p, i) => `${String(i + 1).padStart(3, '0')}  ${p[0].toFixed(6)}  ${p[1].toFixed(6)}`).join('\n');
+  document.getElementById('parsed-count').textContent = String(rawPoints.length);
+
+  if (rawPoints.length < 2) {
+    reducedPoints = [];
+    document.getElementById('output-empty').hidden = false;
+    document.getElementById('output-content').hidden = true;
+    renderCanvas();
+    return;
+  }
+
+  const tolerance = parseFloat(document.getElementById('tolerance_nm').value);
+  if (isNaN(tolerance) || tolerance <= 0) {
+    showError('Simplify tolerance must be a positive number.');
+    reducedPoints = [];
+    renderCanvas();
+    return;
+  }
+
+  reducedPoints = douglasPeucker(rawPoints, tolerance);
+
+  document.getElementById('mission-summary').textContent =
+    `TRACK REDUCED | ${rawPoints.length} → ${reducedPoints.length} pts | TOLERANCE ${tolerance} NM`;
+  document.getElementById('accuracy-badge').textContent =
+    `REDUCED ${rawPoints.length} → ${reducedPoints.length} pts`;
+  document.getElementById('waypoint-count').textContent = `${reducedPoints.length} waypoints`;
+  document.getElementById('out-skyvector').value   = formatSkyVector(reducedPoints);
+  document.getElementById('out-simbrief').value    = formatSimBrief(reducedPoints);
+  document.getElementById('out-plaintext').value   = formatPlainText(reducedPoints);
+  document.getElementById('out-reducebrief').value = formatReduceBrief(reducedPoints, rawPoints.length, tolerance);
+
+  document.getElementById('output-empty').hidden   = true;
+  document.getElementById('output-content').hidden = false;
+
+  renderCanvas();
+};
+
+document.getElementById('kml-input').addEventListener('input', reduce);
+document.getElementById('tolerance_nm').addEventListener('input', reduce);
+document.getElementById('kml-file').addEventListener('change', e => {
+  const file = e.target.files && e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    document.getElementById('kml-input').value = ev.target.result;
+    reduce();
+  };
+  reader.readAsText(file);
+});
+
+// ── Tab switching ─────────────────────────────────────────────────────────────
+
+const outputs = { skyvector: 'out-skyvector', simbrief: 'out-simbrief', plaintext: 'out-plaintext', reducebrief: 'out-reducebrief' };
+let activeTab = 'skyvector';
+
+const switchTab = name => {
+  activeTab = name;
+  document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.tab === name));
+  Object.keys(outputs).forEach(k => document.getElementById(`tab-${k}`).classList.toggle('active', k === name));
+  document.getElementById('copy-label').textContent = 'COPY TO CLIPBOARD';
+  document.getElementById('copy-btn').classList.remove('copied');
+};
+document.querySelectorAll('.tab-btn').forEach(btn => btn.addEventListener('click', () => switchTab(btn.dataset.tab)));
+
+// ── Copy ──────────────────────────────────────────────────────────────────────
+
+document.getElementById('copy-btn').addEventListener('click', () => {
+  const text = document.getElementById(outputs[activeTab]).value;
+  if (!text) return;
+  const onCopied = () => {
+    const lbl = document.getElementById('copy-label');
+    const btn = document.getElementById('copy-btn');
+    lbl.textContent = '✓ COPIED'; btn.classList.add('copied');
+    setTimeout(() => { lbl.textContent = 'COPY TO CLIPBOARD'; btn.classList.remove('copied'); }, 1500);
+  };
+  navigator.clipboard?.writeText(text).then(onCopied).catch(() => {
+    const ta = document.getElementById(outputs[activeTab]);
+    ta.select(); ta.setSelectionRange(0, text.length);
+    try { document.execCommand('copy'); onCopied(); } catch {}
+  });
+});
+</script>
+</body>
+</html>
