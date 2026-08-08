@@ -1,7 +1,7 @@
 # APV tool source (`_apv-src`)
 
 This directory contains the React + Vite + TypeScript source for the
-**Applied Flight Visualizer (APV)** tool, served at `/tools/apv/` on
+**Applied Flight Visualizer (APV)** tool, served at `/labs/apv/` on
 `appliedinformationservices.com`.
 
 It wraps two open-source component sets:
@@ -22,18 +22,18 @@ source files are vendored directly into `src/components/ui/`:
 GitHub Pages runs Jekyll by default, which excludes any top-level directory
 starting with an underscore from the published site. This keeps the React
 source committed to the repo (for reproducibility) without serving `.tsx`
-files to the public. Only the built output at `/tools/apv/` is served.
+files to the public. Only the built output at `/labs/apv/` is served.
 
 ## Rebuilding
 
 ```bash
 cd _apv-src
 npm install          # first time only
-npm run build        # emits into ../tools/apv/
+npm run build        # emits into ../labs/apv/
 ```
 
 After rebuilding, commit the changes in **both** `_apv-src/` (if any) and
-`tools/apv/` (the build output).
+`labs/apv/` (the build output).
 
 ## Local preview
 
@@ -50,7 +50,7 @@ production. To preview the production build against the real site:
 cd _apv-src && npm run build
 cd ..                              # repo root
 python3 -m http.server 8000
-# Open http://localhost:8000/tools/apv/
+# Open http://localhost:8000/labs/apv/
 ```
 
 ## Updating vendored flightcn / mapcn

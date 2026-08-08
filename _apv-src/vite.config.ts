@@ -7,14 +7,14 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
   plugins: [react()],
-  base: "/tools/apv/",
+  base: "/labs/apv/",
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
   },
   build: {
-    outDir: path.resolve(__dirname, "../tools/apv"),
+    outDir: path.resolve(__dirname, "../labs/apv"),
     emptyOutDir: true,
     assetsDir: "assets",
     sourcemap: false,
