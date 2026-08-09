@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Applied Information Services consulting services — intelligence audits, program intelligence briefs, and collection architecture reviews for defense, intelligence, and aerospace organizations.">
+  <meta name="description" content="Applied Information Services consulting services — intelligence audits, program intelligence briefs, collection architecture reviews, and collection vault audits for defense, intelligence, and aerospace organizations and analysts.">
   <title>Services | Applied Information Services</title>
 
   <!-- Google Analytics -->
@@ -108,7 +108,7 @@
     /* ── Services grid ── */
     .svc-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: var(--f2);
       margin-bottom: var(--f5);
     }
@@ -266,6 +266,11 @@
     }
 
     /* ── Responsive ── */
+    @media (max-width: 1000px) {
+      .svc-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
     @media (max-width: 700px) {
       .svc-grid {
         grid-template-columns: 1fr;
@@ -335,7 +340,7 @@
             </div>
             <div class="svc-meta-row">
               <span class="svc-price-label">Starting at</span>
-              <span class="svc-price">$2,500</span>
+              <span class="svc-price">$4,840</span>
             </div>
           </div>
         </div>
@@ -356,7 +361,7 @@
             </div>
             <div class="svc-meta-row">
               <span class="svc-price-label">Starting at</span>
-              <span class="svc-price">$1,500</span>
+              <span class="svc-price">$3,227</span>
             </div>
           </div>
         </div>
@@ -377,7 +382,28 @@
             </div>
             <div class="svc-meta-row">
               <span class="svc-price-label">Starting at</span>
-              <span class="svc-price">$4,000</span>
+              <span class="svc-price">$6,454</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="svc-card">
+          <div class="svc-num">SVC &mdash; 04</div>
+          <div class="svc-name">Collection<br>Vault Audit</div>
+          <div class="svc-tagline">For individual analysts.</div>
+          <p class="svc-desc">
+            An audit of how you personally track sources, entities, and cases right now (Obsidian, notes, whatever it is), plus a
+            redesign spec for making it hold up. Built for OSINT/intelligence analysts and small teams — the lightest entry point
+            into a working collection architecture.
+          </p>
+          <div class="svc-meta">
+            <div class="svc-meta-row">
+              <span class="svc-meta-label">Deliverable</span>
+              <span class="svc-meta-val">Written audit + vault redesign spec</span>
+            </div>
+            <div class="svc-meta-row">
+              <span class="svc-price-label">Starting at</span>
+              <span class="svc-price">$2,581</span>
             </div>
           </div>
         </div>
