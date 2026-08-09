@@ -195,7 +195,7 @@
   /* ── TIER REFERENCE ── */
   .tier-panel { background: var(--surface); border: 1px solid var(--border); padding: 16px 20px; margin-bottom: 16px; }
   .tier-header { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 12px; }
-  .tier-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .tier-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
   .tier-card { border: 1px solid var(--border); padding: 12px; }
   .tier-name { font-family: var(--cond); font-size: 13px; font-weight: 600; color: var(--text-bright); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
   .tier-desc { font-size: 10px; color: var(--text-dim); line-height: 1.5; margin-bottom: 8px; }
@@ -327,7 +327,7 @@
         <div class="field-row">
           <span class="field-label bright">Equivalent Base Salary</span>
           <div class="field-input"><span class="prefix">$</span>
-            <input type="number" id="base-salary" value="150000" min="0" step="1000" oninput="recalc()">
+            <input type="number" id="base-salary" value="130000" min="0" step="1000" oninput="recalc()">
           </div>
         </div>
         <div class="field-row">
@@ -509,6 +509,12 @@
           <div class="tier-desc">Design/optimize client ongoing OSINT collection architecture.</div>
           <div class="tier-range" id="tier-arch">—</div>
           <div class="tier-hours">Est. 20–40 hrs</div>
+        </div>
+        <div class="tier-card">
+          <div class="tier-name">Collection Vault Audit</div>
+          <div class="tier-desc">Entry-tier: audit + redesign of a single analyst's knowledge vault. On-ramp into Collection Architecture Review.</div>
+          <div class="tier-range" id="tier-vault">—</div>
+          <div class="tier-hours">Est. 8–15 hrs</div>
         </div>
       </div>
     </div>
@@ -813,6 +819,7 @@
     set('tier-audit', tierCalc(15, 25));
     set('tier-brief', tierCalc(10, 20));
     set('tier-arch',  tierCalc(20, 40));
+    set('tier-vault', tierCalc(8, 15));
 
     // Also update JQT
     recalcJQ();
