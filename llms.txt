@@ -7,6 +7,7 @@ Applied Information Services (AIS) provides open-source intelligence, research, 
 ## Services
 
 - [Services](https://appliedinformationservices.com/services.html): Full service catalog and engagement model.
+- [FAQ](https://appliedinformationservices.com/faq.html): Answers on tier pricing, fit, differentiation, and engagement timeline.
 - Intelligence Audit ($4,840 starting): Maps existing intelligence practices and delivers a structured gap analysis with prioritized recommendations.
 - Program Intelligence Brief ($3,227 starting): A structured OSINT deep-dive on a specific platform, program, contract vehicle, or competitor organization.
 - Collection Architecture Review ($6,454 starting): Assessment and blueprint for building or formalizing a permanent in-house OSINT function.
