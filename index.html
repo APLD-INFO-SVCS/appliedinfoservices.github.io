@@ -22,6 +22,79 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/main.css?v=12">
+
+  <style>
+    /* ── Tier reconciliation grid (mirrors services.html service cards) ── */
+    .svc-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--f2);
+      margin-bottom: var(--f4);
+    }
+    .svc-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border-subtle);
+      border-top: 3px solid var(--color-accent);
+      padding: var(--f3);
+      display: flex;
+      flex-direction: column;
+      gap: var(--f2);
+    }
+    .svc-num {
+      font-family: var(--font-mono);
+      font-size: var(--f4);
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      color: rgba(201, 168, 76, 0.35);
+      line-height: 1;
+    }
+    .svc-name {
+      font-size: var(--f3);
+      font-weight: 700;
+      color: var(--color-text-primary);
+      letter-spacing: -0.01em;
+      line-height: 1.15;
+    }
+    .svc-tagline {
+      font-size: var(--f2);
+      font-weight: 500;
+      color: var(--color-accent);
+      font-style: italic;
+    }
+    .svc-desc {
+      font-size: var(--f2);
+      color: var(--color-text-secondary);
+      line-height: 1.618;
+      flex: 1;
+    }
+    .svc-meta {
+      background: var(--color-surface-alt);
+      border-top: 1px solid var(--color-border-subtle);
+      padding: var(--f2) var(--f3);
+      margin: 0 calc(-1 * var(--f3)) calc(-1 * var(--f3));
+    }
+    .svc-price-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+    }
+    .svc-price {
+      font-size: var(--f3);
+      font-weight: 700;
+      color: var(--color-text-primary);
+      letter-spacing: 0.02em;
+      display: block;
+      margin-top: 2px;
+    }
+    @media (max-width: 1000px) {
+      .svc-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 700px) {
+      .svc-grid { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
   <div id="header-placeholder"></div>
@@ -31,7 +104,7 @@
       <h1>Intelligence That Drives Decisions</h1>
       <p class="hero-accent">Open-source research and structured analysis for aerospace, defense, and government.</p>
       <a href="#consultation" class="hero-cta">Schedule a Consultation</a>
-      <span class="hero-trust">Initial engagements from $300. Response within two business days.</span>
+      <span class="hero-trust">$300 consultation — credits in full toward your Intelligence Audit, Program Intelligence Brief, Collection Architecture Review, or Collection Vault Audit engagement. Response within two business days.</span>
     </div>
   </section>
 
@@ -232,6 +305,65 @@
     </div>
   </div>
 
+  <!-- ── Four Ways We Can Help (tier reconciliation) ──────────────────── -->
+  <section class="benefits-section">
+    <div class="benefits-inner">
+      <span class="benefits-eyebrow">After Your Consultation</span>
+      <h2 class="benefits-title">Four Ways We Can Help</h2>
+      <p class="naics-subtitle">Every consultation ends with a recommendation for one of four fixed-scope engagements. Your $300 consultation fee credits in full toward whichever one you choose.</p>
+
+      <div class="svc-grid">
+        <div class="svc-card">
+          <div class="svc-num">01</div>
+          <div class="svc-name">Intelligence Audit</div>
+          <div class="svc-tagline">First paid engagement.</div>
+          <p class="svc-desc">We map your existing intelligence practices and deliver a structured gap analysis with prioritized recommendations. Low commitment, high clarity — the natural foundation for everything that follows.</p>
+          <div class="svc-meta">
+            <span class="svc-price-label">Starting at</span>
+            <span class="svc-price">$4,840</span>
+          </div>
+        </div>
+
+        <div class="svc-card">
+          <div class="svc-num">02</div>
+          <div class="svc-name">Program Intelligence Brief</div>
+          <div class="svc-tagline">Targeted open-source depth.</div>
+          <p class="svc-desc">A structured OSINT deep-dive on a specific platform, program, contract vehicle, or competitor organization. Fixed scope, fixed deliverable, no ambiguity.</p>
+          <div class="svc-meta">
+            <span class="svc-price-label">Starting at</span>
+            <span class="svc-price">$3,227</span>
+          </div>
+        </div>
+
+        <div class="svc-card">
+          <div class="svc-num">03</div>
+          <div class="svc-name">Collection Architecture Review</div>
+          <div class="svc-tagline">For organizations building to last.</div>
+          <p class="svc-desc">For organizations ready to build or formalize a permanent intelligence capability — sources, tools, workflows, and dissemination assessed, then a blueprint for a sustainable in-house OSINT function.</p>
+          <div class="svc-meta">
+            <span class="svc-price-label">Starting at</span>
+            <span class="svc-price">$6,454</span>
+          </div>
+        </div>
+
+        <div class="svc-card">
+          <div class="svc-num">04</div>
+          <div class="svc-name">Collection Vault Audit</div>
+          <div class="svc-tagline">For individual analysts.</div>
+          <p class="svc-desc">An audit of how you personally track sources, entities, and cases today, plus a redesign spec for making it hold up. The lightest entry point into a working collection architecture.</p>
+          <div class="svc-meta">
+            <span class="svc-price-label">Starting at</span>
+            <span class="svc-price">$2,581</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-buttons">
+        <a href="services.html">See Full Service Details</a>
+      </div>
+    </div>
+  </section>
+
   <!-- ── Schedule a Consultation ───────────────────────────────────────── -->
   <section id="consultation" class="consultation-section">
     <div class="consultation-inner">
@@ -242,7 +374,7 @@
         <div class="consultation-meta">
           <div class="consultation-meta-item">
             <span class="consultation-meta-label">Engagement Fee</span>
-            <p class="consultation-meta-value consultation-meta-value--signal">Initial consultation engagements are $300. This covers a scoping session, requirements review, and a written summary of recommended analytical approaches.</p>
+            <p class="consultation-meta-value consultation-meta-value--signal">Initial consultation engagements are $300. This covers a scoping session, requirements review, and a written summary of recommended analytical approaches. The $300 fee credits in full toward whichever engagement follows: Intelligence Audit, Program Intelligence Brief, Collection Architecture Review, or Collection Vault Audit.</p>
           </div>
           <div class="consultation-meta-item">
             <span class="consultation-meta-label">Response Time</span>
@@ -299,7 +431,7 @@
         <div id="form-confirmation" class="form-confirmation">
           <div class="form-confirmation-title">Request Received</div>
           <p class="form-confirmation-body">Thank you for your consultation request. We will review your requirements and respond within two business days. For urgent needs, contact us directly at <a href="mailto:info@appliedinformationservices.com" style="color: var(--color-accent); text-decoration: none;">info@appliedinformationservices.com</a>.</p>
-          <p class="form-confirmation-body" style="margin-top: var(--f3);">To secure your consultation slot, you can pay the $300 engagement fee now:</p>
+          <p class="form-confirmation-body" style="margin-top: var(--f3);">To secure your consultation slot, you can pay the $300 engagement fee now — it credits in full toward whichever of the four engagements we recommend:</p>
           <div style="margin-top: var(--f3);">
             <a href="https://buy.stripe.com/6oUfZh9PY7iJ1PM3bVbbG01" target="_blank" rel="noopener noreferrer" class="form-submit" style="display:inline-flex; text-decoration:none;">Pay Consultation Fee — $300</a>
           </div>
