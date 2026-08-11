@@ -1,0 +1,29 @@
+# Applied Information Services
+
+> Research, analysis, and consulting. Information solutions for complex domains.
+
+Applied Information Services (AIS) provides open-source intelligence, research, and consulting services for aerospace, defense, and government domains.
+
+## Services
+
+- [Services](https://appliedinformationservices.com/services.html): Full service catalog and engagement model.
+- Intelligence Audit ($4,840 starting): Maps existing intelligence practices and delivers a structured gap analysis with prioritized recommendations.
+- Program Intelligence Brief ($3,227 starting): A structured OSINT deep-dive on a specific platform, program, contract vehicle, or competitor organization.
+- Collection Architecture Review ($6,454 starting): Assessment and blueprint for building or formalizing a permanent in-house OSINT function.
+- Collection Vault Audit ($2,581 starting): Audit and redesign spec for how an individual analyst or small team tracks sources, entities, and cases.
+
+## Industry Classifications
+
+- NAICS 541690 — Other Scientific & Technical Consulting Services: Structured analysis, open-source research, and technical advisory services across aerospace, defense, and government domains.
+- NAICS 519290 — Web Search Portals and All Other Information Services: Open-source aerospace and defense intelligence monitoring and subscription-based information products.
+- NAICS 541618 — Other Management Consulting Services: Program and acquisition decision support; advisory engagements spanning organizational and operational challenges.
+- NAICS 611430 — Professional & Management Development Training: Structured training programs for analysts, program managers, and intelligence professionals.
+
+## Products
+
+- [JANN](https://appliedinformationservices.com/jann.html): JANN product page.
+- [Labs](https://appliedinformationservices.com/labs/): Applied Labs tools and experiments.
+
+## Contact
+
+- Email: info@appliedinformationservices.com
