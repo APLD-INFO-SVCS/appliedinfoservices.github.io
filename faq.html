@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Frequently asked questions about Applied Information Services engagements — tier pricing, who the Collection Vault Audit is for, how AIS differs from other OSINT consultants, and what an engagement timeline looks like.">
+  <title>FAQ | Applied Information Services</title>
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CWY00FKP9J"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-CWY00FKP9J');
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700&family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css?v=11">
+
+  <style>
+    /* ── Page body ── */
+    .faq-body {
+      background: var(--color-surface-alt);
+      padding: var(--f4) 0 var(--f6);
+    }
+    .faq-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 var(--f5);
+    }
+
+    /* ── Classification hero band ── */
+    .faq-band {
+      background: var(--color-nav);
+      padding: var(--f5) var(--f5) var(--f4);
+    }
+    .faq-band-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: var(--f2);
+    }
+    .faq-domain-tags {
+      font-family: var(--font-mono);
+      font-size: var(--f2);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+    }
+    .faq-doc-type {
+      font-size: var(--f4);
+      font-weight: 600;
+      color: var(--color-text-nav);
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+    }
+    .faq-classification {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(201, 168, 76, 0.65);
+    }
+    .faq-band-rule {
+      height: 2px;
+      background: var(--color-accent);
+    }
+
+    /* ── Positioning statement ── */
+    .faq-positioning {
+      font-size: var(--f3);
+      font-weight: 300;
+      line-height: 1.618;
+      color: var(--color-text-secondary);
+      padding: var(--f5) 0 var(--f4);
+      border-bottom: 1px solid var(--color-border-subtle);
+      margin-bottom: var(--f4);
+    }
+
+    /* ── Section label ── */
+    .faq-section-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      display: flex;
+      align-items: center;
+      gap: var(--f2);
+      margin-bottom: var(--f3);
+    }
+    .faq-section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--color-accent);
+      opacity: 0.3;
+    }
+
+    /* ── FAQ item (native details/summary — no JS) ── */
+    .faq-item {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border-subtle);
+      border-top: 3px solid var(--color-accent);
+      margin-bottom: var(--f3);
+    }
+    .faq-item[open] {
+      box-shadow: 0 2px 8px rgba(10, 22, 40, 0.07);
+    }
+    .faq-question {
+      list-style: none;
+      cursor: pointer;
+      padding: var(--f3) var(--f4);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--f3);
+      font-size: var(--f3);
+      font-weight: 700;
+      color: var(--color-text-primary);
+      letter-spacing: -0.01em;
+      line-height: 1.3;
+    }
+    .faq-question::-webkit-details-marker {
+      display: none;
+    }
+    .faq-question::after {
+      content: '+';
+      flex-shrink: 0;
+      font-family: var(--font-mono);
+      font-size: var(--f4);
+      font-weight: 400;
+      color: var(--color-accent);
+      line-height: 1;
+    }
+    .faq-item[open] .faq-question::after {
+      content: '\2212';
+    }
+    .faq-answer {
+      padding: 0 var(--f4) var(--f4);
+    }
+    .faq-answer p {
+      font-size: var(--f2);
+      color: var(--color-text-secondary);
+      line-height: 1.618;
+      max-width: none;
+      margin: 0 0 var(--f2);
+    }
+    .faq-answer p:last-child {
+      margin-bottom: 0;
+    }
+    .faq-answer strong {
+      color: var(--color-text-primary);
+    }
+    .faq-answer a {
+      color: var(--color-primary);
+    }
+    .faq-tier-name {
+      font-weight: 700;
+      color: var(--color-text-primary);
+    }
+    .faq-tier-price {
+      font-family: var(--font-mono);
+      color: var(--color-accent);
+    }
+    .faq-answer ol {
+      margin: 0 0 var(--f2);
+      padding-left: var(--f4);
+    }
+    .faq-answer ol:last-child {
+      margin-bottom: 0;
+    }
+    .faq-answer li {
+      font-size: var(--f2);
+      color: var(--color-text-secondary);
+      line-height: 1.618;
+      margin-bottom: var(--f1);
+    }
+    .faq-answer li strong {
+      color: var(--color-text-primary);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 700px) {
+      .faq-band {
+        padding: var(--f4) var(--f3) var(--f3);
+      }
+      .faq-inner {
+        padding: 0 var(--f3);
+      }
+      .faq-doc-type {
+        font-size: var(--f3);
+      }
+      .faq-question {
+        padding: var(--f3);
+        font-size: var(--f2);
+      }
+      .faq-answer {
+        padding: 0 var(--f3) var(--f3);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <!-- Classification hero band -->
+  <div class="faq-band">
+    <div class="faq-band-inner">
+      <div class="faq-domain-tags">Defense &middot; Intelligence &middot; Aerospace</div>
+      <div class="faq-doc-type">Frequently Asked Questions</div>
+      <div class="faq-classification">Proprietary &amp; Confidential</div>
+    </div>
+  </div>
+  <div class="faq-band-rule"></div>
+
+  <div class="faq-body">
+    <div class="faq-inner">
+
+      <!-- Positioning statement -->
+      <p class="faq-positioning">
+        Answers to the questions we hear most before an engagement starts: tier pricing, who each service is
+        built for, how Applied compares to other OSINT consultants, and what the process looks like end to end.
+      </p>
+
+      <div class="faq-section-label">Questions</div>
+
+      <details class="faq-item" open>
+        <summary class="faq-question">What does each service tier cost?</summary>
+        <div class="faq-answer">
+          <p><span class="faq-tier-name">Intelligence Audit</span> &mdash; <span class="faq-tier-price">$4,840 starting</span><br>
+          Applied maps your existing intelligence practices: what you're collecting, where it lives, how it reaches
+          decision-makers. You get a structured gap analysis with prioritized recommendations. Low commitment, high
+          clarity. This is the first paid engagement and the natural foundation for everything that follows.
+          <strong>Deliverable:</strong> findings brief + recommendations report.</p>
+
+          <p><span class="faq-tier-name">Program Intelligence Brief</span> &mdash; <span class="faq-tier-price">$3,227 starting</span><br>
+          A structured OSINT deep-dive on one platform, program, contract vehicle, or competitor organization.
+          Sourced from open regulatory filings, aviation registries, government procurement databases, and Applied's
+          curated aerospace intelligence network. Fixed scope, fixed deliverable, no ambiguity.
+          <strong>Deliverable:</strong> structured intelligence brief, sourced.</p>
+
+          <p><span class="faq-tier-name">Collection Architecture Review</span> &mdash; <span class="faq-tier-price">$6,454 starting</span><br>
+          For organizations ready to build or formalize a permanent intelligence capability. Applied assesses your
+          sources, tools, collection workflows, and dissemination pipeline, then delivers a practical blueprint for a
+          sustainable, in-house OSINT function built to your operational tempo and resource constraints.
+          <strong>Deliverable:</strong> assessment report + architecture blueprint.</p>
+
+          <p><span class="faq-tier-name">Collection Vault Audit</span> &mdash; <span class="faq-tier-price">$2,581 starting</span><br>
+          An audit of how you personally track sources, entities, and cases right now (Obsidian, notes, whatever it
+          is), plus a redesign spec for making it hold up. Built for OSINT/intelligence analysts and small teams.
+          The lightest entry point into a working collection architecture.
+          <strong>Deliverable:</strong> written audit + vault redesign spec.</p>
+
+          <p>Pricing scales with organizational size and engagement complexity. The rates above are calibrated for
+          small and mid-size operators. Enterprise and prime contractor engagements are scoped individually.</p>
+
+          <p>The $300 scoping consultation isn't a separate cost. It credits in full toward whichever tier the
+          engagement becomes.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-question">Who is the Collection Vault Audit for, specifically?</summary>
+        <div class="faq-answer">
+          <p>Individual analysts and small teams, not organizations. If you're the one person (or the small group)
+          actually doing the collecting, tracking sources and entities in Obsidian, notes, spreadsheets, or whatever
+          system you've cobbled together, this tier is built for you.</p>
+          <p>It's the lightest entry point Applied offers: a written audit of your current setup plus a redesign
+          spec, not an organization-wide architecture engagement. If you're scoping a capability for a whole team or
+          department, look at the Collection Architecture Review instead.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-question">How is Applied different from other OSINT consultants?</summary>
+        <div class="faq-answer">
+          <p>Scope, deliverables, timeline, and price are agreed in writing before work starts. No ambiguity, no
+          scope creep, no open-ended hours.</p>
+          <p>Applied doesn't sell generalist market research. The practice is built on aerospace, defense, and
+          government domain work: open regulatory filings, aviation registries, government procurement databases,
+          and a curated aerospace intelligence network most generalist OSINT shops don't have.</p>
+          <p>Every tier has a fixed deliverable and a fixed starting price, published up front. You're not
+          requesting a quote into a black box. You know what you're buying before you talk to anyone.</p>
+          <p>The engagement ladder runs from a $300 scoping consultation through four fixed-scope tiers, from a
+          single analyst's personal vault to a full in-house intelligence architecture. You start at the size that
+          matches your actual problem, not a generic retainer.</p>
+          <p>Applied formalizes intelligence practices you likely already run informally: tracking competitors,
+          monitoring program announcements, watching regulatory shifts, reading contract awards. The work is
+          building the doctrine, systems, and process to make that deliberate, not starting from zero.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-question">What does an engagement timeline look like, start to finish?</summary>
+        <div class="faq-answer">
+          <ol>
+            <li><strong>Consultation ($300).</strong> A scoping session to confirm fit and identify the right tier.
+            Applied responds to consultation requests within two business days.</li>
+            <li><strong>Scoping summary.</strong> Applied reviews your requirements against available sources and
+            methodologies, then sends a written summary: recommended tier, deliverable, timeline, and price. Nothing
+            starts until you agree to these in writing. The $300 you already paid credits against this price.</li>
+            <li><strong>Engagement.</strong> Applied executes the scoped work: audit, brief, architecture review, or
+            vault audit, depending on the tier selected.</li>
+            <li><strong>Delivery.</strong> You receive the finished deliverable in a structured, decision-ready
+            format, tailored to your environment and reporting requirements.</li>
+          </ol>
+        </div>
+      </details>
+
+      <p class="faq-positioning" style="border-bottom: none; padding-bottom: 0; margin-bottom: 0;">
+        See full tier details on the <a href="services.html">Services</a> page, or
+        <a href="index.html#consultation">book a consultation</a> to get started.
+      </p>
+
+    </div>
+  </div>
+
+  <div id="footer-placeholder"></div>
+
+  <script>
+    fetch('includes/header.html')
+      .then(response => response.text())
+      .then(data => document.getElementById('header-placeholder').innerHTML = data);
+
+    fetch('includes/footer.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('footer-placeholder').innerHTML = data;
+        document.querySelectorAll('.ais-copyright-year').forEach(el => {
+          el.textContent = new Date().getFullYear();
+        });
+      });
+  </script>
+</body>
+</html>
