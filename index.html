@@ -7,21 +7,26 @@
   <meta name="description" content="Applied Information Services – Research, analysis, and consulting. Information solutions for complex domains.">
   <title>Applied Information Services</title>
 
-  <!-- Google tag (gtag.js) -->
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CWY00FKP9J"></script>
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.appliedinformationservices.com/">
+  <meta property="og:title" content="Applied Information Services">
+  <meta property="og:description" content="Applied Information Services – Research, analysis, and consulting. Information solutions for complex domains.">
+  <meta property="og:image" content="https://www.appliedinformationservices.com/img/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Applied Information Services">
+  <meta name="twitter:description" content="Applied Information Services – Research, analysis, and consulting. Information solutions for complex domains.">
+  <meta name="twitter:image" content="https://www.appliedinformationservices.com/img/og-image.png">
 
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'G-CWY00FKP9J');
-  </script>
+  <!-- Google Analytics: consent-gated, see js/cookie-consent.js -->
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/main.css?v=12">
+  <link rel="stylesheet" href="css/main.css?v=13">
 
   <style>
     /* ── Tier reconciliation grid (mirrors services.html service cards) ── */
@@ -124,6 +129,14 @@
   </style>
 </head>
 <body>
+  <div id="cookie-banner" class="cookie-banner" hidden>
+    <p class="cookie-banner-text">We use cookies for basic site analytics. <a href="privacy-policy.html">Privacy Policy</a></p>
+    <div class="cookie-banner-actions">
+      <button id="cookie-decline" type="button" class="cookie-banner-btn">Decline</button>
+      <button id="cookie-accept" type="button" class="cookie-banner-btn cookie-banner-btn-primary">Accept</button>
+    </div>
+  </div>
+
   <div id="header-placeholder"></div>
 
   <section class="hero">
@@ -570,6 +583,8 @@
       });
     });
   </script>
+
+  <script src="js/cookie-consent.js"></script>
 
 </body>
 </html>
