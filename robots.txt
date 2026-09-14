@@ -1,0 +1,23 @@
+User-agent: *
+Disallow: /labs/
+Disallow: /10-minutes.html
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://www.appliedinformationservices.com/sitemap.xml

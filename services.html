@@ -7,18 +7,26 @@
   <meta name="description" content="Applied Information Services consulting services — intelligence audits, program intelligence briefs, collection architecture reviews, and collection vault audits for defense, intelligence, and aerospace organizations and analysts.">
   <title>Services | Applied Information Services</title>
 
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CWY00FKP9J"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-CWY00FKP9J');
-  </script>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.appliedinformationservices.com/services.html">
+  <meta property="og:title" content="Services | Applied Information Services">
+  <meta property="og:description" content="Applied Information Services consulting services — intelligence audits, program intelligence briefs, collection architecture reviews, and collection vault audits for defense, intelligence, and aerospace organizations and analysts.">
+  <meta property="og:image" content="https://www.appliedinformationservices.com/img/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Services | Applied Information Services">
+  <meta name="twitter:description" content="Applied Information Services consulting services — intelligence audits, program intelligence briefs, collection architecture reviews, and collection vault audits for defense, intelligence, and aerospace organizations and analysts.">
+  <meta name="twitter:image" content="https://www.appliedinformationservices.com/img/og-image.png">
+
+  <!-- Google Analytics: consent-gated, see js/cookie-consent.js -->
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700&family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/main.css?v=11">
+  <link rel="stylesheet" href="css/main.css?v=13">
 
   <style>
     /* ── Page body ── */
@@ -291,6 +299,14 @@
   </style>
 </head>
 <body>
+  <div id="cookie-banner" class="cookie-banner" hidden>
+    <p class="cookie-banner-text">We use cookies for basic site analytics. <a href="privacy-policy.html">Privacy Policy</a></p>
+    <div class="cookie-banner-actions">
+      <button id="cookie-decline" type="button" class="cookie-banner-btn">Decline</button>
+      <button id="cookie-accept" type="button" class="cookie-banner-btn cookie-banner-btn-primary">Accept</button>
+    </div>
+  </div>
+
   <div id="header-placeholder"></div>
 
   <!-- Classification hero band -->
@@ -516,5 +532,7 @@
         });
       });
   </script>
+
+  <script src="js/cookie-consent.js"></script>
 </body>
 </html>
