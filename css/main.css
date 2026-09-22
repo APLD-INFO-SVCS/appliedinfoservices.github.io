@@ -174,15 +174,43 @@ body {
   align-items: center;
 }
 
-/* Header hero — "Applied Information Services" — with background image */
-div.hero {
-  background-color: var(--color-nav);
-  background-image:
-    linear-gradient(135deg, rgba(10,22,40,0.72) 0%, rgba(13,31,60,0.52) 60%, rgba(0,87,184,0.08) 100%),
-    url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1400&q=80');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+/* ── Sub-nav banner (interior pages, from includes/header.html) ───────── */
+/* Compact page-title bar. Suppressed on the homepage, which has its own
+   full hero (section.hero) immediately below it. */
+
+.subnav-banner {
+  background: var(--color-nav);
+  padding: var(--f3) var(--f5);   /* 21px 55px */
+  border-bottom: 1px solid var(--color-footer-border);
+}
+
+body.page-home .subnav-banner {
+  display: none;
+}
+
+.subnav-banner-inner {
+  max-width: 860px;
+  margin: 0 auto;
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--f3);                 /* 21px */
+}
+
+.subnav-banner h1 {
+  font-size: var(--f4);           /* 34px */
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+.subnav-tagline {
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
 }
 
 /* Index hero — "Intelligence That Drives Decisions" — solid dark navy */
@@ -429,7 +457,12 @@ p {
 
 .embed-container.active {
   display: block;
-  animation: fadeIn 0.3s ease;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .embed-container.active {
+    animation: fadeIn 0.3s ease;
+  }
 }
 
 @keyframes fadeIn {
