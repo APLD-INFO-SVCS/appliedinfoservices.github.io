@@ -2,7 +2,7 @@
 
 > Research, analysis, and consulting. Information solutions for complex domains.
 
-Applied Information Services (AIS) provides open-source intelligence, research, and consulting services for aerospace, defense, and government domains.
+Applied Information Services provides open-source intelligence, research, and consulting services for aerospace, defense, and government domains.
 
 ## Services
 
