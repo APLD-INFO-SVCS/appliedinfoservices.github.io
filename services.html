@@ -296,6 +296,10 @@
         font-size: var(--f3);
       }
     }
+    /* Heading elements keep the former div look */
+    h2.svc-section-label { padding-bottom: 0; font-weight: 400; line-height: normal; }
+    h2.svc-section-label::after { position: static; width: auto; }
+    h3.svc-name, h3.svc-eng-title { margin: 0; }
   </style>
 </head>
 <body>
@@ -332,18 +336,18 @@
 
       <!-- Entry step -->
       <p class="svc-positioning">
-        Every engagement starts with a $300 scoping consultation (a working session to confirm fit and scope which
-        service below is the right starting point). <a href="index.html#consultation">Book a consultation</a> before
-        selecting a service.
+        Every engagement starts with a question sent through the <a href="research.html#intake">research intake</a>.
+        We confirm the scope in writing within two business days. A larger question is quoted as one of the services
+        below before you pay more, and your deposit credits toward it.
       </p>
 
       <!-- Services -->
-      <div class="svc-section-label">Consulting Services</div>
+      <h2 class="svc-section-label">Consulting Services</h2>
       <div class="svc-grid">
 
         <div class="svc-card">
           <div class="svc-num">SVC &mdash; 01</div>
-          <div class="svc-name">Intelligence<br>Audit</div>
+          <h3 class="svc-name">Intelligence<br>Audit</h3>
           <div class="svc-tagline">First paid engagement.</div>
           <p class="svc-desc">
             We map your existing intelligence practices (what you're collecting, where it lives, how it reaches decision-makers)
@@ -363,7 +367,7 @@
 
         <div class="svc-card">
           <div class="svc-num">SVC &mdash; 02</div>
-          <div class="svc-name">Program<br>Intelligence Brief</div>
+          <h3 class="svc-name">Program<br>Intelligence Brief</h3>
           <div class="svc-tagline">Targeted open-source depth.</div>
           <p class="svc-desc">
             A structured OSINT deep-dive on a specific platform, program, contract vehicle, or competitor organization.
@@ -384,7 +388,7 @@
 
         <div class="svc-card">
           <div class="svc-num">SVC &mdash; 03</div>
-          <div class="svc-name">Collection<br>Architecture</div>
+          <h3 class="svc-name">Collection<br>Architecture</h3>
           <div class="svc-tagline">For organizations building to last.</div>
           <p class="svc-desc">
             For teams and organizations ready to build or formalize a permanent intelligence capability. We assess your sources, tools, collection workflows, and dissemination pipeline, then deliver a practical blueprint for a sustainable, in-house OSINT function built to your operational tempo and resource constraints. Scoped at the consultation, from a single team to a full program.
@@ -416,7 +420,7 @@
             "@type": "Service",
             "name": "Intelligence Audit",
             "description": "We map your existing intelligence practices (what you're collecting, where it lives, how it reaches decision-makers) and deliver a structured gap analysis with prioritized recommendations. Low commitment. High clarity. Natural foundation for everything that follows.",
-            "provider": { "@type": "Organization", "name": "Applied Information Services, LLC" },
+            "provider": { "@id": "https://www.appliedinformationservices.com/#org" },
             "offers": {
               "@type": "Offer",
               "price": "4840",
@@ -427,7 +431,7 @@
             "@type": "Service",
             "name": "Program Intelligence Brief",
             "description": "A structured OSINT deep-dive on a specific platform, program, contract vehicle, or competitor organization. Sourced from open regulatory filings, aviation registries, government procurement databases, and Applied's curated aerospace intelligence network. Fixed scope, fixed deliverable, no ambiguity.",
-            "provider": { "@type": "Organization", "name": "Applied Information Services, LLC" },
+            "provider": { "@id": "https://www.appliedinformationservices.com/#org" },
             "offers": {
               "@type": "Offer",
               "price": "3227",
@@ -438,7 +442,7 @@
             "@type": "Service",
             "name": "Collection Architecture",
             "description": "For teams and organizations ready to build or formalize a permanent intelligence capability. We assess your sources, tools, collection workflows, and dissemination pipeline, then deliver a practical blueprint for a sustainable, in-house OSINT function built to your operational tempo and resource constraints. Scoped at the consultation, from a single team to a full program.",
-            "provider": { "@type": "Organization", "name": "Applied Information Services, LLC" },
+            "provider": { "@id": "https://www.appliedinformationservices.com/#org" },
             "offers": {
               "@type": "Offer",
               "price": "6454",
@@ -450,10 +454,10 @@
       </script>
 
       <!-- Engagement model -->
-      <div class="svc-section-label">Engagement Model</div>
+      <h2 class="svc-section-label">Engagement Model</h2>
       <div class="svc-eng-grid">
         <div class="svc-eng-block">
-          <div class="svc-eng-title">How Engagements Work</div>
+          <h3 class="svc-eng-title">How Engagements Work</h3>
           <div class="svc-eng-body">
             <p>All projects are scoped and priced before work begins.</p>
             <p class="svc-trust-anchor">Scope, deliverables, timeline, and pricing are agreed in writing upfront: no ambiguity, no scope creep.</p>
@@ -461,7 +465,7 @@
           </div>
         </div>
         <div class="svc-eng-block">
-          <div class="svc-eng-title">Who We Work With</div>
+          <h3 class="svc-eng-title">Who We Work With</h3>
           <div class="svc-eng-body">
             <p>Applied serves small to mid-size businesses including those in the aerospace, defense, and intelligence sectors.
             If you're building, bidding, or competing in this space, we want to help your firm succeed.</p>
