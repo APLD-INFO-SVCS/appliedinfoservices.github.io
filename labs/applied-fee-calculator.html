@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
-<title>AFC — AIS Fee Calculator | Applied Information Labs</title>
+<title>AFC — Applied Fee Calculator | Applied Information Labs</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Barlow+Condensed:wght@300;400;600;700&display=swap');
 
@@ -285,7 +285,7 @@
   <header>
     <div>
       <div class="system-id">Applied Information Services, LLC // Internal Tools</div>
-      <h1>AIS Fee <span>Calculator</span></h1>
+      <h1>Applied Fee <span>Calculator</span></h1>
       <div class="status-row">
         <span class="badge active">Time Value Tool</span>
         <span class="badge active">Job Quote Tool</span>
@@ -294,7 +294,7 @@
     </div>
     <div class="header-right">
       <div>CONSULTANT: FRANK TYLER</div>
-      <div>ENTITY: AIS, LLC</div>
+      <div>ENTITY: Applied, LLC</div>
       <div id="date-display">—</div>
     </div>
   </header>
@@ -441,7 +441,7 @@
           </div>
         </div>
         <div class="field-row">
-          <span class="field-label">Web / Infra (AIS + JANN)</span>
+          <span class="field-label">Web / Infra (Applied + JANN)</span>
           <div class="field-input"><span class="prefix">$</span>
             <input type="number" id="oh-web" value="1200" min="0" step="100" oninput="recalc()">
           </div>
@@ -490,7 +490,7 @@
 
     <!-- Service tier reference -->
     <div class="tier-panel">
-      <div class="tier-header">AIS Service Tiers — Benchmark Reference @ 50% Margin</div>
+      <div class="tier-header">Applied Service Tiers — Benchmark Reference @ 50% Margin</div>
       <div class="tier-grid">
         <div class="tier-card">
           <div class="tier-name">Intelligence Audit</div>
@@ -505,16 +505,10 @@
           <div class="tier-hours">Est. 10–20 hrs</div>
         </div>
         <div class="tier-card">
-          <div class="tier-name">Collection Architecture Review</div>
-          <div class="tier-desc">Design/optimize client ongoing OSINT collection architecture.</div>
+          <div class="tier-name">Collection Architecture</div>
+          <div class="tier-desc">Assess and design a client's in-house OSINT collection architecture, scoped from a single team to a full program.</div>
           <div class="tier-range" id="tier-arch">—</div>
           <div class="tier-hours">Est. 20–40 hrs</div>
-        </div>
-        <div class="tier-card">
-          <div class="tier-name">Collection Vault Audit</div>
-          <div class="tier-desc">Entry-tier: audit + redesign of a single analyst's knowledge vault. On-ramp into Collection Architecture Review.</div>
-          <div class="tier-range" id="tier-vault">—</div>
-          <div class="tier-hours">Est. 8–15 hrs</div>
         </div>
       </div>
     </div>
@@ -545,7 +539,7 @@
             </thead>
             <tbody>
               <tr>
-                <td><span class="role-label bright">You (AIS)</span></td>
+                <td><span class="role-label bright">You</span></td>
                 <td><input type="number" id="l0-days" value="4" min="0" step="0.5" oninput="recalcJQ()"></td>
                 <td><input type="number" id="l0-rate" value="" placeholder="auto" min="0" step="1" oninput="recalcJQ()" title="Leave blank to use fully-loaded floor rate"></td>
                 <td><input type="number" id="l0-hours" value="32" min="0" step="1" oninput="recalcJQ()"></td>
@@ -726,7 +720,7 @@
       Invoice 1 before work begins. Scope must be defined before quote is sent.<br>
       Source: <a href="https://www.holloway.com/b/art-for-money" target="_blank">Art for Money</a> (Ardelean) + AFM Fee Calculator.
     </div>
-    <div class="footer-sig">AIS // Internal Tools<br>Not for distribution</div>
+    <div class="footer-sig">Applied // Internal Tools<br>Not for distribution</div>
   </footer>
 
 </div><!-- /wrapper -->
@@ -819,7 +813,6 @@
     set('tier-audit', tierCalc(15, 25));
     set('tier-brief', tierCalc(10, 20));
     set('tier-arch',  tierCalc(20, 40));
-    set('tier-vault', tierCalc(8, 15));
 
     // Also update JQT
     recalcJQ();
