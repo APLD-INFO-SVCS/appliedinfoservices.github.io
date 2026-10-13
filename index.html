@@ -99,7 +99,29 @@
     @media (max-width: 700px) {
       .svc-grid { grid-template-columns: 1fr; }
     }
+    /* ── Send a Question block: single centered column, facts in a row ── */
+    #consultation .consultation-inner { grid-template-columns: 1fr; max-width: 860px; }
+    #consultation .consultation-lede { position: static; }
+    #consultation .consultation-meta { flex-direction: row; flex-wrap: wrap; gap: var(--f4); }
+    #consultation .consultation-meta-item { flex: 1 1 14rem; }
+    #consultation .consultation-meta-value--signal { font-size: var(--f2); }
+    #consultation .consultation-cta { margin-top: var(--f4); }
   </style>
+  <script type="application/ld+json">
+  {"@context": "https://schema.org", "@graph": [
+  {
+    "@type": "Organization",
+    "@id": "https://www.appliedinformationservices.com/#org",
+    "name": "Applied Information Services, LLC",
+    "url": "https://www.appliedinformationservices.com/",
+    "logo": "https://www.appliedinformationservices.com/apple-touch-icon.png",
+    "email": "info@appliedinformationservices.com",
+    "foundingDate": "2025",
+    "address": {"@type": "PostalAddress", "streetAddress": "1001 S Main St Ste 11354", "addressLocality": "Kalispell", "addressRegion": "MT", "postalCode": "59901", "addressCountry": "US"},
+    "sameAs": ["https://x.com/APLD_IIS", "https://www.instagram.com/APLD_IIS", "https://jann.substack.com"]
+  }
+  ]}
+  </script>
 </head>
 <body class="page-home">
   <div id="cookie-banner" class="cookie-banner" hidden>
@@ -116,8 +138,8 @@
     <div class="hero-inner">
       <h1>Intelligence That Drives Decisions</h1>
       <p class="hero-accent">Open-source research and structured analysis for aerospace, defense, and government.</p>
-      <a href="#consultation" class="hero-cta">Schedule a Consultation</a>
-      <span class="hero-trust">$300 consultation — credits in full toward your Intelligence Audit, Program Intelligence Brief, or Collection Architecture engagement. Response within two business days.</span>
+      <a href="research.html#intake" class="hero-cta">Send a Question</a>
+      <span class="hero-trust">$300 sourced research memo, delivered in five business days. Larger questions are quoted first. Reply within two business days.</span>
     </div>
   </section>
 
@@ -188,7 +210,7 @@
 
       <div class="approach-track">
 
-        <!-- Step 01 — Submit a Consultation Request -->
+        <!-- Step 01 — Send the question -->
         <div class="approach-card">
           <span class="approach-step-num">01</span>
           <div class="approach-icon-wrap">
@@ -201,8 +223,8 @@
               <line x1="21" y1="23" x2="24" y2="23" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round"/>
             </svg>
           </div>
-          <h3 class="approach-card-title">Submit a Consultation Request</h3>
-          <p class="approach-card-desc">Describe your intelligence or research requirement using our consultation form. We review every submission and respond within two business days.</p>
+          <h3 class="approach-card-title">Send the question</h3>
+          <p class="approach-card-desc">Describe your question in the research intake and pay a $50 deposit. We review every submission and reply within two business days.</p>
         </div>
 
         <!-- Arrow 01→02 -->
@@ -330,9 +352,9 @@
   <!-- ── Three Ways We Can Help (tier reconciliation) ──────────────────── -->
   <section class="benefits-section">
     <div class="benefits-inner">
-      <span class="benefits-eyebrow">After Your Consultation</span>
+      <span class="benefits-eyebrow">Larger engagements</span>
       <h2 class="benefits-title">Three Ways We Can Help</h2>
-      <p class="naics-subtitle">Every consultation ends with a recommendation for one of three fixed-scope engagements. Your $300 consultation fee credits in full toward whichever one you choose.</p>
+      <p class="naics-subtitle">A larger question is quoted at scope confirmation as one of three fixed-scope engagements, before you pay more. Your deposit or a completed research memo credits toward the one you choose.</p>
 
       <div class="svc-grid">
         <div class="svc-card">
@@ -376,80 +398,28 @@
     </div>
   </section>
 
-  <!-- ── Schedule a Consultation ───────────────────────────────────────── -->
+  <!-- ── Send a Question ───────────────────────────────────────────────── -->
   <section id="consultation" class="consultation-section">
     <div class="consultation-inner">
-
       <div class="consultation-lede">
         <span class="consultation-eyebrow">Get Started</span>
-        <h2 class="consultation-title">Schedule a Consultation</h2>
+        <h2 class="consultation-title">Send a Question</h2>
         <div class="consultation-meta">
           <div class="consultation-meta-item">
-            <span class="consultation-meta-label">Engagement Fee</span>
-            <p class="consultation-meta-value consultation-meta-value--signal">Initial consultation engagements are $300. This covers a scoping session, requirements review, and a written summary of recommended analytical approaches. The $300 fee credits in full toward whichever engagement follows: Intelligence Audit, Program Intelligence Brief, or Collection Architecture.</p>
+            <span class="consultation-meta-label">Price</span>
+            <p class="consultation-meta-value consultation-meta-value--signal">A sourced research memo costs $300. A $50 deposit submits the question and credits toward the price.</p>
           </div>
           <div class="consultation-meta-item">
-            <span class="consultation-meta-label">Response Time</span>
-            <p class="consultation-meta-value consultation-meta-value--signal">We respond to all consultation requests within two business days.</p>
+            <span class="consultation-meta-label">Turnaround</span>
+            <p class="consultation-meta-value consultation-meta-value--signal">Five business days from scope confirmation. We reply within two business days. A larger question is quoted first, before you pay more.</p>
           </div>
           <div class="consultation-meta-item">
             <span class="consultation-meta-label">Contact</span>
             <p class="consultation-meta-value"><a href="mailto:info@appliedinformationservices.com" style="color: var(--color-accent); text-decoration: none;">info@appliedinformationservices.com</a></p>
           </div>
         </div>
+        <p class="consultation-cta"><a href="research.html#intake" class="hero-cta">Send a Question</a></p>
       </div>
-
-      <div class="consultation-form-wrap">
-        <form id="consultation-form" method="POST" action="https://formspree.io/f/xeepawey" novalidate>
-          <input type="hidden" name="_subject" value="New Consultation Request — Applied Information Services">
-          <div class="form-fields">
-            <div class="form-field">
-              <label class="form-label" for="cf-name">Full Name *</label>
-              <input class="form-input" type="text" id="cf-name" name="name" required placeholder="Jane Smith">
-            </div>
-            <div class="form-field">
-              <label class="form-label" for="cf-org">Organization *</label>
-              <input class="form-input" type="text" id="cf-org" name="org" required placeholder="Acme Corporation">
-            </div>
-            <div class="form-field">
-              <label class="form-label" for="cf-email">Email *</label>
-              <input class="form-input" type="email" id="cf-email" name="email" required placeholder="jane@example.com">
-            </div>
-            <div class="form-field">
-              <label class="form-label" for="cf-phone">Phone <span style="font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></label>
-              <input class="form-input" type="tel" id="cf-phone" name="phone" placeholder="+1 (555) 000-0000">
-            </div>
-            <div class="form-field form-field--full">
-              <label class="form-label" for="cf-requirement">Requirement *</label>
-              <textarea class="form-textarea" id="cf-requirement" name="requirement" required placeholder="Briefly describe your intelligence or research requirement, including domain, timeframe, and any relevant context..."></textarea>
-            </div>
-            <div class="form-field form-field--full">
-              <label class="form-label" for="cf-source">How did you hear about us?</label>
-              <select class="form-select" id="cf-source" name="source">
-                <option value="" disabled selected>Select one</option>
-                <option value="jann">JANN Newsletter</option>
-                <option value="search">Web Search</option>
-                <option value="referral">Referral</option>
-                <option value="linkedin">LinkedIn</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
-          </div>
-          <div class="form-footer">
-            <button type="submit" class="form-submit">Submit Request</button>
-            <span class="form-mailto">Or email us: <a href="mailto:info@appliedinformationservices.com">info@appliedinformationservices.com</a></span>
-          </div>
-        </form>
-        <div id="form-confirmation" class="form-confirmation">
-          <div class="form-confirmation-title">Request Received</div>
-          <p class="form-confirmation-body">Thank you for your consultation request. We will review your requirements and respond within two business days. For urgent needs, contact us directly at <a href="mailto:info@appliedinformationservices.com" style="color: var(--color-accent); text-decoration: none;">info@appliedinformationservices.com</a>.</p>
-          <p class="form-confirmation-body" style="margin-top: var(--f3);">To secure your consultation slot, you can pay the $300 engagement fee now — it credits in full toward whichever of the three engagements we recommend:</p>
-          <div style="margin-top: var(--f3);">
-            <a href="https://buy.stripe.com/6oUfZh9PY7iJ1PM3bVbbG01" target="_blank" rel="noopener noreferrer" class="form-submit" style="display:inline-flex; text-decoration:none;">Pay Consultation Fee — $300</a>
-          </div>
-        </div>
-      </div>
-
     </div>
   </section>
 
@@ -470,81 +440,6 @@
           el.textContent = new Date().getFullYear();
         });
       });
-
-    // Consultation form — submit to Formspree, show inline confirmation
-    document.getElementById('consultation-form').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const form = this;
-
-      // Validate required fields
-      const required = [
-        { el: form.querySelector('#cf-name'),        msg: 'Full name is required.' },
-        { el: form.querySelector('#cf-org'),         msg: 'Organization is required.' },
-        { el: form.querySelector('#cf-email'),       msg: 'Email address is required.' },
-        { el: form.querySelector('#cf-requirement'), msg: 'Please describe your requirement.' }
-      ];
-
-      // Clear previous errors
-      form.querySelectorAll('.form-input--error, .form-textarea--error').forEach(el => {
-        el.classList.remove('form-input--error', 'form-textarea--error');
-      });
-      form.querySelectorAll('.form-error-msg').forEach(el => el.remove());
-
-      let valid = true;
-      required.forEach(({ el, msg }) => {
-        const val = el.value.trim();
-        let fieldInvalid = val === '';
-        if (!fieldInvalid && el.type === 'email') {
-          fieldInvalid = !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
-          msg = 'Please enter a valid email address.';
-        }
-        if (fieldInvalid) {
-          el.classList.add(el.tagName === 'TEXTAREA' ? 'form-textarea--error' : 'form-input--error');
-          const errEl = document.createElement('span');
-          errEl.className = 'form-error-msg';
-          errEl.textContent = msg;
-          el.parentNode.appendChild(errEl);
-          if (valid) el.focus();
-          valid = false;
-        }
-      });
-
-      if (!valid) return;
-
-      // Clear errors on input
-      required.forEach(({ el }) => {
-        el.addEventListener('input', function() {
-          this.classList.remove('form-input--error', 'form-textarea--error');
-          const err = this.parentNode.querySelector('.form-error-msg');
-          if (err) err.remove();
-        }, { once: true });
-      });
-
-      const submitBtn = form.querySelector('.form-submit');
-      submitBtn.textContent = 'Sending…';
-      submitBtn.disabled = true;
-
-      fetch(form.action, {
-        method: 'POST',
-        body: new FormData(form),
-        headers: { 'Accept': 'application/json' }
-      })
-      .then(response => {
-        if (response.ok) {
-          form.style.display = 'none';
-          document.getElementById('form-confirmation').classList.add('visible');
-        } else {
-          submitBtn.textContent = 'Submit Request';
-          submitBtn.disabled = false;
-          alert('There was a problem submitting the form. Please email us directly at info@appliedinformationservices.com');
-        }
-      })
-      .catch(() => {
-        submitBtn.textContent = 'Submit Request';
-        submitBtn.disabled = false;
-        alert('There was a problem submitting the form. Please email us directly at info@appliedinformationservices.com');
-      });
-    });
   </script>
 
   <script src="js/cookie-consent.js"></script>

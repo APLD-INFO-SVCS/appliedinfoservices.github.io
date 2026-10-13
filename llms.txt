@@ -6,6 +6,8 @@ Applied Information Services provides open-source intelligence, research, and co
 
 ## Services
 
+- [About](https://appliedinformationservices.com/about.html): Who Applied is, what it does, who uses it, and key facts.
+- [Research](https://appliedinformationservices.com/research.html): Investigative research memo, $300, five business days. Every engagement starts here; larger questions are quoted before you pay more.
 - [Services](https://appliedinformationservices.com/services.html): Full service catalog and engagement model.
 - [FAQ](https://appliedinformationservices.com/faq.html): Answers on tier pricing, fit, differentiation, and engagement timeline.
 - Intelligence Audit ($4,840 starting): Maps existing intelligence practices and delivers a structured gap analysis with prioritized recommendations.
@@ -24,6 +26,17 @@ Applied Information Services provides open-source intelligence, research, and co
 - [JANN](https://appliedinformationservices.com/jann.html): JANN product page.
 - [Labs](https://appliedinformationservices.com/labs/): Applied Labs tools and experiments.
 
+## Key facts
+
+- Company: Applied Information Services, LLC (Montana limited liability company, Kalispell), founded 2025
+- Core offering: investigative research from primary sources and public records
+- Pricing: $300 research memo; tiers from $3,227 / $4,840 / $6,454
+- Terms: fixed scope, price, and timeline agreed in writing per engagement; no retainer required
+- Reply time: two business days
+
 ## Contact
 
 - Email: info@appliedinformationservices.com
+- X: https://x.com/APLD_IIS
+- Instagram: https://www.instagram.com/APLD_IIS
+- Substack: https://jann.substack.com
