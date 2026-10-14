@@ -342,3 +342,14 @@
     flex: 1;
   }
 }
+
+@media (max-width: 700px) {
+  .apv-btn,
+  .apv-field input[type="text"],
+  .apv-field input[type="number"],
+  .apv-field input[type="url"],
+  .apv-field input[type="color"],
+  .apv-field select {
+    min-height: 44px;
+  }
+}

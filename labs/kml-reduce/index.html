@@ -65,7 +65,13 @@
     }
 
     .brand { border-left: 2px solid var(--green); padding-left: 12px; }
-    .brand-name { font-family: var(--disp); font-size: 28px; font-weight: 700; color: var(--green); letter-spacing: .05em; line-height: 1; }
+    .brand-name { margin: 0; font-family: var(--disp); font-size: 28px; font-weight: 700; color: var(--green); letter-spacing: .05em; line-height: 1; }
+    @media (max-width: 767px) {
+      .mode-btn, .vigil-input, .copy-btn, .gen-btn, select.vigil-input { min-height: 44px; }
+      .zoom-btn { min-width: 44px; min-height: 44px; }
+      .brand-back { display: flex; align-items: center; min-height: 44px; margin-bottom: 0; }
+      .preset-btn { min-height: 44px; }
+    }
     .brand-sub  { font-family: var(--ui); font-size: 10px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: var(--txt-1); margin-top: 3px; }
     .brand-back { display: block; font-family: var(--mono); font-size: 10px; color: var(--txt-2); letter-spacing: .08em; margin-bottom: 6px; text-decoration: none; }
     .brand-back:hover { color: var(--txt-1); }
@@ -238,7 +244,7 @@
 <header class="site-header">
   <div class="brand">
     <a class="brand-back" href="/labs/">&larr; APPLIED LABS</a>
-    <div class="brand-name">TRIM</div>
+    <h1 class="brand-name">TRIM</h1>
     <div class="brand-sub">KML Waypoint Reducer</div>
   </div>
   <div class="header-right">
