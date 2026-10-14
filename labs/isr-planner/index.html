@@ -262,6 +262,11 @@
     .copy-btn:hover  { background: rgba(255,183,0,.08); }
     .copy-btn.copied { border-color: var(--green); color: var(--green); }
 
+    .output-meta { flex-wrap: wrap; gap: 8px; }
+    .meta-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    .copy-btn:disabled { opacity: .4; cursor: not-allowed; }
+    .sb-note { font-family: var(--mono); font-size: 10px; color: var(--txt-2); padding-top: 6px; }
+
     .export-wrap { padding-top: 10px; }
     .compliance-section { margin-bottom: 12px; }
   </style>
@@ -350,6 +355,23 @@
               <label class="vigil-label" for="arrival">Arrival ICAO</label>
               <div class="input-wrap">
                 <input type="text" id="arrival" class="vigil-input" placeholder="KDCA" maxlength="4"
+                  autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false">
+              </div>
+            </div>
+          </div>
+
+          <div class="grid2">
+            <div class="field">
+              <label class="vigil-label" for="ac_type">Aircraft Type <span class="opt-tag">OPT</span></label>
+              <div class="input-wrap">
+                <input type="text" id="ac_type" class="vigil-input" placeholder="B738" maxlength="4"
+                  autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false">
+              </div>
+            </div>
+            <div class="field">
+              <label class="vigil-label" for="callsign">Callsign <span class="opt-tag">OPT</span></label>
+              <div class="input-wrap">
+                <input type="text" id="callsign" class="vigil-input" placeholder="PELICAN1" maxlength="8"
                   autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false">
               </div>
             </div>
@@ -474,10 +496,16 @@
 
           <div class="output-meta">
             <span id="waypoint-count" class="wp-count"></span>
-            <button id="copy-btn" class="copy-btn" type="button">
-              <span>⧉</span><span id="copy-label">COPY TO CLIPBOARD</span>
-            </button>
+            <div class="meta-actions">
+              <button id="simbrief-btn" class="copy-btn" type="button" disabled title="Enter departure and arrival ICAO">
+                <span>↗</span><span>OPEN IN SIMBRIEF</span>
+              </button>
+              <button id="copy-btn" class="copy-btn" type="button">
+                <span>⧉</span><span id="copy-label">COPY TO CLIPBOARD</span>
+              </button>
+            </div>
           </div>
+          <div class="sb-note">SimBrief opens in a new tab and needs a SimBrief or Navigraph login. Aircraft type and callsign are optional.</div>
         </div>
 
       </div>
@@ -1000,9 +1028,11 @@ const switchTab = name => {
 };
 document.querySelectorAll('.tab-btn').forEach(btn => btn.addEventListener('click', () => switchTab(btn.dataset.tab)));
 
+let lastWps = null, lastSummary = '';
+
 // ── Form submit ───────────────────────────────────────────────────────────────
 
-const showError  = msg => { const el = document.getElementById('form-error'); el.textContent = msg; el.hidden = false; };
+const showError  = msg => { lastWps = null; lastSummary = ''; syncSimbrief(); const el = document.getElementById('form-error'); el.textContent = msg; el.hidden = false; };
 const clearError = ()  => { const el = document.getElementById('form-error'); el.textContent = '';  el.hidden = true; };
 
 document.getElementById('planner-form').addEventListener('submit', e => {
@@ -1125,6 +1155,7 @@ document.getElementById('planner-form').addEventListener('submit', e => {
       document.querySelector('.tab-btn[data-tab="arcbrief"]').textContent = 'ARC BRIEF';
     }
 
+    lastWps = wps; lastSummary = summary;
     document.getElementById('mission-summary').textContent = summary;
     document.getElementById('accuracy-badge').textContent  = badge;
     document.getElementById('waypoint-count').textContent  = `${wps.length} waypoints`;
@@ -1164,6 +1195,7 @@ document.getElementById('planner-form').addEventListener('submit', e => {
     }
 
     document.getElementById('output-panel').hidden = false;
+    syncSimbrief();
     switchTab('skyvector');
     btn.disabled = false;
     document.getElementById('gen-label').textContent = 'GENERATE ORBIT';
@@ -1187,6 +1219,33 @@ document.getElementById('copy-btn').addEventListener('click', () => {
     try { document.execCommand('copy'); onCopied(); } catch {}
   });
 });
+
+// ── SimBrief dispatch redirect ────────────────────────────────────────────────
+// https://forum.navigraph.com/t/dispatch-redirect-guide/5299
+const simbriefUrl = p => 'https://dispatch.simbrief.com/options/custom?' +
+  new URLSearchParams(Object.entries(p).filter(([, v]) => v)).toString().replace(/\+/g, '%20');
+
+const sbBtn = document.getElementById('simbrief-btn');
+const sbParams = () => ({
+  orig:     document.getElementById('departure').value.trim().toUpperCase(),
+  dest:     document.getElementById('arrival').value.trim().toUpperCase(),
+  type:     document.getElementById('ac_type').value.trim().toUpperCase(),
+  callsign: document.getElementById('callsign').value.trim().toUpperCase(),
+  fl:       document.getElementById('altitude_ft').value.trim() !== '' ? String(Math.round(parseFloat(document.getElementById('altitude_ft').value)) || '') : '',
+  route:    lastWps ? formatSimBrief(lastWps) : '',
+  manualrmk: lastSummary,
+});
+const syncSimbrief = () => {
+  const p = sbParams();
+  sbBtn.disabled = !(p.orig.length === 4 && p.dest.length === 4 && p.route);
+};
+['departure','arrival','ac_type','callsign'].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) el.addEventListener('input', syncSimbrief);
+});
+sbBtn.addEventListener('click', () => window.open(simbriefUrl(sbParams()), '_blank', 'noopener'));
+syncSimbrief();
+['altitude_ft'].forEach(id => document.getElementById(id).addEventListener('input', syncSimbrief));
 </script>
 </body>
 </html>
