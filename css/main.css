@@ -37,6 +37,8 @@ html {
   --color-text-primary:   #1a1f2e;
   --color-text-secondary: #4a5568;
   --color-text-muted:     #8892a4;
+  --color-text-muted-on-light: #667085;   /* 4.6:1 on --color-surface-alt, for muted text on light surfaces */
+  --color-accent-text:    #8a6a1a;        /* gold for text on light surfaces, 4.7:1 on --color-surface-alt */
   --color-text-nav:       #e8ecf4;
 
   /* Borders */
@@ -686,7 +688,7 @@ footer::after {
 .naics-code {
   font-family: var(--font-mono);
   font-size: var(--f2);
-  color: var(--color-primary);
+  color: var(--color-accent);
   letter-spacing: 0.05em;
   flex-shrink: 0;
 }
@@ -935,7 +937,7 @@ footer::after {
   font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.25em;
-  color: var(--color-accent);
+  color: var(--color-accent-text);
   margin-bottom: var(--f2);
 }
 
@@ -987,7 +989,7 @@ footer::after {
   font-family: var(--font-mono);
   font-size: var(--f5);
   font-weight: 400;
-  color: rgba(201, 168, 76, 0.4);
+  color: rgba(201, 168, 76, 0.6);
   letter-spacing: 0.05em;
   line-height: 1;
   margin-bottom: calc(-1 * var(--f2));
