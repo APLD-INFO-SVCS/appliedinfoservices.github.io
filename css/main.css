@@ -746,15 +746,6 @@ footer::after {
   padding-top: var(--f3);
 }
 
-.capability-num {
-  font-family: var(--font-mono);
-  font-size: var(--f3);
-  font-weight: 400;
-  color: rgba(201, 168, 76, 0.5);
-  letter-spacing: 0.1em;
-  line-height: 1;
-}
-
 .capability-label {
   font-size: var(--f2);
   font-weight: 700;
@@ -996,7 +987,7 @@ footer::after {
   font-family: var(--font-mono);
   font-size: var(--f5);
   font-weight: 400;
-  color: rgba(201, 168, 76, 0.18);
+  color: rgba(201, 168, 76, 0.4);
   letter-spacing: 0.05em;
   line-height: 1;
   margin-bottom: calc(-1 * var(--f2));
@@ -1753,6 +1744,7 @@ h1.svc-doc-type {
 
 .cookie-banner-text {
   margin: 0;
+  color: var(--color-text-nav);
   font-size: 0.9rem;
   max-width: 60ch;
 }
