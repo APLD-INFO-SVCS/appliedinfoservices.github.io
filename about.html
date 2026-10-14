@@ -26,7 +26,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700&family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/main.css?v=13">
+  <link rel="stylesheet" href="css/main.css?v=14">
 
   <style>
     .abt-body { background: var(--color-surface-alt); padding: var(--f4) 0 var(--f6); }
@@ -51,7 +51,7 @@
 
     .abt-section-label {
       font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase;
-      color: var(--color-accent); display: flex; align-items: center; gap: var(--f2);
+      color: var(--color-accent-text); display: flex; align-items: center; gap: var(--f2);
       margin: var(--f5) 0 var(--f3); padding-bottom: 0; line-height: normal; font-weight: 400;
     }
     .abt-section-label::after {
@@ -72,7 +72,7 @@
     }
     .abt-card p:last-child { margin-bottom: 0; }
     .abt-card a, .abt-body li a, .abt-lead a, .abt-facts a { color: var(--color-primary); }
-    .abt-price { font-family: var(--font-mono); color: var(--color-accent); }
+    .abt-price { font-family: var(--font-mono); color: var(--color-accent-text); }
     .abt-list { margin: 0 0 var(--f3); padding-left: var(--f4); }
     .abt-list li { margin-bottom: var(--f1); }
 
@@ -139,7 +139,7 @@
   <div class="abt-band">
     <div class="abt-band-inner">
       <div class="abt-domain-tags">Defense &middot; Intelligence &middot; Aerospace</div>
-      <div class="abt-doc-type">About Applied</div>
+      <h1 class="abt-doc-type">About Applied</h1>
     </div>
   </div>
   <div class="abt-band-rule"></div>
@@ -156,7 +156,7 @@
 
       <div class="abt-card">
         <h3>Investigative Research</h3>
-        <p><span class="abt-price">$300</span> for a sourced written memo, delivered in five business days. You send a question,
+        <p><span class="abt-price">$300</span> for a sourced written memo, delivered five business days after scope confirmation. You send a question,
         we research it from filings, registrations, court documents, and datasets, and you get the findings with a
         confidence rating on each one. <a href="research.html">See how the memo works</a>.</p>
       </div>
@@ -224,7 +224,7 @@
         <a href="mailto:info@appliedinformationservices.com">info@appliedinformationservices.com</a>.</p>
         <p><strong>Response time.</strong> Two business days.</p>
         <p><strong>Who you work with.</strong> The founder, directly.</p>
-        <p><strong>Turnaround.</strong> Five business days for a research memo. Larger engagements set their timeline in the written scoping summary.</p>
+        <p><strong>Turnaround.</strong> Five business days from scope confirmation for a research memo. Larger engagements set their timeline in the written scoping summary.</p>
       </div>
       <ol class="abt-list">
         <li>Send your question through the research intake with a $50 deposit.</li>
@@ -267,7 +267,7 @@
       </div>
       <div class="abt-card">
         <h3>How long does it take?</h3>
-        <p>A research memo takes five business days. Applied replies to every inquiry within two business days.</p>
+        <p>A research memo takes five business days from scope confirmation. Applied replies to every inquiry within two business days.</p>
       </div>
       <div class="abt-card">
         <h3>Does Applied use classified or insider information?</h3>
@@ -299,5 +299,6 @@
   </script>
 
   <script src="js/cookie-consent.js"></script>
+  <script src="js/nav-menu.js"></script>
 </body>
 </html>

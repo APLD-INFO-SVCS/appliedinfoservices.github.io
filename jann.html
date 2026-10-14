@@ -26,7 +26,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700&family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/main.css?v=13">
+  <link rel="stylesheet" href="css/main.css?v=14">
 
   <style>
     /* ── Page layout ── */
@@ -66,13 +66,6 @@
       letter-spacing: -0.01em;
       line-height: 1.2;
     }
-    .jann-classification {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: rgba(201, 168, 76, 0.65);
-    }
     .jann-band-rule {
       height: 2px;
       background: var(--color-accent);
@@ -102,7 +95,7 @@
       font-size: 11px;
       letter-spacing: 0.25em;
       text-transform: uppercase;
-      color: var(--color-accent);
+      color: var(--color-accent-text);
       display: flex;
       align-items: center;
       gap: var(--f2);
@@ -174,7 +167,7 @@
       font-family: var(--font-mono);
       font-size: 11px;
       letter-spacing: 0.06em;
-      color: rgba(232, 236, 244, 0.4);
+      color: rgba(232, 236, 244, 0.7);
       line-height: 1.618;
       max-width: none;
       margin: 0;
@@ -218,8 +211,7 @@
   <div class="jann-band">
     <div class="jann-band-inner">
       <div class="jann-domain-tags">Aerospace &middot; Defense &middot; Intelligence &middot; OSINT</div>
-      <div class="jann-doc-type">JANN &mdash; Joint AEROSINT News Network</div>
-      <div class="jann-classification">Open-Source Analytical Publication &mdash; Applied Information Services</div>
+      <h1 class="jann-doc-type">JANN: Joint AEROSINT News Network</h1>
     </div>
   </div>
   <div class="jann-band-rule"></div>
@@ -253,10 +245,9 @@
       <div class="jann-card">
         <p>JANN functions as Applied&rsquo;s published analytical record. Where Applied engagements
         are client-privileged, JANN represents the open-source layer: verified
-        findings, documented methodologies, and signals of record for the defense
-        and intelligence community.</p>
-        <p>Subscribers include analysts, contractors, program managers, and researchers
-        operating across the defense industrial base and the intelligence community.</p>
+        findings, documented methods, and a record of what we observed, written
+        for aerospace, defense, and intelligence readers, from pilots and mechanics
+        to government counsel and program managers.</p>
       </div>
 
       <!-- Press -->
@@ -310,6 +301,7 @@
   </script>
 
   <script src="js/cookie-consent.js"></script>
+  <script src="js/nav-menu.js"></script>
 
 </body>
 </html>

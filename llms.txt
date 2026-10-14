@@ -7,7 +7,7 @@ Applied Information Services provides open-source intelligence, research, and co
 ## Services
 
 - [About](https://appliedinformationservices.com/about.html): Who Applied is, what it does, who uses it, and key facts.
-- [Research](https://appliedinformationservices.com/research.html): Investigative research memo, $300, five business days. Every engagement starts here; larger questions are quoted before you pay more.
+- [Research](https://appliedinformationservices.com/research.html): Investigative research memo, $300, five business days from scope confirmation. Every engagement starts here; larger questions are quoted before you pay more.
 - [Services](https://appliedinformationservices.com/services.html): Full service catalog and engagement model.
 - [FAQ](https://appliedinformationservices.com/faq.html): Answers on tier pricing, fit, differentiation, and engagement timeline.
 - Intelligence Audit ($4,840 starting): Maps existing intelligence practices and delivers a structured gap analysis with prioritized recommendations.
