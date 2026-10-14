@@ -26,7 +26,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/main.css?v=13">
+  <link rel="stylesheet" href="css/main.css?v=14">
 
   <style>
     /* ── Tier reconciliation grid (mirrors services.html service cards) ── */
@@ -50,7 +50,7 @@
       font-size: var(--f4);
       font-weight: 400;
       letter-spacing: 0.15em;
-      color: rgba(201, 168, 76, 0.35);
+      color: var(--color-accent-text);
       line-height: 1;
     }
     .svc-name {
@@ -63,7 +63,7 @@
     .svc-tagline {
       font-size: var(--f2);
       font-weight: 500;
-      color: var(--color-accent);
+      color: var(--color-accent-text);
       font-style: italic;
     }
     .svc-desc {
@@ -83,7 +83,7 @@
       font-size: 10px;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--color-text-muted);
+      color: var(--color-text-muted-on-light);
     }
     .svc-price {
       font-size: var(--f3);
@@ -139,26 +139,23 @@
       <h1>Intelligence That Drives Decisions</h1>
       <p class="hero-accent">Open-source research and structured analysis for aerospace, defense, and government.</p>
       <a href="research.html#intake" class="hero-cta">Send a Question</a>
-      <span class="hero-trust">$300 sourced research memo, delivered in five business days. Larger questions are quoted first. Reply within two business days.</span>
+      <span class="hero-trust">$300 sourced research memo, delivered five business days after scope confirmation. Larger questions are quoted first. Reply within two business days.</span>
     </div>
   </section>
 
   <section class="capabilities-strip">
     <div class="capabilities-inner">
       <div class="capability-col">
-        <span class="capability-num">01</span>
         <span class="capability-label">Open-Source Research &amp; Monitoring</span>
-        <p class="capability-desc">Open-source research and monitoring across aerospace, defense, and government domains.</p>
+        <p class="capability-desc">We check filings, registrations, court records and datasets for one question and give each finding a confidence rating.</p>
       </div>
       <div class="capability-col">
-        <span class="capability-num">02</span>
         <span class="capability-label">Structured Analysis &amp; Synthesis</span>
-        <p class="capability-desc">Structured multi-source analysis and synthesis to surface decision-ready insights.</p>
+        <p class="capability-desc">We compare several sources on the same question and report where they agree and where they do not.</p>
       </div>
       <div class="capability-col">
-        <span class="capability-num">03</span>
         <span class="capability-label">Advisory &amp; Strategic Consulting</span>
-        <p class="capability-desc">Expert advisory services tailored to complex technical and organizational challenges, delivered in compliance with applicable U.S. law.</p>
+        <p class="capability-desc">Larger questions get a written scope and a price before any work starts. All work follows U.S. export control and sanctions law.</p>
       </div>
     </div>
   </section>
@@ -172,12 +169,12 @@
 
         <div class="bento-item bento-item--wide">
           <div class="bento-item-title">Intelligence Advantage</div>
-          <p class="bento-item-desc">Fuse open-source data streams into coherent intelligence products covering complex operational and acquisition domains.</p>
+          <p class="bento-item-desc">We read public records and write up what they show, in a memo you can hand to someone else.</p>
         </div>
 
         <div class="bento-item">
           <div class="bento-item-title">Operational Clarity</div>
-          <p class="bento-item-desc">Structured, decision-ready reports built from your complex information.</p>
+          <p class="bento-item-desc">Every claim in the memo names its source and carries a confidence rating.</p>
         </div>
 
         <div class="bento-item">
@@ -192,7 +189,7 @@
 
         <div class="bento-item">
           <div class="bento-item-title">Tailored Solutions</div>
-          <p class="bento-item-desc">Custom research and reporting frameworks aligned to your mission requirements and organizational structure.</p>
+          <p class="bento-item-desc">Priced per question. The $300 memo covers one sourced question, and larger work is quoted first.</p>
         </div>
 
       </div>
@@ -334,7 +331,7 @@
 
     <div class="content-section products-section">
       <h2>Our Products</h2>
-      <p>We develop tailored research and advisory products aligned to your mission requirements. All engagements are subject to applicable U.S. export control laws, sanctions regulations, and compliance requirements. Contact us to discuss how we can support your needs.</p>
+      <p>Research memos and advisory work, each scoped to one question. All engagements are subject to applicable U.S. export control laws, sanctions regulations, and compliance requirements. Contact us to discuss how we can support your needs.</p>
       <div class="project-buttons" style="margin-top: var(--f3);">
         <a href="mailto:info@appliedinformationservices.com">Contact Us</a>
       </div>
@@ -443,6 +440,7 @@
   </script>
 
   <script src="js/cookie-consent.js"></script>
+  <script src="js/nav-menu.js"></script>
 
 </body>
 </html>

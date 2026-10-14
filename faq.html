@@ -26,7 +26,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700&family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/main.css?v=13">
+  <link rel="stylesheet" href="css/main.css?v=14">
 
   <style>
     /* ── Page body ── */
@@ -66,13 +66,6 @@
       letter-spacing: -0.01em;
       line-height: 1.2;
     }
-    .faq-classification {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: rgba(201, 168, 76, 0.65);
-    }
     .faq-band-rule {
       height: 2px;
       background: var(--color-accent);
@@ -95,7 +88,7 @@
       font-size: 11px;
       letter-spacing: 0.25em;
       text-transform: uppercase;
-      color: var(--color-accent);
+      color: var(--color-accent-text);
       display: flex;
       align-items: center;
       gap: var(--f2);
@@ -173,7 +166,7 @@
     }
     .faq-tier-price {
       font-family: var(--font-mono);
-      color: var(--color-accent);
+      color: var(--color-accent-text);
     }
     .faq-answer ol {
       margin: 0 0 var(--f2);
@@ -228,8 +221,7 @@
   <div class="faq-band">
     <div class="faq-band-inner">
       <div class="faq-domain-tags">Defense &middot; Intelligence &middot; Aerospace</div>
-      <div class="faq-doc-type">Frequently Asked Questions</div>
-      <div class="faq-classification">Proprietary &amp; Confidential</div>
+      <h1 class="faq-doc-type">Frequently Asked Questions</h1>
     </div>
   </div>
   <div class="faq-band-rule"></div>
@@ -248,19 +240,19 @@
       <details class="faq-item" open>
         <summary class="faq-question">What does each service tier cost?</summary>
         <div class="faq-answer">
-          <p><span class="faq-tier-name">Intelligence Audit</span> &mdash; <span class="faq-tier-price">$4,840 starting</span><br>
+          <p><span class="faq-tier-name">Intelligence Audit</span>: <span class="faq-tier-price">$4,840 starting</span><br>
           Applied maps your existing intelligence practices: what you're collecting, where it lives, how it reaches
           decision-makers. You get a structured gap analysis with prioritized recommendations. Low commitment, high
           clarity. This is the first paid engagement and the natural foundation for everything that follows.
           <strong>Deliverable:</strong> findings brief + recommendations report.</p>
 
-          <p><span class="faq-tier-name">Program Intelligence Brief</span> &mdash; <span class="faq-tier-price">$3,227 starting</span><br>
+          <p><span class="faq-tier-name">Program Intelligence Brief</span>: <span class="faq-tier-price">$3,227 starting</span><br>
           A structured OSINT deep-dive on one platform, program, contract vehicle, or competitor organization.
           Sourced from open regulatory filings, aviation registries, government procurement databases, and Applied's
           curated aerospace intelligence network. Scope and deliverable are fixed before work starts.
           <strong>Deliverable:</strong> structured intelligence brief, sourced.</p>
 
-          <p><span class="faq-tier-name">Collection Architecture</span> &mdash; <span class="faq-tier-price">$6,454 starting</span><br>
+          <p><span class="faq-tier-name">Collection Architecture</span>: <span class="faq-tier-price">$6,454 starting</span><br>
           For teams and organizations ready to build or formalize a permanent intelligence capability. We assess your sources, tools, collection workflows, and dissemination pipeline, then deliver a practical blueprint for a sustainable, in-house OSINT function built to your operational tempo and resource constraints. Scoped at the consultation, from a single team to a full program.
           <strong>Deliverable:</strong> assessment report + architecture blueprint.</p>
 
@@ -369,5 +361,6 @@
   </script>
 
   <script src="js/cookie-consent.js"></script>
+  <script src="js/nav-menu.js"></script>
 </body>
 </html>

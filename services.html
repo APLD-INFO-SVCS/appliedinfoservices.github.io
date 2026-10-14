@@ -26,7 +26,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700&family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/main.css?v=13">
+  <link rel="stylesheet" href="css/main.css?v=14">
 
   <style>
     /* ── Page body ── */
@@ -66,13 +66,6 @@
       letter-spacing: -0.01em;
       line-height: 1.2;
     }
-    .svc-classification {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: rgba(201, 168, 76, 0.65);
-    }
     .svc-band-rule {
       height: 2px;
       background: var(--color-accent);
@@ -99,7 +92,7 @@
       font-size: 11px;
       letter-spacing: 0.25em;
       text-transform: uppercase;
-      color: var(--color-accent);
+      color: var(--color-accent-text);
       display: flex;
       align-items: center;
       gap: var(--f2);
@@ -136,7 +129,7 @@
       font-size: var(--f4);
       font-weight: 400;
       letter-spacing: 0.15em;
-      color: rgba(201, 168, 76, 0.35);
+      color: var(--color-accent-text);
       line-height: 1;
     }
     .svc-name {
@@ -149,7 +142,7 @@
     .svc-tagline {
       font-size: var(--f2);
       font-weight: 500;
-      color: var(--color-accent);
+      color: var(--color-accent-text);
       font-style: italic;
     }
     .svc-desc {
@@ -179,7 +172,7 @@
       font-size: 10px;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--color-text-muted);
+      color: var(--color-text-muted-on-light);
     }
     .svc-meta-val {
       font-size: var(--f2);
@@ -190,7 +183,7 @@
       font-size: 10px;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--color-text-muted);
+      color: var(--color-text-muted-on-light);
       margin-top: var(--f1);
     }
     .svc-price {
@@ -257,7 +250,7 @@
       font-size: 11px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--color-text-muted);
+      color: var(--color-text-muted-on-light);
     }
     .svc-doc-footer-right {
       font-size: var(--f2);
@@ -266,7 +259,7 @@
       line-height: 1.7;
     }
     .svc-doc-footer-right a {
-      color: var(--color-accent);
+      color: var(--color-accent-text);
       text-decoration: none;
     }
     .svc-doc-footer-right a:hover {
@@ -317,8 +310,7 @@
   <div class="svc-band">
     <div class="svc-band-inner">
       <div class="svc-domain-tags">Defense &middot; Intelligence &middot; Aerospace</div>
-      <div class="svc-doc-type">Service Tiers &amp; Engagement Terms</div>
-      <div class="svc-classification">Public Reference &mdash; Applied Information Services</div>
+      <h1 class="svc-doc-type">Service Tiers &amp; Engagement Terms</h1>
     </div>
   </div>
   <div class="svc-band-rule"></div>
@@ -346,7 +338,7 @@
       <div class="svc-grid">
 
         <div class="svc-card">
-          <div class="svc-num">SVC &mdash; 01</div>
+          <div class="svc-num">SVC 01</div>
           <h3 class="svc-name">Intelligence<br>Audit</h3>
           <div class="svc-tagline">First paid engagement.</div>
           <p class="svc-desc">
@@ -366,7 +358,7 @@
         </div>
 
         <div class="svc-card">
-          <div class="svc-num">SVC &mdash; 02</div>
+          <div class="svc-num">SVC 02</div>
           <h3 class="svc-name">Program<br>Intelligence Brief</h3>
           <div class="svc-tagline">Targeted open-source depth.</div>
           <p class="svc-desc">
@@ -387,7 +379,7 @@
         </div>
 
         <div class="svc-card">
-          <div class="svc-num">SVC &mdash; 03</div>
+          <div class="svc-num">SVC 03</div>
           <h3 class="svc-name">Collection<br>Architecture</h3>
           <div class="svc-tagline">For organizations building to last.</div>
           <p class="svc-desc">
@@ -505,5 +497,6 @@
   </script>
 
   <script src="js/cookie-consent.js"></script>
+  <script src="js/nav-menu.js"></script>
 </body>
 </html>
