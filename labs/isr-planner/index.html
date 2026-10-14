@@ -65,7 +65,12 @@
     }
 
     .brand { border-left: 2px solid var(--green); padding-left: 12px; }
-    .brand-name { font-family: var(--disp); font-size: 28px; font-weight: 700; color: var(--green); letter-spacing: .05em; line-height: 1; }
+    .brand-name { margin: 0; font-family: var(--disp); font-size: 28px; font-weight: 700; color: var(--green); letter-spacing: .05em; line-height: 1; }
+    @media (max-width: 767px) {
+      .mode-btn, .vigil-input, .copy-btn, .gen-btn, select.vigil-input { min-height: 44px; }
+      .zoom-btn { min-width: 44px; min-height: 44px; }
+      .brand-back { padding: 14px 0 12px; margin-bottom: 0; }
+    }
     .brand-sub  { font-family: var(--ui); font-size: 10px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: var(--txt-1); margin-top: 3px; }
 
     .header-right { text-align: right; }
@@ -277,7 +282,7 @@
 
 <header class="site-header">
   <div class="brand">
-    <div class="brand-name">VIGIL</div>
+    <h1 class="brand-name">VIGIL</h1>
     <div class="brand-sub">ISR Flight Pattern Planner</div>
   </div>
   <div class="header-right">
