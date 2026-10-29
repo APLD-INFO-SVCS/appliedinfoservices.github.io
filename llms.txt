@@ -1,18 +1,14 @@
 # Applied Information Services
 
-> Research, analysis, and consulting. Information solutions for complex domains.
+> A consulting and services firm.
 
-Applied Information Services provides open-source intelligence, research, and consulting services for aerospace, defense, and government domains.
+Applied Information Services, LLC is a consulting and services firm and the publisher of JANN, the Joint AEROSINT News Network.
 
-## Services
+## Pages
 
-- [About](https://appliedinformationservices.com/about.html): Who Applied is, what it does, who uses it, and key facts.
-- [Research](https://appliedinformationservices.com/research.html): Investigative research memo, $300, five business days from scope confirmation. Every engagement starts here; larger questions are quoted before you pay more.
-- [Services](https://appliedinformationservices.com/services.html): Full service catalog and engagement model.
-- [FAQ](https://appliedinformationservices.com/faq.html): Answers on tier pricing, fit, differentiation, and engagement timeline.
-- Intelligence Audit ($4,840 starting): Maps existing intelligence practices and delivers a structured gap analysis with prioritized recommendations.
-- Program Intelligence Brief ($3,227 starting): A structured OSINT deep-dive on a specific platform, program, contract vehicle, or competitor organization.
-- Collection Architecture ($6,454 starting): Assessment and blueprint for building or formalizing a permanent in-house OSINT function, scoped from a single team to a full program.
+- [About](https://appliedinformationservices.com/about.html): What Applied is, and key facts.
+- [FAQ](https://appliedinformationservices.com/faq.html): Frequently asked questions.
+- [JANN](https://appliedinformationservices.com/jann.html): JANN and The AEROSINT, Applied's publication.
 
 ## Industry Classifications
 
@@ -21,18 +17,10 @@ Applied Information Services provides open-source intelligence, research, and co
 - NAICS 541618 — Other Management Consulting Services: Program and acquisition decision support; advisory engagements spanning organizational and operational challenges.
 - NAICS 611430 — Professional & Management Development Training: Structured training programs for analysts, program managers, and intelligence professionals.
 
-## Products
-
-- [JANN](https://appliedinformationservices.com/jann.html): JANN product page.
-- [Labs](https://appliedinformationservices.com/labs/): Applied Labs tools and experiments.
-
 ## Key facts
 
 - Company: Applied Information Services, LLC (Montana limited liability company, Kalispell), founded 2025
-- Core offering: investigative research from primary sources and public records
-- Pricing: $300 research memo; tiers from $3,227 / $4,840 / $6,454
-- Terms: fixed scope, price, and timeline agreed in writing per engagement; no retainer required
-- Reply time: two business days
+- Reply time: three business days
 
 ## Contact
 
