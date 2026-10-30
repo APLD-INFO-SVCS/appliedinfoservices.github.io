@@ -1935,7 +1935,7 @@ h1.svc-doc-type {
 .site-plain .hero-inner { width: 100%; max-width: 860px; }
 .site-plain .page-content { max-width: 860px; margin: 0 auto; padding: 0 0 var(--f5); }
 .site-plain .abt-lead { font-size: 15px; padding-top: var(--f3); }
-@media (min-width: 701px) {
+@media (min-width: 981px) {
   .site-plain [class$="-inner"]:not(.subnav-banner-inner):not(.hero-inner) { padding-left: 0; padding-right: 0; }
 }
 @media (max-width: 700px) {
@@ -1962,3 +1962,53 @@ h1.svc-doc-type {
   font-weight: 400;
   text-decoration: underline;
 }
+
+/* Plain site layer: fixed-width nav, compact masthead and bands */
+@media (min-width: 701px) {
+  .site-plain .nav-bar { padding: 0 max(var(--f5), calc((100% - 860px) / 2)); }
+}
+.site-plain .subnav-banner { padding: var(--f2) var(--f5); }
+.site-plain .subnav-title { font-size: 19px; }
+.site-plain .subnav-tagline { font-size: 11px; color: #a8a59f; }
+.site-plain [class$="-band"] { padding-top: var(--f3); padding-bottom: var(--f2); }
+.site-plain [class$="-body"] { padding-top: var(--f3); padding-bottom: var(--f4); }
+.site-plain .abt-lead { padding-top: 0; padding-bottom: var(--f2); margin-bottom: var(--f2); }
+
+/* Plain footer (shared include, also used by Labs) */
+footer.footer-plain {
+  background: #0c0c0c;
+  border-top: 0;
+  padding: var(--f3) var(--f5);
+  font-family: Verdana, Geneva, Arial, sans-serif;
+}
+footer.footer-plain::before,
+footer.footer-plain::after { display: none; }
+.footer-plain-inner { max-width: 860px; margin: 0 auto; }
+.footer-plain p {
+  font-size: 11px;
+  line-height: 1.6;
+  color: #a8a59f;
+  max-width: none;
+  margin: 0 0 var(--f1);
+}
+.footer-plain a { color: #d7d3cd; }
+.footer-plain a:hover { color: #ffffff; }
+.footer-plain-links { font-size: 12px; }
+.footer-plain-notice { border-top: 1px solid #252925; margin-top: var(--f2); padding-top: var(--f2); }
+.footer-plain-notice p { font-size: 10px; }
+@media (max-width: 700px) {
+  footer.footer-plain { padding: var(--f3); }
+}
+.site-plain .naics-subtitle { margin: var(--f2) 0 var(--f2); }
+@media (max-width: 700px) {
+  .site-plain .project-buttons a,
+  .site-plain .project-buttons .toggle-button { width: auto; }
+}
+.site-plain .project-buttons { align-items: flex-start; }
+.site-plain .project-buttons a { text-align: left; }
+
+.site-plain .cookie-banner a { color: #ffffff; }
+.site-plain .nav-bar a:hover,
+.site-plain .nav-menu a:hover { color: #ffffff; }
+.site-plain .jann-card a { color: var(--color-text-primary); }
+.site-plain [class$="-card"] h2 { font-size: 17px; margin-top: 0; padding-bottom: 0; }
