@@ -4,21 +4,126 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="A consulting and services firm.">
-  <meta name="robots" content="noindex">
-  <title>Applied Information Services</title>
+  <meta name="description" content="Applied Information Services capabilities.">
+  <title>Capabilities | Applied Information Services</title>
 
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
   <link rel="icon" href="favicon-16.png" sizes="16x16" type="image/png">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.appliedinformationservices.com/services.html">
+  <meta property="og:title" content="Capabilities | Applied Information Services">
+  <meta property="og:description" content="Applied Information Services capabilities.">
+  <meta property="og:image" content="https://www.appliedinformationservices.com/img/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Capabilities | Applied Information Services">
+  <meta name="twitter:description" content="Applied Information Services capabilities.">
+  <meta name="twitter:image" content="https://www.appliedinformationservices.com/img/og-image.png">
+
   <!-- Google Analytics: consent-gated, see js/cookie-consent.js -->
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700&family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/main.css?v=14">
 
+  <style>
+    .abt-body { background: var(--color-surface-alt); padding: var(--f4) 0 var(--f6); }
+    .abt-inner { max-width: 860px; margin: 0 auto; padding: 0 var(--f5); }
+
+    .abt-band { background: var(--color-nav); padding: var(--f5) var(--f5) var(--f4); }
+    .abt-band-inner { max-width: 860px; margin: 0 auto; display: flex; flex-direction: column; gap: var(--f2); }
+    .abt-domain-tags {
+      font-family: var(--font-mono); font-size: var(--f2); letter-spacing: 0.25em;
+      text-transform: uppercase; color: var(--color-accent);
+    }
+    .abt-doc-type { font-size: var(--f4); font-weight: 600; color: var(--color-text-nav); letter-spacing: -0.01em; line-height: 1.2; }
+    .abt-band-rule { height: 2px; background: var(--color-accent); }
+
+    .abt-lead {
+      font-size: var(--f3); font-weight: 300; line-height: 1.618;
+      color: var(--color-text-secondary);
+      padding: var(--f5) 0 var(--f4);
+      border-bottom: 1px solid var(--color-border-subtle);
+      margin: 0 0 var(--f4);
+    }
+
+    .abt-section-label {
+      font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--color-accent-text); display: flex; align-items: center; gap: var(--f2);
+      margin: var(--f5) 0 var(--f3); padding-bottom: 0; line-height: normal; font-weight: 400;
+    }
+    .abt-section-label::after {
+      content: ''; flex: 1; height: 1px; background: var(--color-accent); opacity: 0.3;
+      position: static; width: auto;
+    }
+
+    .abt-card {
+      background: var(--color-surface); border: 1px solid var(--color-border-subtle);
+      border-top: 3px solid var(--color-accent); padding: var(--f3) var(--f4); margin-bottom: var(--f3);
+    }
+    .abt-card h3 {
+      margin: 0 0 var(--f1); font-size: var(--f3); font-weight: 700; color: var(--color-text-primary);
+      letter-spacing: -0.01em; line-height: 1.3;
+    }
+    .abt-card p, .abt-body li {
+      font-size: var(--f2); color: var(--color-text-secondary); line-height: 1.618; max-width: none; margin: 0 0 var(--f2);
+    }
+    .abt-card p:last-child { margin-bottom: 0; }
+    .abt-card a, .abt-body li a, .abt-lead a, .abt-facts a { color: var(--color-primary); }
+    .abt-price { font-family: var(--font-mono); color: var(--color-accent-text); }
+    .abt-list { margin: 0 0 var(--f3); padding-left: var(--f4); }
+    .abt-list li { margin-bottom: var(--f1); }
+
+    .abt-facts { background: var(--color-surface); border: 1px solid var(--color-border-subtle); border-top: 3px solid var(--color-accent); margin: 0; }
+    .abt-facts-row {
+      display: grid; grid-template-columns: minmax(0, 14rem) minmax(0, 1fr); gap: var(--f3);
+      padding: var(--f2) var(--f4); border-bottom: 1px solid var(--color-border-subtle);
+    }
+    .abt-facts-row:last-child { border-bottom: none; }
+    .abt-facts dt {
+      font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--color-text-primary); font-weight: 600; padding-top: 2px;
+    }
+    .abt-facts dd { margin: 0; font-size: var(--f2); color: var(--color-text-secondary); line-height: 1.618; overflow-wrap: anywhere; }
+
+    @media (max-width: 700px) {
+      .abt-band { padding: var(--f4) var(--f3) var(--f3); }
+      .abt-inner { padding: 0 var(--f3); }
+      .abt-doc-type { font-size: var(--f3); }
+      .abt-lead { font-size: var(--f2); }
+      .abt-card { padding: var(--f3); }
+      .abt-facts-row { grid-template-columns: 1fr; gap: var(--f1); padding: var(--f2) var(--f3); }
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://www.appliedinformationservices.com/#org",
+        "name": "Applied Information Services, LLC",
+        "url": "https://www.appliedinformationservices.com/",
+        "logo": "https://www.appliedinformationservices.com/apple-touch-icon.png",
+        "email": "info@appliedinformationservices.com",
+        "foundingDate": "2025",
+        "description": "A consulting and services firm for complex domains.",
+        "address": { "@type": "PostalAddress", "streetAddress": "1001 S Main St Ste 11354", "addressLocality": "Kalispell", "addressRegion": "MT", "postalCode": "59901", "addressCountry": "US" },
+        "sameAs": ["https://x.com/APLD_IIS", "https://www.instagram.com/APLD_IIS", "https://jann.substack.com"]
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://www.appliedinformationservices.com/services.html#page",
+        "url": "https://www.appliedinformationservices.com/services.html",
+        "name": "Applied Information Services Capabilities",
+        "about": { "@id": "https://www.appliedinformationservices.com/#org" }
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
   <div id="cookie-banner" class="cookie-banner" hidden>
@@ -31,14 +136,89 @@
 
   <div id="header-placeholder"></div>
 
-  <div class="page-content">
-    <div class="content-section">
-      <h1 class="page-title">Applied Information Services</h1>
-      <p>Applied Information Services is a consulting and services firm.</p>
-      <p>Inquiries: <a href="mailto:info@appliedinformationservices.com">info@appliedinformationservices.com</a></p>
-      <p>Applied responds within three business days.</p>
+  <div class="abt-band">
+    <div class="abt-band-inner">
+      <div class="abt-domain-tags">Defense &middot; Intelligence &middot; Aerospace</div>
+      <h1 class="abt-doc-type">Capabilities</h1>
     </div>
   </div>
+  <div class="abt-band-rule"></div>
+
+  <main class="abt-body">
+    <div class="abt-inner">
+
+      <p class="abt-lead">
+        Applied Information Services is a consulting and services firm. Its capabilities span eight areas.
+      </p>
+
+      <div class="abt-card">
+        <h3>Aerospace Domain Awareness</h3>
+        <ul class="abt-list">
+          <li><strong>Aircraft Research and Documentation.</strong> Registry, ownership, and flight-history research on individual aircraft and fleets.</li>
+          <li><strong>Platform and Fleet Analysis.</strong> Documentation of aircraft types, operators, and the roles they fill.</li>
+          <li><strong>Aviation and Defense Market Research.</strong> Programs, operators, contract activity, and market structure across the aerospace and defense sector.</li>
+          <li><strong>Program and Acquisition Research.</strong> Open-source research on defense and government programs.</li>
+        </ul>
+      </div>
+      <div class="abt-card">
+        <h3>Investigative Research and Due Diligence</h3>
+        <ul class="abt-list">
+          <li><strong>Public Records Research.</strong> Filings, registrations, court documents, and datasets, read at the source.</li>
+          <li><strong>Corporate and Ownership Research.</strong> Entity structures, beneficial ownership, and the relationships between them.</li>
+          <li><strong>Third-Party Due Diligence.</strong> Background research on organizations ahead of a decision.</li>
+        </ul>
+      </div>
+      <div class="abt-card">
+        <h3>Open-Source Intelligence</h3>
+        <ul class="abt-list">
+          <li><strong>Collection and Monitoring.</strong> Structured open-source collection on defined subjects over time.</li>
+          <li><strong>Briefings and Analytic Products.</strong> Findings presented to decision-makers in person or as written assessments, briefs, and reports in standard formats.</li>
+        </ul>
+      </div>
+      <div class="abt-card">
+        <h3>Data, Analytics, and Dissemination</h3>
+        <ul class="abt-list">
+          <li><strong>Data Processing and Analytics.</strong> Collection, cleaning, and analysis of structured and unstructured data.</li>
+          <li><strong>Dissemination.</strong> Delivery of finished analysis formatted to the customer&#x27;s needs.</li>
+        </ul>
+      </div>
+      <div class="abt-card">
+        <h3>Automation, AI, and Machine Learning</h3>
+        <ul class="abt-list">
+          <li><strong>Workflow Automation.</strong> Repetitive work moved to automated systems.</li>
+          <li><strong>Applied Machine Learning.</strong> Models and AI tools applied to defined problems.</li>
+          <li><strong>AI Adoption Support.</strong> Practical integration of AI tools into existing work.</li>
+        </ul>
+      </div>
+      <div class="abt-card">
+        <h3>Systems and Knowledge Management</h3>
+        <ul class="abt-list">
+          <li><strong>Systems and Workflow Design.</strong> Information systems built around how the work is done.</li>
+          <li><strong>Knowledge Management.</strong> Structures that keep an organization&#x27;s research findable and usable.</li>
+          <li><strong>Technical Writing and Editing.</strong> Documentation, procedures, and reports.</li>
+        </ul>
+      </div>
+      <div class="abt-card">
+        <h3>Training and Analyst Development</h3>
+        <ul class="abt-list">
+          <li><strong>Open-Source Intelligence Training.</strong> Instruction in open-source methods for analysts and teams.</li>
+        </ul>
+      </div>
+      <div class="abt-card">
+        <h3>Mission Support</h3>
+        <ul class="abt-list">
+          <li><strong>Special Projects.</strong></li>
+        </ul>
+      </div>
+
+      <h2 class="abt-section-label">Inquiries</h2>
+      <div class="abt-card">
+        <p><a href="mailto:info@appliedinformationservices.com">info@appliedinformationservices.com</a></p>
+        <p>Applied responds within three business days.</p>
+      </div>
+
+    </div>
+  </main>
 
   <div id="footer-placeholder"></div>
 
@@ -59,6 +239,5 @@
 
   <script src="js/cookie-consent.js"></script>
   <script src="js/nav-menu.js"></script>
-
 </body>
 </html>
