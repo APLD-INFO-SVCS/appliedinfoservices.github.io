@@ -1794,3 +1794,221 @@ h1.svc-doc-type {
     min-height: 44px;
   }
 }
+
+/* ══ Plain site layer ════════════════════════════════════════════════════
+   Public pages carry body.site-plain: Applied Print-register colors
+   (Frost, Oil Black, Hurricane), Verdana, flat content, no cards.
+   Labs pages do not carry the class and keep their own styling. */
+
+.site-plain {
+  --color-nav:            #0c0c0c;  /* Oil Black */
+  --color-hero:           #141614;
+  --color-footer:         #0c0c0c;
+  --color-footer-border:  #252925;
+  --color-primary:        #0c0c0c;
+  --color-primary-dark:   #000000;
+  --color-accent:         #89817a;  /* Hurricane */
+  --color-surface:        #fbfaf2;  /* Frost */
+  --color-surface-alt:    #fbfaf2;
+  --color-text-primary:   #0c0c0c;
+  --color-text-secondary: #2f2f2b;
+  --color-text-muted:     #6b6b63;
+  --color-text-muted-on-light: #6b6b63;
+  --color-accent-text:    #6b6b63;
+  --color-text-nav:       #d7d3cd;  /* Gatekeeper White */
+  --color-border-accent:  #89817a;
+  --color-border-subtle:  #d8d6c8;
+  --font-sans: Verdana, Geneva, Arial, sans-serif;
+  --font-mono: Verdana, Geneva, Arial, sans-serif;
+  background: var(--color-surface);
+  font-family: var(--font-sans);
+}
+
+.site-plain a { color: var(--color-text-primary); }
+.site-plain a:hover { color: var(--color-accent-text); }
+.site-plain .nav-bar a,
+.site-plain footer a { color: var(--color-text-nav); }
+
+/* Labels: sentence case, no letter-spacing, no mono */
+.site-plain [class$="-eyebrow"],
+.site-plain [class$="-domain-tags"],
+.site-plain [class$="-section-label"],
+.site-plain .subnav-tagline,
+.site-plain .footer-company-tagline,
+.site-plain .footer-col-label,
+.site-plain .hero-trust,
+.site-plain .abt-facts dt,
+.site-plain .naics-table th {
+  text-transform: none;
+  letter-spacing: normal;
+  font-family: var(--font-sans);
+}
+.site-plain [class$="-domain-tags"] { display: none; }
+.site-plain [class$="-section-label"] {
+  color: var(--color-text-primary);
+  font-size: 15px;
+  font-weight: 700;
+}
+.site-plain [class$="-section-label"]::after { display: none; }
+
+/* Page title bands: light, with one heavy rule under them */
+.site-plain [class$="-band"] { background: var(--color-surface); padding-bottom: var(--f2); }
+.site-plain [class$="-doc-type"] { color: var(--color-text-primary); font-size: 24px; }
+.site-plain [class$="-band-rule"] { background: var(--color-accent); height: 3px; }
+.site-plain [class$="-body"] { background: var(--color-surface); }
+
+/* Flat content: no cards, boxes, shadows, or colored top bars */
+.site-plain .content-section,
+.site-plain [class$="-card"],
+.site-plain .faq-item,
+.site-plain .abt-facts {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  padding: 0;
+  margin-bottom: var(--f3);
+}
+.site-plain .content-section { padding-top: var(--f3); border-top: 1px solid var(--color-border-subtle); }
+.site-plain .abt-facts-row { padding-left: 0; padding-right: 0; }
+.site-plain .faq-question { padding-left: 0; padding-right: 0; font-size: 15px; }
+.site-plain .faq-answer { padding-left: 0; padding-right: 0; }
+.site-plain h2,
+.site-plain h3 { font-size: 17px; letter-spacing: normal; }
+.site-plain h2::after,
+.site-plain h1.page-title::after,
+.site-plain [class$="-title"]::after,
+.site-plain .hero::after,
+.site-plain footer::before,
+.site-plain footer::after { display: none; }
+
+/* Buttons become plain links */
+.site-plain .project-buttons a {
+  display: inline;
+  background: none;
+  color: var(--color-text-primary);
+  padding: 0;
+  min-width: 0;
+  text-transform: none;
+  letter-spacing: normal;
+  font-weight: 400;
+  text-decoration: underline;
+}
+
+/* Capability list on the homepage */
+.site-plain .capability-list { list-style: disc; padding-left: var(--f3); max-width: 680px; }
+.site-plain .capability-list li { font-size: 13px; line-height: 1.618; margin-bottom: var(--f1); color: var(--color-text-secondary); }
+
+/* Homepage photo: a fixed-height banner strip */
+.site-plain section.hero {
+  min-height: 0;
+  height: 233px;
+  background-image:
+    linear-gradient(rgba(12, 12, 12, 0.55), rgba(12, 12, 12, 0.55)),
+    url('../img/hero-earth.jpg');
+  align-items: flex-end;
+  padding: var(--f3) var(--f5);
+}
+.site-plain .hero h1 { font-size: 24px; margin-bottom: var(--f1); }
+.site-plain .hero-accent { margin-bottom: var(--f1); }
+.site-plain .hero-trust { font-size: 11px; color: rgba(215, 211, 205, 0.8); }
+
+/* Section backgrounds flatten to the page */
+.site-plain .benefits-section,
+.site-plain .naics-section { background: var(--color-surface); }
+.site-plain .naics-table { background: transparent; border: 1px solid var(--color-border-subtle); }
+
+@media (max-width: 700px) {
+  .site-plain section.hero { height: 233px; padding: var(--f3); }
+}
+
+/* Plain site layer: alignment and spacing */
+.site-plain [class$="-eyebrow"] { display: none; }
+.site-plain .nav-links a,
+.site-plain .nav-company,
+.site-plain .footer-company-name { text-transform: none; letter-spacing: normal; }
+.site-plain .benefits-section,
+.site-plain .naics-section { padding-top: var(--f4); padding-bottom: var(--f4); }
+.site-plain .benefits-title,
+.site-plain .naics-title { margin-bottom: var(--f2); padding-bottom: 0; font-size: 17px; }
+.site-plain .bento-grid,
+.site-plain .naics-table { margin-top: var(--f2); }
+.site-plain .hero-inner { width: 100%; max-width: 860px; }
+.site-plain .page-content { max-width: 860px; margin: 0 auto; padding: 0 0 var(--f5); }
+.site-plain .abt-lead { font-size: 15px; padding-top: var(--f3); }
+@media (min-width: 981px) {
+  .site-plain [class$="-inner"]:not(.subnav-banner-inner):not(.hero-inner) { padding-left: 0; padding-right: 0; }
+}
+@media (max-width: 700px) {
+  .site-plain .page-content { padding: 0 var(--f3) var(--f5); }
+}
+.site-plain [class$="-card"] p,
+.site-plain [class$="-card"] li,
+.site-plain [class$="-lede"] { color: var(--color-text-secondary); }
+.site-plain [class$="-card"] h3 { font-size: 15px; margin-top: 0; }
+.site-plain [class$="-lede"] { font-size: 15px; }
+.site-plain .jann-subscribe-block { background: transparent; border: 0; padding: 0; }
+.site-plain .jann-subscribe-block p { color: var(--color-text-secondary); }
+.site-plain .jann-lede p { font-size: 15px; }
+.site-plain .crumb,
+.site-plain .footer-disclaimer-title { text-transform: none; letter-spacing: normal; }
+.site-plain .project-buttons { justify-content: flex-start; }
+.site-plain .project-buttons .toggle-button {
+  background: none;
+  color: var(--color-text-primary);
+  padding: 0;
+  min-width: 0;
+  text-transform: none;
+  letter-spacing: normal;
+  font-weight: 400;
+  text-decoration: underline;
+}
+
+/* Plain site layer: fixed-width nav, compact masthead and bands */
+@media (min-width: 701px) {
+  .site-plain .nav-bar { padding: 0 max(var(--f5), calc((100% - 860px) / 2)); }
+}
+.site-plain .subnav-banner { padding: var(--f2) var(--f5); }
+.site-plain .subnav-title { font-size: 19px; }
+.site-plain .subnav-tagline { font-size: 11px; color: #a8a59f; }
+.site-plain [class$="-band"] { padding-top: var(--f3); padding-bottom: var(--f2); }
+.site-plain [class$="-body"] { padding-top: var(--f3); padding-bottom: var(--f4); }
+.site-plain .abt-lead { padding-top: 0; padding-bottom: var(--f2); margin-bottom: var(--f2); }
+
+/* Plain footer (shared include, also used by Labs) */
+footer.footer-plain {
+  background: #0c0c0c;
+  border-top: 0;
+  padding: var(--f3) var(--f5);
+  font-family: Verdana, Geneva, Arial, sans-serif;
+}
+footer.footer-plain::before,
+footer.footer-plain::after { display: none; }
+.footer-plain-inner { max-width: 860px; margin: 0 auto; }
+.footer-plain p {
+  font-size: 11px;
+  line-height: 1.6;
+  color: #a8a59f;
+  max-width: none;
+  margin: 0 0 var(--f1);
+}
+.footer-plain a { color: #d7d3cd; }
+.footer-plain a:hover { color: #ffffff; }
+.footer-plain-links { font-size: 12px; }
+.footer-plain-notice { border-top: 1px solid #252925; margin-top: var(--f2); padding-top: var(--f2); }
+.footer-plain-notice p { font-size: 10px; }
+@media (max-width: 700px) {
+  footer.footer-plain { padding: var(--f3); }
+}
+.site-plain .naics-subtitle { margin: var(--f2) 0 var(--f2); }
+@media (max-width: 700px) {
+  .site-plain .project-buttons a,
+  .site-plain .project-buttons .toggle-button { width: auto; }
+}
+.site-plain .project-buttons { align-items: flex-start; }
+.site-plain .project-buttons a { text-align: left; }
+
+.site-plain .cookie-banner a { color: #ffffff; }
+.site-plain .nav-bar a:hover,
+.site-plain .nav-menu a:hover { color: #ffffff; }
+.site-plain .jann-card a { color: var(--color-text-primary); }
+.site-plain [class$="-card"] h2 { font-size: 17px; margin-top: 0; padding-bottom: 0; }
