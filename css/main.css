@@ -2012,3 +2012,11 @@ footer.footer-plain::after { display: none; }
 .site-plain .nav-menu a:hover { color: #ffffff; }
 .site-plain .jann-card a { color: var(--color-text-primary); }
 .site-plain [class$="-card"] h2 { font-size: 17px; margin-top: 0; padding-bottom: 0; }
+
+.site-plain .project-buttons a:hover,
+.site-plain .project-buttons a:active {
+  background: none;
+  box-shadow: none;
+  transform: none;
+  color: var(--color-accent-text);
+}
