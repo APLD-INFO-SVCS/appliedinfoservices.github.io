@@ -25,10 +25,11 @@
   <!-- Google Analytics: consent-gated, see js/cookie-consent.js -->
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=B612:ital,wght@0,400;0,700;1,400;1,700&family=B612+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/main.css?v=17">
+  <link rel="stylesheet" href="css/ops-coded.css?v=1">
 </head>
-<body class="site-plain">
+<body class="site-plain ops-coded">
   <div id="cookie-banner" class="cookie-banner" hidden>
     <p class="cookie-banner-text">We use cookies for basic site analytics. <a href="privacy-policy.html">Privacy Policy</a></p>
     <div class="cookie-banner-actions">
@@ -39,47 +40,68 @@
 
   <div id="header-placeholder"></div>
 
-  <div class="page-content">
-    <div class="crumb"><a href="index.html">← Back to Home</a></div>
+  <div class="page-band">
+    <div class="page-band-inner">
+      <h1 class="page-doc-type">Privacy Policy</h1>
+    </div>
+  </div>
+  <div class="page-band-rule"></div>
 
-    <div class="content-section">
+  <main class="page-content">
+    <div class="crumb"><a href="index.html">← Back to home</a></div>
 
-      <h1 class="page-title">Privacy Policy</h1>
-      <p style="color: var(--color-text-muted-on-light); font-size: 11px; margin-top: 0;">Last updated: March 29, 2026 &nbsp;&middot;&nbsp; Applied Information Services, LLC</p>
+    <div class="legal-content">
+      <p class="page-updated">Last updated: March 29, 2026 &nbsp;&middot;&nbsp; Applied Information Services, LLC</p>
 
       <p>Applied Information Services, LLC (&ldquo;Applied,&rdquo; &ldquo;we,&rdquo; &ldquo;our,&rdquo; or &ldquo;us&rdquo;) is committed to protecting the privacy of visitors to this website. This Privacy Policy describes what information we collect, how we use it, and your rights with respect to that information.</p>
       <p>A comprehensive Privacy Policy addressing data retention schedules, cross-border transfer mechanisms, and full regulatory disclosures is currently in preparation. This page reflects current practices in the interim.</p>
 
-      <h2 class="legal-heading">Information We Collect</h2>
+      <section class="split-section">
+      <h2 class="legal-heading">Information we collect</h2>
       <p>We may collect the following categories of information:</p>
       <p><strong>Automatically collected information.</strong> We use Google Analytics (via Google Tag Manager, ID: G-CWY00FKP9J) to collect standard web analytics data including pages visited, time on site, browser type, device type, and approximate geographic location derived from IP address. This data is collected in aggregate and is not directly linked to your identity.</p>
       <p><strong>Communications.</strong> If you contact us by email, we retain the content of that correspondence.</p>
 
-      <h2 class="legal-heading">How We Use Your Information</h2>
+      </section>
+      <section class="split-section">
+      <h2 class="legal-heading">How we use your information</h2>
       <p>We use collected information to respond to correspondence, improve the website, and understand how visitors use it. We do not sell, rent, or share personal information with third parties for marketing purposes.</p>
 
-      <h2 class="legal-heading">Third-Party Services</h2>
+      </section>
+      <section class="split-section">
+      <h2 class="legal-heading">Third-party services</h2>
       <p><strong>Google Analytics.</strong> Website usage data is collected by Google LLC via Google Analytics. Google's privacy policy governs that data. Visitors in the EU/UK should be aware that this constitutes a transfer of personal data to the United States. Google Analytics only loads after you accept the cookie banner shown on your first visit.</p>
       <p><strong>Substack.</strong> The JANN newsletter is published and managed on Substack. If you subscribe to JANN, your subscription data is governed by Substack's Terms of Use and Privacy Policy.</p>
 
-      <h2 class="legal-heading">Data Retention</h2>
+      </section>
+      <section class="split-section">
+      <h2 class="legal-heading">Data retention</h2>
       <p>We retain correspondence for as long as necessary to respond to it. Web analytics data is retained per Google Analytics' default retention settings. A formal retention schedule will be published with the full Privacy Policy.</p>
 
-      <h2 class="legal-heading">Your Rights</h2>
+      </section>
+      <section class="split-section">
+      <h2 class="legal-heading">Your rights</h2>
       <p>Depending on your jurisdiction, you may have rights to access, correct, delete, or restrict processing of your personal data. To exercise any such rights or to make a privacy-related inquiry, contact us at <a href="mailto:info@appliedinformationservices.com">info@appliedinformationservices.com</a>.</p>
 
+      </section>
+      <section class="split-section">
       <h2 class="legal-heading">Cookies</h2>
       <p>This website uses cookies set by Google Analytics for usage tracking. On your first visit, a banner asks you to accept or decline these cookies. Analytics cookies are not set until you accept, and you can change your mind at any time by clearing your browser's site data for this domain.</p>
 
-      <h2 class="legal-heading">Changes to This Policy</h2>
+      </section>
+      <section class="split-section">
+      <h2 class="legal-heading">Changes to this policy</h2>
       <p>We may update this Privacy Policy periodically. Continued use of this website following any update constitutes acceptance of the revised policy. The &ldquo;Last updated&rdquo; date at the top of this page reflects the most recent revision.</p>
 
+      </section>
+      <section class="split-section">
       <h2 class="legal-heading">Contact</h2>
       <p>For privacy-related inquiries: <a href="mailto:info@appliedinformationservices.com">info@appliedinformationservices.com</a></p>
       <p>Applied Information Services, LLC &middot; 1001 S Main St Ste 11354 &middot; Kalispell, MT 59901</p>
+      </section>
 
     </div>
-  </div>
+  </main>
 
   <div id="footer-placeholder"></div>
 
@@ -99,6 +121,7 @@
   </script>
 
   <script src="js/cookie-consent.js"></script>
+  <script src="js/legal-notices.js"></script>
   <script src="js/nav-menu.js"></script>
 </body>
 </html>
