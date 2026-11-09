@@ -25,8 +25,9 @@
   <!-- Google Analytics: consent-gated, see js/cookie-consent.js -->
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700&family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=B612:ital,wght@0,400;0,700;1,400;1,700&family=B612+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/main.css?v=17">
+  <link rel="stylesheet" href="css/ops-coded.css?v=1">
 
   <style>
     /* ── Page layout ── */
@@ -196,7 +197,7 @@
     }
   </style>
 </head>
-<body class="site-plain">
+<body class="site-plain ops-coded">
   <div id="cookie-banner" class="cookie-banner" hidden>
     <p class="cookie-banner-text">We use cookies for basic site analytics. <a href="privacy-policy.html">Privacy Policy</a></p>
     <div class="cookie-banner-actions">
@@ -216,7 +217,7 @@
   </div>
   <div class="jann-band-rule"></div>
 
-  <div class="jann-body">
+  <main class="jann-body">
     <div class="jann-inner">
 
       <!-- Lede -->
@@ -228,27 +229,25 @@
       </div>
 
       <!-- What Is AEROSINT -->
-      <div class="jann-section-label">What Is AEROSINT</div>
+      <section class="split-section">
+      <h2 class="jann-section-label">What is AEROSINT</h2>
       <div class="jann-card">
-        <p>AEROSINT (Aerospace OSINT) is the disciplined application of OSINT methodology to aerospace
-        platforms, flight operations, and civil aviation infrastructure with defense
-        or intelligence relevance.</p>
-        <p>The term was coined and codified by Applied Information Services. It is an
-        analytical discipline. AEROSINT draws on collection tradecraft, pattern-of-life analysis, and domain
-        expertise.</p>
+        <p>AEROSINT is open-source intelligence applied to aircraft, flight operations, and aviation infrastructure with defense or intelligence relevance.</p>
+        <p>Applied Information Services coined the term. The work draws on collection tradecraft and pattern-of-life analysis.</p>
       </div>
 
       <!-- Relationship to Applied -->
-      <div class="jann-section-label">Relationship to Applied</div>
+      </section>
+      <section class="split-section">
+      <h2 class="jann-section-label">Relationship to Applied</h2>
       <div class="jann-card">
-        <p>JANN is Applied&rsquo;s published analytical record: verified
-        findings, documented methods, and a record of observations, written
-        for aerospace, defense, and intelligence readers, from pilots and mechanics
-        to government counsel and program managers.</p>
+        <p>JANN is Applied&rsquo;s published record. Its readers include pilots, mechanics, government counsel, and program managers.</p>
       </div>
 
       <!-- Press -->
-      <div class="jann-section-label">Press</div>
+      </section>
+      <section class="split-section">
+      <h2 class="jann-section-label">Press</h2>
       <div class="jann-card">
         <p>The Washington Post credited JANN by name in its investigation into a covert CIA program tied to attacks on fishing boats near the Galápagos Islands.</p>
         <p>The story cited JANN's FAA airworthiness-document analysis, which first identified at least three specially modified Cessna Citation Longitude aircraft. One of them was tracked near the boats before the strikes and is central to the investigation. The others are the same modified type, but they were not tied to the attacks. Published August 13, 2026.</p>
@@ -256,7 +255,9 @@
       </div>
 
       <!-- Subscribe + Embed -->
-      <div class="jann-section-label">Subscribe</div>
+      </section>
+      <section class="split-section">
+      <h2 class="jann-section-label">Subscribe</h2>
       <section class="jann-subscribe-block">
         <p class="jann-subscribe-cta">
           Subscribe to <em>The AEROSINT</em> on Substack to receive JANN reporting direct.
@@ -275,9 +276,10 @@
           JANN publishes on its own schedule.
         </p>
       </section>
+      </section>
 
     </div>
-  </div>
+  </main>
 
   <div id="footer-placeholder"></div>
 
@@ -297,6 +299,7 @@
   </script>
 
   <script src="js/cookie-consent.js"></script>
+  <script src="js/legal-notices.js"></script>
   <script src="js/nav-menu.js"></script>
 
 </body>

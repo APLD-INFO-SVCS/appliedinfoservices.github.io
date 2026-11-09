@@ -6,23 +6,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Page not found | Applied Information Services">
   <meta name="robots" content="noindex, nofollow">
-  <title>Page Not Found | Applied Information Services</title>
+  <title>Page not found | Applied Information Services</title>
 
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
-  <link rel="icon" href="favicon-16.png" sizes="16x16" type="image/png">
-  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
   <!-- Google Analytics: consent-gated, see js/cookie-consent.js -->
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/main.css?v=17">
+  <link href="https://fonts.googleapis.com/css2?family=B612:ital,wght@0,400;0,700;1,400;1,700&family=B612+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main.css?v=17">
+  <link rel="stylesheet" href="/css/ops-coded.css?v=1">
 
 </head>
-<body class="site-plain">
+<body class="site-plain ops-coded">
   <div id="cookie-banner" class="cookie-banner" hidden>
-    <p class="cookie-banner-text">We use cookies for basic site analytics. <a href="privacy-policy.html">Privacy Policy</a></p>
+    <p class="cookie-banner-text">We use cookies for basic site analytics. <a href="/privacy-policy.html">Privacy Policy</a></p>
     <div class="cookie-banner-actions">
       <button id="cookie-decline" type="button" class="cookie-banner-btn">Decline</button>
       <button id="cookie-accept" type="button" class="cookie-banner-btn cookie-banner-btn-primary">Accept</button>
@@ -31,26 +32,32 @@
 
   <div id="header-placeholder"></div>
 
-  <div class="page-content">
-    <div class="content-section" style="text-align: center;">
-      <h1 class="page-title">404 &middot; Page Not Found</h1>
-      <p>The page you're looking for doesn't exist, or it moved.</p>
-      <div class="project-buttons" style="justify-content: center;">
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="faq.html">FAQ</a>
-      </div>
+  <div class="page-band">
+    <div class="page-band-inner">
+      <h1 class="page-doc-type">Page not found</h1>
     </div>
   </div>
+  <div class="page-band-rule"></div>
+
+  <main class="page-content">
+    <div>
+      <p>The page you're looking for doesn't exist, or it moved.</p>
+      <div class="project-buttons">
+        <a href="/index.html">Home</a>
+        <a href="/about.html">About</a>
+        <a href="/faq.html">FAQ</a>
+      </div>
+    </div>
+  </main>
 
   <div id="footer-placeholder"></div>
 
   <script>
-    fetch('includes/header.html')
+    fetch('/includes/header.html')
       .then(response => response.text())
       .then(data => document.getElementById('header-placeholder').innerHTML = data);
 
-    fetch('includes/footer.html')
+    fetch('/includes/footer.html')
       .then(response => response.text())
       .then(data => {
         document.getElementById('footer-placeholder').innerHTML = data;
@@ -60,8 +67,9 @@
       });
   </script>
 
-  <script src="js/cookie-consent.js"></script>
-  <script src="js/nav-menu.js"></script>
+  <script src="/js/cookie-consent.js"></script>
+  <script src="/js/legal-notices.js"></script>
+  <script src="/js/nav-menu.js"></script>
 
 </body>
 </html>
